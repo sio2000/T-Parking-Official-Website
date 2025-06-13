@@ -79,22 +79,38 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row justify-center gap-4 mb-8"
+            className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-8"
           >
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-colors shadow-lg hover:shadow-xl"
-            >
-              {t.hero.appStore}
-            </motion.button>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-colors shadow-lg hover:shadow-xl"
-            >
-              {t.hero.googlePlay}
-            </motion.button>
+            <div className="flex flex-row items-center gap-6">
+              <motion.a 
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="h-20 w-56 flex items-center justify-center bg-black rounded-xl shadow-lg"
+              >
+                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                  <img 
+                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
+                    alt="Download on App Store" 
+                    className="h-full w-full object-contain block mx-auto p-2 scale-110"
+                  />
+                </div>
+              </motion.a>
+              <motion.a 
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="h-20 w-56 flex items-center justify-center bg-black rounded-xl shadow-lg"
+              >
+                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                  <img 
+                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
+                    alt="Get it on Google Play" 
+                    className="h-full w-full object-contain block mx-auto p-2 scale-150"
+                  />
+                </div>
+              </motion.a>
+            </div>
           </motion.div>
           {/* Animated Down Arrow */}
           <motion.div
