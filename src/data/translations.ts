@@ -1673,6 +1673,1088 @@ export const translations = {
           en: '© 2025 T-Parking. All rights reserved.'
         }
       }
+    },
+    termsConditions: {
+      title: {
+        el: 'Όροι και Προϋποθέσεις Χρήσης - T-Parking',
+        en: 'Terms and Conditions of Use - T-Parking'
+      },
+      lastUpdated: {
+        el: 'Τελευταία Ενημέρωση: 7 Δεκεμβρίου 2025',
+        en: 'Last Updated: December 7, 2025'
+      },
+      introduction: {
+        el: 'Καλώς ήρθατε στο T-Parking. Οι παρακάτω Όροι και Προϋποθέσεις Χρήσης διέπουν τη χρήση της εφαρμογής T-Parking και των υπηρεσιών μας. Παρακαλούμε διαβάστε προσεκτικά αυτούς τους όρους πριν από τη χρήση της εφαρμογής. Με τη χρήση της εφαρμογής, αποδέχεστε αυτούς τους όρους και συναινείτε ρητά στην επεξεργασία των προσωπικών σας δεδομένων σύμφωνα με τον Κανονισμό (ΕΕ) 2016/679 για την Προστασία των Προσωπικών Δεδομένων (GDPR). Αν δεν συμφωνείτε με οποιοδήποτε μέρος αυτών των όρων, παρακαλούμε μην χρησιμοποιείτε την εφαρμογή.',
+        en: 'Welcome to T-Parking. The following Terms and Conditions of Use govern the use of the T-Parking application and our services. Please read these terms carefully before using the application. By using the application, you accept these terms and explicitly consent to the processing of your personal data in accordance with Regulation (EU) 2016/679 on the Protection of Personal Data (GDPR). If you do not agree with any part of these terms, please do not use the application.'
+      },
+      acceptance: {
+        title: {
+          el: '2. Αποδοχή Όρων & Συναίνεση',
+          en: '2. Acceptance of Terms & Consent'
+        },
+        acceptanceTitle: {
+          el: '2.1 Αποδοχή Όρων',
+          en: '2.1 Acceptance of Terms'
+        },
+        acceptanceContent: {
+          el: 'Με την εγγραφή, είσοδο ή χρήση της εφαρμογής T-Parking, αποδέχεστε αυτούς τους Όρους και Προϋποθέσεις Χρήσης και συμφωνείτε να τους τηρείτε.',
+          en: 'By registering, logging in, or using the T-Parking application, you accept these Terms and Conditions of Use and agree to abide by them.'
+        },
+        consentTitle: {
+          el: '2.2 Συναίνεση Επεξεργασίας Δεδομένων',
+          en: '2.2 Consent for Data Processing'
+        },
+        consentContent: {
+          el: 'Με τη χρήση της εφαρμογής, συναινείτε ρητά στην επεξεργασία των προσωπικών σας δεδομένων σύμφωνα με την Πολιτική Απορρήτου μας (δείτε /privacy-policy).',
+          en: 'By using the application, you explicitly consent to the processing of your personal data in accordance with our Privacy Policy (see /privacy-policy).'
+        },
+        consentCharacteristics: {
+          el: [
+            'Ελεύθερη: Δεν υπάρχει πίεση ή υποχρέωση',
+            'Συγκεκριμένη: Για συγκεκριμένους σκοπούς',
+            'Ενημερωμένη: Έχετε πρόσβαση σε όλες τις πληροφορίες',
+            'Σαφής: Δίνεται μέσω explicit checkbox κατά την εγγραφή'
+          ],
+          en: [
+            'Free: No pressure or obligation',
+            'Specific: For specific purposes',
+            'Informed: You have access to all information',
+            'Unambiguous: Given through explicit checkbox during registration'
+          ]
+        },
+        withdrawTitle: {
+          el: '2.3 Ανάκληση Συναίνεσης',
+          en: '2.3 Withdrawal of Consent'
+        },
+        withdrawContent: {
+          el: 'Μπορείτε να ανακαλέσετε τη συναίνεσή σας οποιαδήποτε στιγμή, χωρίς να επηρεάζεται η νομιμότητα της προηγούμενης επεξεργασίας.',
+          en: 'You can withdraw your consent at any time, without affecting the lawfulness of prior processing.'
+        }
+      },
+      serviceDescription: {
+        title: {
+          el: '3. Περιγραφή Υπηρεσίας',
+          en: '3. Service Description'
+        },
+        whatIsTitle: {
+          el: '3.1 Τι είναι το T-Parking',
+          en: '3.1 What is T-Parking'
+        },
+        whatIsContent: {
+          el: 'Το T-Parking είναι μια mobile εφαρμογή που επιτρέπει στους χρήστες να:',
+          en: 'T-Parking is a mobile application that allows users to:'
+        },
+        features: {
+          el: [
+            'Βρίσκουν διαθέσιμες θέσεις στάθμευσης σε πραγματικό χρόνο',
+            'Κρατούν θέσεις στάθμευσης (reservations)',
+            'Μοιράζονται θέσεις στάθμευσης όταν ξεπαρκάρουν',
+            'Πλοηγούνται προς θέσεις στάθμευσης (μέσω Google Maps)',
+            'Κερδίζουν πόντους και επιβραβεύσεις',
+            'Λαμβάνουν ειδοποιήσεις για κοντινές διαθέσιμες θέσεις'
+          ],
+          en: [
+            'Find available parking spots in real-time',
+            'Reserve parking spots (reservations)',
+            'Share parking spots when they leave',
+            'Navigate to parking spots (via Google Maps)',
+            'Earn points and rewards',
+            'Receive notifications for nearby available spots'
+          ]
+        },
+        functionalityTitle: {
+          el: '3.2 Λειτουργικότητα',
+          en: '3.2 Functionality'
+        },
+        functionalityContent: {
+          el: 'Η εφαρμογή λειτουργεί σε πραγματικό χρόνο (real-time) χωρίς καθυστερήσεις και χρησιμοποιεί δεδομένα τοποθεσίας (GPS) για την παροχή των υπηρεσιών της. Όλα τα features είναι 100% δωρεάν και διαθέσιμα σε όλους τους χρήστες.',
+          en: 'The app operates in real-time without delays and uses location data (GPS) to provide its services. All features are 100% free and available to all users.'
+        },
+        characteristicsTitle: {
+          el: '3.3 Χαρακτηριστικά',
+          en: '3.3 Features'
+        },
+        characteristics: {
+          el: [
+            'Σύστημα Πόντων: Κερδίζετε πόντους κάθε φορά που μοιράζεστε μια θέση στάθμευσης',
+            'Κρατήσεις: 1 δωρεάν κράτηση ανά 20 επιβεβαιωμένα ξεπαρκαρίσματα',
+            'Ειδοποιήσεις: Push notifications για κοντινές διαθέσιμες θέσεις',
+            'Ιστορικό & Στατιστικά: Προβολή ιστορικού, πόντων, rankings, εξοικονόμησης χρόνου/χρημάτων',
+            'Πλοήγηση: Ενσωματωμένη πλοήγηση μέσω Google Maps'
+          ],
+          en: [
+            'Points System: You earn points every time you share a parking spot',
+            'Reservations: 1 free reservation per 20 confirmed departures',
+            'Notifications: Push notifications for nearby available spots',
+            'History & Statistics: View history, points, rankings, time/money savings',
+            'Navigation: Integrated navigation via Google Maps'
+          ]
+        }
+      },
+      registration: {
+        title: {
+          el: '4. Εγγραφή & Λογαριασμός',
+          en: '4. Registration & Account'
+        },
+        requirementsTitle: {
+          el: '4.1 Απαιτήσεις Εγγραφής',
+          en: '4.1 Registration Requirements'
+        },
+        requirementsIntro: {
+          el: 'Για να χρησιμοποιήσετε το T-Parking, πρέπει να:',
+          en: 'To use T-Parking, you must:'
+        },
+        requirements: {
+          el: [
+            'Έχετε συμπληρώσει το 18ο έτος της ηλικίας σας',
+            'Δημιουργήσετε λογαριασμό με ακριβή και ενημερωμένα στοιχεία',
+            'Παράσχετε έγκυρη διεύθυνση email',
+            'Δημιουργήσετε ασφαλές password (τουλάχιστον 6 χαρακτήρες)'
+          ],
+          en: [
+            'Be at least 18 years of age',
+            'Create an account with accurate and up-to-date information',
+            'Provide a valid email address',
+            'Create a secure password (at least 6 characters)'
+          ]
+        },
+        responsibilityTitle: {
+          el: '4.2 Ευθύνη Χρήστη',
+          en: '4.2 User Responsibility'
+        },
+        responsibilityContent: {
+          el: 'Είστε υπεύθυνος για:',
+          en: 'You are responsible for:'
+        },
+        responsibility: {
+          el: [
+            'Τη διασφάλιση της ασφάλειας του λογαριασμού σας, συμπεριλαμβανομένου του password σας',
+            'Όλη τη δραστηριότητα που γίνεται μέσω του λογαριασμού σας',
+            'Τη διατήρηση ενημερωμένων και ακριβών πληροφοριών στο προφίλ σας'
+          ],
+          en: [
+            'Ensuring the security of your account, including your password',
+            'All activity that occurs through your account',
+            'Maintaining up-to-date and accurate information in your profile'
+          ]
+        },
+        securityTitle: {
+          el: '4.3 Ασφάλεια Λογαριασμού',
+          en: '4.3 Account Security'
+        },
+        securityContent: {
+          el: 'Εάν υποψιάζεστε ότι ο λογαριασμός σας έχει παραβιαστεί, ειδοποιήστε μας άμεσα στο: devtaskhub@gmail.com',
+          en: 'If you suspect that your account has been compromised, notify us immediately at: devtaskhub@gmail.com'
+        },
+        securityDisclaimer: {
+          el: 'Εμείς δεν φέρουμε ευθύνη για ζημίες που προκύπτουν από μη εξουσιοδοτημένη χρήση του λογαριασμού σας.',
+          en: 'We are not responsible for damages arising from unauthorized use of your account.'
+        }
+      },
+      useOfService: {
+        title: {
+          el: '5. Χρήση Υπηρεσίας',
+          en: '5. Use of Service'
+        },
+        lawfulUseTitle: {
+          el: '5.1 Νόμιμη Χρήση',
+          en: '5.1 Lawful Use'
+        },
+        lawfulUseContent: {
+          el: 'Η χρήση της εφαρμογής επιτρέπεται μόνο για νόμιμους σκοπούς.',
+          en: 'Use of the application is permitted only for lawful purposes.'
+        },
+        prohibitedTitle: {
+          el: '5.2 Απαγορευμένες Δραστηριότητες',
+          en: '5.2 Prohibited Activities'
+        },
+        prohibitedIntro: {
+          el: 'Απαγορεύεται αυστηρά:',
+          en: 'The following are strictly prohibited:'
+        },
+        falseInformationTitle: {
+          el: 'Παροχή Ψευδών ή Παραπλανητικών Πληροφοριών:',
+          en: 'Providing False or Misleading Information:'
+        },
+        falseInformation: {
+          el: [
+            'Δημιουργία ψευδών θέσεων στάθμευσης',
+            'Παροχή παραπλανητικών πληροφοριών σχετικά με τη διαθεσιμότητα θέσεων',
+            'Χρήση ψευδών στοιχείων κατά την εγγραφή'
+          ],
+          en: [
+            'Creating fake parking spots',
+            'Providing misleading information about spot availability',
+            'Using false information during registration'
+          ]
+        },
+        abuseTitle: {
+          el: 'Κατάχρηση Υπηρεσίας:',
+          en: 'Service Abuse:'
+        },
+        abuse: {
+          el: [
+            'Χρήση της εφαρμογής για παράνομες δραστηριότητες',
+            'Κατάχρηση του συστήματος πόντων ή κρατήσεων',
+            'Προσπάθεια χειραγώγησης των rankings ή στατιστικών'
+          ],
+          en: [
+            'Using the app for illegal activities',
+            'Abusing the points system or reservations',
+            'Attempting to manipulate rankings or statistics'
+          ]
+        },
+        thirdPartyRightsTitle: {
+          el: 'Παραβίαση Δικαιωμάτων Τρίτων:',
+          en: 'Violation of Third-Party Rights:'
+        },
+        thirdPartyRights: {
+          el: [
+            'Παραβίαση πνευματικών δικαιωμάτων',
+            'Παραβίαση δικαιωμάτων ιδιωτικής ζωής',
+            'Χρήση της εφαρμογής για παρενοχλήσεις ή εκφοβισμούς'
+          ],
+          en: [
+            'Violation of intellectual property rights',
+            'Violation of privacy rights',
+            'Using the app for harassment or intimidation'
+          ]
+        },
+        technicalInterferenceTitle: {
+          el: 'Τεχνικές Επεμβάσεις:',
+          en: 'Technical Interference:'
+        },
+        technicalInterference: {
+          el: [
+            'Hacking, reverse engineering, ή προσπάθεια να παρακάμψετε τα security measures',
+            'Προσπάθεια πρόσβασης σε δεδομένα άλλων χρηστών',
+            'Χρήση bots, scripts, ή automated tools για χειραγώγηση της εφαρμογής'
+          ],
+          en: [
+            'Hacking, reverse engineering, or attempting to bypass security measures',
+            'Attempting to access other users\' data',
+            'Using bots, scripts, or automated tools to manipulate the app'
+          ]
+        },
+        otherProhibitedTitle: {
+          el: 'Άλλες Απαγορευμένες Δραστηριότητες:',
+          en: 'Other Prohibited Activities:'
+        },
+        otherProhibited: {
+          el: [
+            'Χρήση της εφαρμογής με τρόπο που μπορεί να βλάψει την εφαρμογή, τους χρήστες της, ή τρίτους',
+            'Καταστροφή, διαταραχή ή παρεμπόδιση της λειτουργίας της εφαρμογής',
+            'Πωλήσεις, μεταβίβαση, ή ενοικίαση του λογαριασμού σας σε τρίτους'
+          ],
+          en: [
+            'Using the app in a way that may harm the app, its users, or third parties',
+            'Destroying, disrupting, or interfering with the app\'s functionality',
+            'Selling, transferring, or renting your account to third parties'
+          ]
+        },
+        consequencesTitle: {
+          el: '5.3 Συνεπείς',
+          en: '5.3 Consequences'
+        },
+        consequences: {
+          el: [
+            'Τερματισμός ή αναστολή του λογαριασμού σας',
+            'Νομικές ενέργειες (εάν χρειάζεται)',
+            'Αποζημιώσεις για ζημίες που προκύπτουν'
+          ],
+          en: [
+            'Termination or suspension of your account',
+            'Legal action (if necessary)',
+            'Compensation for damages incurred'
+          ]
+        }
+      },
+      reservations: {
+        title: {
+          el: '6. Κρατήσεις & Πόντοι',
+          en: '6. Reservations & Points'
+        },
+        reservationsTitle: {
+          el: '6.1 Σύστημα Κρατήσεων',
+          en: '6.1 Reservation System'
+        },
+        reservations: {
+          el: [
+            'Όλοι οι χρήστες μπορούν να κάνουν κράτηση θέσης εάν έχουν διαθέσιμη δωρεάν κράτηση',
+            '1 δωρεάν κράτηση προμηθεύεται για κάθε 20 επιβεβαιωμένα ξεπαρκαρίσματα',
+            'Κάθε κράτηση έχει διάρκεια έως 2 ώρες',
+            'Μετά τη λήξη, η θέση γίνεται διαθέσιμη για άλλους χρήστες',
+            'Όλα τα features είναι 100% δωρεάν - δεν υπάρχουν premium ή platinum subscriptions με πληρωμή'
+          ],
+          en: [
+            'All users can reserve a spot if they have an available free reservation',
+            '1 free reservation is provided for every 20 confirmed departures',
+            'Each reservation has a duration of up to 2 hours',
+            'After expiration, the spot becomes available for other users',
+            'All features are 100% free - there are no premium or platinum paid subscriptions'
+          ]
+        },
+        pointsTitle: {
+          el: '6.2 Σύστημα Πόντων',
+          en: '6.2 Points System'
+        },
+        pointsIntro: {
+          el: '+1 πόντος για κάθε θέση που μοιράζεστε (Unpark). Οι πόντοι χρησιμοποιούνται για:',
+          en: '+1 point for each spot you share (Unpark). Points are used for:'
+        },
+        points: {
+          el: [
+            'Υπολογισμό rankings',
+            'Στατιστικά',
+            'Επιβραβεύσεις (δωρεάν κρατήσεις)'
+          ],
+          en: [
+            'Ranking calculations',
+            'Statistics',
+            'Rewards (free reservations)'
+          ]
+        },
+        rewardsTitle: {
+          el: '6.3 Επιβραβεύσεις',
+          en: '6.3 Rewards'
+        },
+        rewards: {
+          el: [
+            '1 δωρεάν κράτηση = 20 επιβεβαιωμένα ξεπαρκαρίσματα',
+            'Οι επιβραβεύσεις είναι ατομικές και δεν μπορούν να μεταφερθούν'
+          ],
+          en: [
+            '1 free reservation = 20 confirmed departures',
+            'Rewards are individual and cannot be transferred'
+          ]
+        },
+        availabilityTitle: {
+          el: '6.4 Διαθεσιμότητα Κρατήσεων',
+          en: '6.4 Reservation Availability'
+        },
+        availability: {
+          el: [
+            'Οι κρατήσεις είναι subject to availability',
+            'Δεν εγγυόμαστε ότι μια θέση θα είναι διαθέσιμη όταν φτάσετε',
+            'Δεν φέρουμε ευθύνη για αλλαγές στην κατάσταση μιας θέσης (π.χ. εάν κάποιος άλλος έχει πάρει τη θέση)'
+          ],
+          en: [
+            'Reservations are subject to availability',
+            'We do not guarantee that a spot will be available when you arrive',
+            'We are not responsible for changes in the status of a spot (e.g., if someone else has taken the spot)'
+          ]
+        }
+      },
+      personalData: {
+        title: {
+          el: '7. Προσωπικά Δεδομένα (Σύνοψη - Για πλήρη λεπτομέρειες δείτε Privacy Policy)',
+          en: '7. Personal Data (Summary - For full details see Privacy Policy)'
+        },
+        collectionTitle: {
+          el: '7.1 Συλλογή Δεδομένων',
+          en: '7.1 Data Collection'
+        },
+        collectionContent: {
+          el: 'Συλλέγουμε τα ακόλουθα προσωπικά δεδομένα (για λεπτομέρειες, δείτε την Πολιτική Απορρήτου):',
+          en: 'We collect the following personal data (for details, see the Privacy Policy):'
+        },
+        collection: {
+          el: [
+            'Ονοματεπώνυμο, Email, Password',
+            'Δεδομένα τοποθεσίας (GPS) σε πραγματικό χρόνο',
+            'Δεδομένα χρήσης (ιστορικό, κρατήσεις, πόντοι)',
+            'Δεδομένα συσκευής',
+            'Cookies και analytics data (με συναίνεση)'
+          ],
+          en: [
+            'Full name, Email, Password',
+            'Location data (GPS) in real-time',
+            'Usage data (history, reservations, points)',
+            'Device data',
+            'Cookies and analytics data (with consent)'
+          ]
+        },
+        legalBasisTitle: {
+          el: '7.2 Νομική Βάση (GDPR Article 6)',
+          en: '7.2 Legal Basis (GDPR Article 6)'
+        },
+        legalBasis: {
+          el: [
+            'Εκτέλεση Συμβολαίου: Παροχή βασικών υπηρεσιών',
+            'Συναίνεση: Marketing, analytics (προαιρετικά)',
+            'Νόμιμο Συμφέρον: Βελτίωση εφαρμογής, ασφάλεια',
+            'Νομική Υποχρέωση: Συμμόρφωση με νόμους'
+          ],
+          en: [
+            'Contract Performance: Providing basic services',
+            'Consent: Marketing, analytics (optional)',
+            'Legitimate Interest: App improvement, security',
+            'Legal Obligation: Compliance with laws'
+          ]
+        },
+        purposeTitle: {
+          el: '7.3 Σκοπός Επεξεργασίας',
+          en: '7.3 Purpose of Processing'
+        },
+        purpose: {
+          el: [
+            'Παροχή και βελτίωση υπηρεσιών',
+            'Επεξεργασία κρατήσεων και πόντων',
+            'Αποστολή ειδοποιήσεων',
+            'Ανάλυση και βελτίωση',
+            'Ασφάλεια και πρόληψη απάτης'
+          ],
+          en: [
+            'Service provision and improvement',
+            'Processing reservations and points',
+            'Sending notifications',
+            'Analysis and improvement',
+            'Security and fraud prevention'
+          ]
+        },
+        policyTitle: {
+          el: '7.4 Πολιτική Απορρήτου',
+          en: '7.4 Privacy Policy'
+        },
+        policyContent: {
+          el: 'Για πλήρεις λεπτομέρειες σχετικά με την επεξεργασία προσωπικών δεδομένων, δείτε την Πολιτική Απορρήτου μας στο /privacy-policy.',
+          en: 'For full details regarding the processing of personal data, see our Privacy Policy at /privacy-policy.'
+        }
+      },
+      userRights: {
+        title: {
+          el: '8. Δικαιώματα Χρήστη (GDPR Articles 15-22)',
+          en: '8. User Rights (GDPR Articles 15-22)'
+        },
+        intro: {
+          el: 'Έχετε τα ακόλουθα δικαιώματα σχετικά με τα προσωπικά σας δεδομένα:',
+          en: 'You have the following rights regarding your personal data:'
+        },
+        rights: {
+          el: [
+            'Δικαίωμα Πρόσβασης (Right of Access)',
+            'Δικαίωμα Διόρθωσης (Right to Rectification)',
+            'Δικαίωμα Διαγραφής / "Δικαίωμα στη Λήθη" (Right to Erasure)',
+            'Δικαίωμα Περιορισμού Επεξεργασίας (Right to Restriction)',
+            'Δικαίωμα Φορητότητας Δεδομένων (Right to Data Portability)',
+            'Δικαίωμα Εναντίωσης (Right to Object)',
+            'Δικαίωμα Ανάκλησης Συναίνεσης (Right to Withdraw Consent)'
+          ],
+          en: [
+            'Right of Access',
+            'Right to Rectification',
+            'Right to Erasure / "Right to be Forgotten"',
+            'Right to Restriction of Processing',
+            'Right to Data Portability',
+            'Right to Object',
+            'Right to Withdraw Consent'
+          ]
+        },
+        contact: {
+          el: 'Για να ασκήσετε οποιοδήποτε από αυτά τα δικαιώματα, επικοινωνήστε μαζί μας στο: devtaskhub@gmail.com',
+          en: 'To exercise any of these rights, contact us at: devtaskhub@gmail.com'
+        }
+      },
+      dataRetention: {
+        title: {
+          el: '9. Διατήρηση Δεδομένων',
+          en: '9. Data Retention'
+        },
+        policyTitle: {
+          el: '9.1 Πολιτική Διατήρησης',
+          en: '9.1 Retention Policy'
+        },
+        policy: {
+          el: [
+            'Δεδομένα Λογαριασμού: Διατηρούνται για όσο ο λογαριασμός είναι ενεργός',
+            'Ιστορικό Κοινοποίησης/Κρατήσεων: 6 μήνες',
+            'Δεδομένα Τοποθεσίας: Διαγράφονται άμεσα μετά τη χρήση (εκτός ενεργών κρατήσεων)',
+            'Analytics Data: 24 μήνες'
+          ],
+          en: [
+            'Account Data: Retained for as long as the account is active',
+            'Sharing/Reservation History: 6 months',
+            'Location Data: Deleted immediately after use (except active reservations)',
+            'Analytics Data: 24 months'
+          ]
+        },
+        deletionTitle: {
+          el: '9.2 Διαγραφή μετά τη Διαγραφή Λογαριασμού',
+          en: '9.2 Deletion After Account Deletion'
+        },
+        deletion: {
+          el: 'Μετά τη διαγραφή του λογαριασμού, όλα τα προσωπικά δεδομένα διαγράφονται εντός 30 ημερών (εκτός εάν απαιτείται διατήρηση από το νόμο).',
+          en: 'After deletion of the account, all personal data is deleted within 30 days (unless retention is required by law).'
+        }
+      },
+      thirdParties: {
+        title: {
+          el: '10. Κοινοποίηση σε Τρίτους',
+          en: '10. Disclosure to Third Parties'
+        },
+        intro: {
+          el: 'Κοινοποιούμε τα προσωπικά σας δεδομένα στους ακόλουθους τρίτους (όλοι GDPR-compliant με DPAs):',
+          en: 'We disclose your personal data to the following third parties (all GDPR-compliant with DPAs):'
+        },
+        parties: {
+          el: [
+            'Supabase: Database & Authentication',
+            'Google Maps API: Πλοήγηση και χάρτες',
+            'Cloud Hosting Providers: Hosting & backup',
+            'Analytics Services: Ανάλυση χρήσης (με συναίνεση)'
+          ],
+          en: [
+            'Supabase: Database & Authentication',
+            'Google Maps API: Navigation and maps',
+            'Cloud Hosting Providers: Hosting & backup',
+            'Analytics Services: Usage analysis (with consent)'
+          ]
+        },
+        details: {
+          el: 'Για λεπτομέρειες, δείτε την Πολιτική Απορρήτου μας.',
+          en: 'For details, see our Privacy Policy.'
+        }
+      },
+      securityMeasures: {
+        title: {
+          el: '11. Μέτρα Ασφάλειας (GDPR Article 32)',
+          en: '11. Security Measures (GDPR Article 32)'
+        },
+        intro: {
+          el: 'Εφαρμόζουμε κατάλληλα τεχνικά και οργανωτικά μέτρα:',
+          en: 'We implement appropriate technical and organizational measures:'
+        },
+        measures: {
+          el: [
+            'Κρυπτογράφηση (TLS/SSL)',
+            'Row-Level Security (RLS)',
+            'Authentication & Authorization',
+            'Regular Security Audits',
+            'Access Controls',
+            'Backup & Recovery',
+            'Incident Response Plan'
+          ],
+          en: [
+            'Encryption (TLS/SSL)',
+            'Row-Level Security (RLS)',
+            'Authentication & Authorization',
+            'Regular Security Audits',
+            'Access Controls',
+            'Backup & Recovery',
+            'Incident Response Plan'
+          ]
+        },
+        details: {
+          el: 'Για λεπτομέρειες, δείτε την Πολιτική Απορρήτου μας.',
+          en: 'For details, see our Privacy Policy.'
+        }
+      },
+      cookies: {
+        title: {
+          el: '12. Cookies & Analytics',
+          en: '12. Cookies & Analytics'
+        },
+        intro: {
+          el: 'Η εφαρμογή χρησιμοποιεί cookies για:',
+          en: 'The app uses cookies for:'
+        },
+        uses: {
+          el: [
+            'Session management',
+            'Authentication',
+            'Αποθήκευση προτιμήσεων',
+            'Analytics (με συναίνεση)'
+          ],
+          en: [
+            'Session management',
+            'Authentication',
+            'Storing preferences',
+            'Analytics (with consent)'
+          ]
+        },
+        management: {
+          el: 'Μπορείτε να διαχειριστείτε τα cookies από τις ρυθμίσεις της εφαρμογής ή του browser σας.',
+          en: 'You can manage cookies from the app settings or your browser settings.'
+        }
+      },
+      notifications: {
+        title: {
+          el: '13. Ειδοποιήσεις & Τοποθεσία',
+          en: '13. Notifications & Location'
+        },
+        gpsTitle: {
+          el: '13.1 Χρήση GPS',
+          en: '13.1 Use of GPS'
+        },
+        gpsContent: {
+          el: 'Η εφαρμογή χρησιμοποιεί δεδομένα τοποθεσίας (GPS) σε πραγματικό χρόνο για:',
+          en: 'The app uses location data (GPS) in real-time for:'
+        },
+        gps: {
+          el: [
+            'Εντοπισμό διαθέσιμων θέσεων κοντά σας',
+            'Αποστολή ειδοποιήσεων',
+            'Πλοήγηση'
+          ],
+          en: [
+            'Identifying available spots near you',
+            'Sending notifications',
+            'Navigation'
+          ]
+        },
+        retentionTitle: {
+          el: '13.2 Διατήρηση Δεδομένων Τοποθεσίας',
+          en: '13.2 Location Data Retention'
+        },
+        retention: {
+          el: [
+            'Real-time data: Διαγράφεται άμεσα μετά τη χρήση',
+            'Active reservations: Διατηρείται μόνο για τη διάρκεια της κράτησης'
+          ],
+          en: [
+            'Real-time data: Deleted immediately after use',
+            'Active reservations: Retained only for the duration of the reservation'
+          ]
+        }
+      },
+      dataBreaches: {
+        title: {
+          el: '14. Παραβιάσεις Δεδομένων (GDPR Articles 33-34)',
+          en: '14. Data Breaches (GDPR Articles 33-34)'
+        },
+        intro: {
+          el: 'Σε περίπτωση παραβίασης δεδομένων:',
+          en: 'In case of a data breach:'
+        },
+        notification: {
+          el: [
+            'Ειδοποίηση Αρχής εντός 72 ωρών',
+            'Ειδοποίηση χρηστών χωρίς αδικαιολόγητη καθυστέρηση (εάν ο κίνδυνος είναι υψηλός)'
+          ],
+          en: [
+            'Notification to Authority within 72 hours',
+            'Notification to users without undue delay (if the risk is high)'
+          ]
+        }
+      },
+      dataTransfer: {
+        title: {
+          el: '15. Μεταφορά Δεδομένων εκτός ΕΕ',
+          en: '15. Data Transfer Outside the EU'
+        },
+        intro: {
+          el: 'Ορισμένα από τα προσωπικά σας δεδομένα μπορεί να μεταφέρονται και να επεξεργάζονται εκτός της Ευρωπαϊκής Ένωσης (π.χ. Supabase backup servers, Google services).',
+          en: 'Some of your personal data may be transferred and processed outside the European Union (e.g., Supabase backup servers, Google services).'
+        },
+        safeguards: {
+          el: [
+            'Adequacy Decisions: Οι χώρες έχουν επαρκές επίπεδο προστασίας (Adequacy Decision από την ΕΕ)',
+            'Standard Contractual Clauses (SCCs): Χρησιμοποιούμε Standard Contractual Clauses που έχουν εγκριθεί από την Ευρωπαϊκή Επιτροπή',
+            'Άλλα κατάλληλα μέτρα προστασίας: Σύμφωνα με το GDPR'
+          ],
+          en: [
+            'Adequacy Decisions: Countries have adequate protection level (Adequacy Decision from EU)',
+            'Standard Contractual Clauses (SCCs): We use Standard Contractual Clauses approved by the European Commission',
+            'Other appropriate protection measures: In accordance with GDPR'
+          ]
+        }
+      },
+      contactData: {
+        title: {
+          el: '16. Επικοινωνία & Data Controller',
+          en: '16. Contact & Data Controller'
+        },
+        controller: {
+          el: 'Data Controller:',
+          en: 'Data Controller:'
+        },
+        company: {
+          el: 'T-Parking',
+          en: 'T-Parking'
+        },
+        email: {
+          el: 'Email:',
+          en: 'Email:'
+        },
+        emailValue: {
+          el: 'devtaskhub@gmail.com',
+          en: 'devtaskhub@gmail.com'
+        },
+        support: {
+          el: 'Υποστήριξη:',
+          en: 'Support:'
+        },
+        authority: {
+          el: 'Αρχή Προστασίας Δεδομένων:',
+          en: 'Data Protection Authority:'
+        },
+        authorityValue: {
+          el: 'www.dpa.gr | dpa@dpa.gr',
+          en: 'www.dpa.gr | dpa@dpa.gr'
+        }
+      },
+      liability: {
+        title: {
+          el: '17. Περιορισμός Ευθύνης',
+          en: '17. Limitation of Liability'
+        },
+        asIsTitle: {
+          el: '17.1 "As Is" Provision',
+          en: '17.1 "As Is" Provision'
+        },
+        asIsContent: {
+          el: 'Το T-Parking παρέχεται "ως έχει" (as is). Δεν εγγυόμαστε:',
+          en: 'T-Parking is provided "as is." We do not guarantee:'
+        },
+        guarantees: {
+          el: [
+            'Ότι η εφαρμογή θα λειτουργεί αδιάλειπτα ή χωρίς σφάλματα',
+            'Ότι οι θέσεις στάθμευσης θα είναι διαθέσιμες όταν φτάσετε',
+            'Ότι οι ειδοποιήσεις θα παραδοθούν εγκαίρως ή πάντα',
+            'Ότι δεν θα υπάρξουν technical issues ή downtime'
+          ],
+          en: [
+            'That the app will operate continuously or without errors',
+            'That parking spots will be available when you arrive',
+            'That notifications will be delivered on time or always',
+            'That there will be no technical issues or downtime'
+          ]
+        },
+        limitationTitle: {
+          el: '17.2 Περιορισμός Ευθύνης',
+          en: '17.2 Limitation of Liability'
+        },
+        limitationContent: {
+          el: 'Δεν φέρουμε ευθύνη για:',
+          en: 'We are not responsible for:'
+        },
+        limitations: {
+          el: [
+            'Ζημίες, απώλειες, ή διαφορές που προκύπτουν από τη χρήση ή την αδυναμία χρήσης της εφαρμογής',
+            'Κρατήσεις που δεν είναι διαθέσιμες όταν φτάσετε',
+            'Ειδοποιήσεις που δεν παραδίδονται',
+            'Σφάλματα στην εφαρμογή',
+            'Απώλεια δεδομένων',
+            'Παραβιάσεις ασφάλειας από τρίτους',
+            'Προβλήματα με third-party services (Google Maps, Supabase, κ.ά.)',
+            'Αναμενόμενα ή μη αναμενόμενα downtime'
+          ],
+          en: [
+            'Damages, losses, or differences arising from use or inability to use the app',
+            'Reservations that are not available when you arrive',
+            'Notifications that are not delivered',
+            'Errors in the app',
+            'Data loss',
+            'Security breaches by third parties',
+            'Problems with third-party services (Google Maps, Supabase, etc.)',
+            'Expected or unexpected downtime'
+          ]
+        },
+        maximumTitle: {
+          el: '17.3 Μέγιστη Ευθύνη',
+          en: '17.3 Maximum Liability'
+        },
+        maximum: {
+          el: 'Σημείωση: Η εφαρμογή είναι 100% δωρεάν - δεν υπάρχουν premium, platinum ή άλλα subscriptions με πληρωμή. Όλα τα features είναι διαθέσιμα δωρεάν σε όλους τους χρήστες. Κατά συνέπεια, η μέγιστη ευθύνη μας είναι €0.',
+          en: 'Note: The app is 100% free - there are no premium, platinum, or other paid subscriptions. All features are available for free to all users. Consequently, our maximum liability is €0.'
+        }
+      },
+      modifications: {
+        title: {
+          el: '18. Τροποποιήσεις Όρων',
+          en: '18. Modifications of Terms'
+        },
+        rightTitle: {
+          el: '18.1 Δικαίωμα Τροποποίησης',
+          en: '18.1 Right to Modify'
+        },
+        rightContent: {
+          el: 'Μπορούμε να τροποποιήσουμε αυτούς τους Όρους και Προϋποθέσεις Χρήσης οποιαδήποτε στιγμή.',
+          en: 'We may modify these Terms and Conditions of Use at any time.'
+        },
+        notificationTitle: {
+          el: '18.2 Ειδοποίηση Αλλαγών',
+          en: '18.2 Change Notification'
+        },
+        notification: {
+          el: [
+            'Οι σημαντικές αλλαγές θα ανακοινωθούν μέσω της εφαρμογής ή email',
+            'Η ημερομηνία "Τελευταία Ενημέρωση" θα ενημερώνεται στην κορυφή αυτής της σελίδας'
+          ],
+          en: [
+            'Significant changes will be announced through the app or email',
+            'The "Last Updated" date will be updated at the top of this page'
+          ]
+        },
+        continuedUseTitle: {
+          el: '18.3 Συνεχής Χρήση',
+          en: '18.3 Continued Use'
+        },
+        continuedUse: {
+          el: [
+            'Η συνεχής χρήση της εφαρμογής μετά από τροποποιήσεις συνεπάγεται αποδοχή των νέων όρων',
+            'Σας συνιστούμε να ελέγχετε τακτικά αυτή τη σελίδα για ενημερώσεις'
+          ],
+          en: [
+            'Continued use of the app after modifications implies acceptance of the new terms',
+            'We recommend that you check this page regularly for updates'
+          ]
+        }
+      },
+      termination: {
+        title: {
+          el: '19. Τερματισμός',
+          en: '19. Termination'
+        },
+        byUsTitle: {
+          el: '19.1 Τερματισμός από Εμάς',
+          en: '19.1 Termination by Us'
+        },
+        byUsContent: {
+          el: 'Διατηρούμε το δικαίωμα να τερματίσουμε ή να αναστείλουμε την πρόσβασή σας στην εφαρμογή χωρίς προειδοποίηση σε περίπτωση:',
+          en: 'We reserve the right to terminate or suspend your access to the app without notice in case of:'
+        },
+        byUsReasons: {
+          el: [
+            'Παραβίασης αυτών των όρων',
+            'Παράνομης χρήσης',
+            'Κατάχρησης της υπηρεσίας',
+            'Αίτημα διαγραφής λογαριασμού από εσάς'
+          ],
+          en: [
+            'Violation of these terms',
+            'Illegal use',
+            'Service abuse',
+            'Account deletion request from you'
+          ]
+        },
+        byYouTitle: {
+          el: '19.2 Τερματισμός από Εσάς',
+          en: '19.2 Termination by You'
+        },
+        byYouContent: {
+          el: 'Μπορείτε να τερματίσετε τη χρήση της εφαρμογής οποιαδήποτε στιγμή διαγράφοντας τον λογαριασμό σας.',
+          en: 'You can terminate the use of the app at any time by deleting your account.'
+        },
+        afterTitle: {
+          el: '19.3 Μετά τον Τερματισμό',
+          en: '19.3 After Termination'
+        },
+        after: {
+          el: [
+            'Τα δεδομένα σας θα διαγραφούν σύμφωνα με την πολιτική διατήρησης (30 ημέρες)',
+            'Δεν θα έχετε πρόσβαση στις υπηρεσίες της εφαρμογής',
+            'Οι κρατήσεις και οι πόντοι σας δεν θα είναι διαθέσιμοι'
+          ],
+          en: [
+            'Your data will be deleted according to the retention policy (30 days)',
+            'You will not have access to the app services',
+            'Your reservations and points will not be available'
+          ]
+        }
+      },
+      childrenData: {
+        title: {
+          el: '20. Δεδομένα Παιδιών (Άρθρο 8 GDPR)',
+          en: '20. Children\'s Data (Article 8 GDPR)'
+        },
+        ageRestriction: {
+          el: 'Η εφαρμογή T-Parking προορίζεται για χρήστες άνω των 18 ετών.',
+          en: 'The T-Parking app is intended for users over 18 years of age.'
+        },
+        noChildren: {
+          el: 'Δεν επιτρέπουμε την εγγραφή ή χρήση της εφαρμογής από χρήστες κάτω των 18 ετών.',
+          en: 'We do not allow registration or use of the app by users under 18 years of age.'
+        },
+        termination: {
+          el: 'Εάν ανακαλύψουμε ότι ένας χρήστης είναι κάτω των 18 ετών, θα τερματίσουμε άμεσα τον λογαριασμό του και θα διαγράψουμε όλα τα δεδομένα του.',
+          en: 'If we discover that a user is under 18 years of age, we will immediately terminate their account and delete all their data.'
+        },
+        parentContact: {
+          el: 'Εάν είστε γονέας ή κηδεμόνας και πιστεύετε ότι το παιδί σας έχει δημιουργήσει λογαριασμό, επικοινωνήστε μαζί μας στο: devtaskhub@gmail.com',
+          en: 'If you are a parent or guardian and believe your child has created an account, contact us at: devtaskhub@gmail.com'
+        }
+      },
+      specialCategories: {
+        title: {
+          el: '21. Ειδικές Κατηγορίες Δεδομένων (Άρθρο 9 GDPR)',
+          en: '21. Special Categories of Data (Article 9 GDPR)'
+        },
+        content: {
+          el: 'Δεν συλλέγουμε ή επεξεργαζόμαστε "ειδικές κατηγορίες" προσωπικών δεδομένων όπως ορίζονται στο Άρθρο 9 GDPR.',
+          en: 'We do not collect or process "special categories" of personal data as defined in Article 9 GDPR.'
+        }
+      },
+      automatedDecision: {
+        title: {
+          el: '22. Αυτοματοποιημένη Λήψη Αποφάσεων (Άρθρο 22 GDPR)',
+          en: '22. Automated Decision-Making (Article 22 GDPR)'
+        },
+        content: {
+          el: 'Δεν χρησιμοποιούμε αυτοματοποιημένη λήψη αποφάσεων ή profiling που παράγει νομικά αποτελέσματα ή επηρεάζει σημαντικά τα δικαιώματα ή τις ελευθερίες σας. Το σύστημα πόντων και rankings είναι καθαρά υπολογιστικό.',
+          en: 'We do not use automated decision-making or profiling that produces legal effects or significantly affects your rights or freedoms. The points system and rankings are purely computational.'
+        }
+      },
+      privacyByDesign: {
+        title: {
+          el: '23. Προστασία Δεδομένων από Σχεδιασμό (Άρθρο 25 GDPR)',
+          en: '23. Data Protection by Design (Article 25 GDPR)'
+        },
+        intro: {
+          el: 'Εφαρμόζουμε "Privacy by Design" και "Privacy by Default":',
+          en: 'We apply "Privacy by Design" and "Privacy by Default":'
+        },
+        measures: {
+          el: [
+            'Συλλέγουμε μόνο τα απαραίτητα δεδομένα',
+            'Κρυπτογράφηση ενεργή από προεπιλογή',
+            'Προστατευτικές ρυθμίσεις από προεπιλογή'
+          ],
+          en: [
+            'We collect only necessary data',
+            'Encryption active by default',
+            'Protective settings by default'
+          ]
+        }
+      },
+      processingRecords: {
+        title: {
+          el: '24. Καταγραφές Επεξεργασίας (Άρθρο 30 GDPR)',
+          en: '24. Processing Records (Article 30 GDPR)'
+        },
+        content: {
+          el: 'Διατηρούμε καταγραφές όλων των δραστηριοτήτων επεξεργασίας προσωπικών δεδομένων, διαθέσιμες για έλεγχο από την ΑΠΔΠΧ.',
+          en: 'We maintain records of all personal data processing activities, available for inspection by the HDPA.'
+        }
+      },
+      jurisdiction: {
+        title: {
+          el: '25. Δικαιοδοσία & Εφαρμοστέο Δίκαιο',
+          en: '25. Jurisdiction & Applicable Law'
+        },
+        applicableTitle: {
+          el: '25.1 Εφαρμοστέο Δίκαιο',
+          en: '25.1 Applicable Law'
+        },
+        applicableIntro: {
+          el: 'Αυτοί οι Όροι και Προϋποθέσεις Χρήσης διέπονται από:',
+          en: 'These Terms and Conditions of Use are governed by:'
+        },
+        applicableLaws: {
+          el: [
+            'Ελληνικό Δίκαιο',
+            'GDPR: Κανονισμός (ΕΕ) 2016/679',
+            'Ελληνικός Νόμος 4624/2019'
+          ],
+          en: [
+            'Greek Law',
+            'GDPR: Regulation (EU) 2016/679',
+            'Greek Law 4624/2019'
+          ]
+        },
+        jurisdictionTitle: {
+          el: '25.2 Δικαιοδοσία',
+          en: '25.2 Jurisdiction'
+        },
+        jurisdictionContent: {
+          el: 'Οποιαδήποτε διαφωνία που προκύπτει από ή σχετίζεται με αυτούς τους όρους θα επιλυθεί από τα αρμόδια δικαστήρια της Ελλάδας.',
+          en: 'Any dispute arising from or related to these terms will be resolved by the competent courts of Greece.'
+        },
+        adrTitle: {
+          el: '25.3 Εναλλακτική Επίλυση Διαφορών (ADR)',
+          en: '25.3 Alternative Dispute Resolution (ADR)'
+        },
+        adrContent: {
+          el: 'Για καταναλωτικές διαφορές, έχετε το δικαίωμα να καταφύγετε σε εναλλακτικές διαδικασίες επίλυσης διαφορών (ADR) σύμφωνα με το ελληνικό δίκαιο.',
+          en: 'For consumer disputes, you have the right to resort to alternative dispute resolution (ADR) procedures in accordance with Greek law.'
+        },
+        authorityTitle: {
+          el: '25.4 Εποπτική Αρχή',
+          en: '25.4 Supervisory Authority'
+        },
+        authorityContent: {
+          el: 'Η Ελληνική Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα (ΑΠΔΠΧ) είναι η αρμόδια εποπτική αρχή για θέματα προστασίας δεδομένων.',
+          en: 'The Hellenic Data Protection Authority (HDPA) is the competent supervisory authority for data protection matters.'
+        }
+      },
+      severability: {
+        title: {
+          el: '26. Αναποτελεσματικότητα Ρήτρων',
+          en: '26. Severability'
+        },
+        content: {
+          el: 'Εάν οποιαδήποτε ρήτρα αυτών των όρων κριθεί άκυρη, παράνομη ή μη εφαρμόσιμη, οι υπόλοιπες ρήτρες παραμένουν σε ισχύ.',
+          en: 'If any clause of these terms is found to be invalid, illegal, or unenforceable, the remaining clauses remain in effect.'
+        }
+      },
+      disclaimer: {
+        title: {
+          el: '27. Αποποίηση Εγγυήσεων',
+          en: '27. Disclaimer of Warranties'
+        },
+        intro: {
+          el: 'Δεν παρέχουμε καμία εγγύηση, ρητή ή σιωπηρή, σχετικά με:',
+          en: 'We provide no warranty, express or implied, regarding:'
+        },
+        warranties: {
+          el: [
+            'Τη διαθεσιμότητα ή την αδιάλειπτη λειτουργία της εφαρμογής',
+            'Την ακρίβεια ή την πληρότητα των πληροφοριών',
+            'Την απουσία σφαλμάτων ή bugs',
+            'Τη συμβατότητα με συγκεκριμένες συσκευές ή λειτουργικά συστήματα'
+          ],
+          en: [
+            'The availability or uninterrupted operation of the app',
+            'The accuracy or completeness of information',
+            'The absence of errors or bugs',
+            'Compatibility with specific devices or operating systems'
+          ]
+        }
+      },
+      contact: {
+        title: {
+          el: '28. Επικοινωνία',
+          en: '28. Contact'
+        },
+        intro: {
+          el: 'Για οποιαδήποτε ερώτηση, αίτημα ή ανησυχία σχετικά με αυτούς τους Όρους και Προϋποθέσεις Χρήσης, επικοινωνήστε μαζί μας:',
+          en: 'For any questions, requests, or concerns regarding these Terms and Conditions of Use, please contact us:'
+        },
+        email: {
+          el: 'Email:',
+          en: 'Email:'
+        },
+        emailValue: {
+          el: 'devtaskhub@gmail.com',
+          en: 'devtaskhub@gmail.com'
+        },
+        support: {
+          el: 'Υποστήριξη:',
+          en: 'Support:'
+        },
+        response: {
+          el: 'Θα απαντήσουμε στο αίτημά σας εντός 30 ημερών (ή 90 ημερών σε περίπλοκες περιπτώσεις, με προηγούμενη ειδοποίηση).',
+          en: 'We will respond to your request within 30 days (or 90 days in complex cases, with prior notice).'
+        }
+      },
+      entireAgreement: {
+        title: {
+          el: '29. Ολική Συμφωνία',
+          en: '29. Entire Agreement'
+        },
+        content: {
+          el: 'Αυτοί οι Όροι και Προϋποθέσεις Χρήσης, μαζί με την Πολιτική Απορρήτου μας, αποτελούν την ολική συμφωνία μεταξύ εσάς και του T-Parking σχετικά με τη χρήση της εφαρμογής.',
+          en: 'These Terms and Conditions of Use, together with our Privacy Policy, constitute the entire agreement between you and T-Parking regarding the use of the application.'
+        }
+      },
+      lastUpdate: {
+        el: 'Τελευταία Ενημέρωση: 7 Δεκεμβρίου 2025',
+        en: 'Last Updated: December 7, 2025'
+      },
+      copyright: {
+        el: '© 2025 T-Parking. Όλα τα δικαιώματα διατηρούνται.',
+        en: '© 2025 T-Parking. All rights reserved.'
+      }
     }
   },
   en: {
@@ -3330,6 +4412,1088 @@ export const translations = {
           en: '© 2025 T-Parking. All rights reserved.'
         }
       }
+    },
+    termsConditions: {
+      title: {
+        el: 'Όροι και Προϋποθέσεις Χρήσης - T-Parking',
+        en: 'Terms and Conditions of Use - T-Parking'
+      },
+      lastUpdated: {
+        el: 'Τελευταία Ενημέρωση: 7 Δεκεμβρίου 2025',
+        en: 'Last Updated: December 7, 2025'
+      },
+      introduction: {
+          el: 'Καλώς ήρθατε στο T-Parking. Οι παρακάτω Όροι και Προϋποθέσεις Χρήσης διέπουν τη χρήση της εφαρμογής T-Parking και των υπηρεσιών μας. Παρακαλούμε διαβάστε προσεκτικά αυτούς τους όρους πριν από τη χρήση της εφαρμογής. Με τη χρήση της εφαρμογής, αποδέχεστε αυτούς τους όρους και συναινείτε ρητά στην επεξεργασία των προσωπικών σας δεδομένων σύμφωνα με τον Κανονισμό (ΕΕ) 2016/679 για την Προστασία των Προσωπικών Δεδομένων (GDPR). Αν δεν συμφωνείτε με οποιοδήποτε μέρος αυτών των όρων, παρακαλούμε μην χρησιμοποιείτε την εφαρμογή.',
+          en: 'Welcome to T-Parking. The following Terms and Conditions of Use govern the use of the T-Parking application and our services. Please read these terms carefully before using the application. By using the application, you accept these terms and explicitly consent to the processing of your personal data in accordance with Regulation (EU) 2016/679 on the Protection of Personal Data (GDPR). If you do not agree with any part of these terms, please do not use the application.'
+        },
+        acceptance: {
+          title: {
+            el: '2. Αποδοχή Όρων & Συναίνεση',
+            en: '2. Acceptance of Terms & Consent'
+          },
+          acceptanceTitle: {
+            el: '2.1 Αποδοχή Όρων',
+            en: '2.1 Acceptance of Terms'
+          },
+          acceptanceContent: {
+            el: 'Με την εγγραφή, είσοδο ή χρήση της εφαρμογής T-Parking, αποδέχεστε αυτούς τους Όρους και Προϋποθέσεις Χρήσης και συμφωνείτε να τους τηρείτε.',
+            en: 'By registering, logging in, or using the T-Parking application, you accept these Terms and Conditions of Use and agree to abide by them.'
+          },
+          consentTitle: {
+            el: '2.2 Συναίνεση Επεξεργασίας Δεδομένων',
+            en: '2.2 Consent for Data Processing'
+          },
+          consentContent: {
+            el: 'Με τη χρήση της εφαρμογής, συναινείτε ρητά στην επεξεργασία των προσωπικών σας δεδομένων σύμφωνα με την Πολιτική Απορρήτου μας (δείτε /privacy-policy).',
+            en: 'By using the application, you explicitly consent to the processing of your personal data in accordance with our Privacy Policy (see /privacy-policy).'
+          },
+          consentCharacteristics: {
+            el: [
+              'Ελεύθερη: Δεν υπάρχει πίεση ή υποχρέωση',
+              'Συγκεκριμένη: Για συγκεκριμένους σκοπούς',
+              'Ενημερωμένη: Έχετε πρόσβαση σε όλες τις πληροφορίες',
+              'Σαφής: Δίνεται μέσω explicit checkbox κατά την εγγραφή'
+            ],
+            en: [
+              'Free: No pressure or obligation',
+              'Specific: For specific purposes',
+              'Informed: You have access to all information',
+              'Unambiguous: Given through explicit checkbox during registration'
+            ]
+          },
+          withdrawTitle: {
+            el: '2.3 Ανάκληση Συναίνεσης',
+            en: '2.3 Withdrawal of Consent'
+          },
+          withdrawContent: {
+            el: 'Μπορείτε να ανακαλέσετε τη συναίνεσή σας οποιαδήποτε στιγμή, χωρίς να επηρεάζεται η νομιμότητα της προηγούμενης επεξεργασίας.',
+            en: 'You can withdraw your consent at any time, without affecting the lawfulness of prior processing.'
+          }
+        },
+        serviceDescription: {
+          title: {
+            el: '3. Περιγραφή Υπηρεσίας',
+            en: '3. Service Description'
+          },
+          whatIsTitle: {
+            el: '3.1 Τι είναι το T-Parking',
+            en: '3.1 What is T-Parking'
+          },
+          whatIsContent: {
+            el: 'Το T-Parking είναι μια mobile εφαρμογή που επιτρέπει στους χρήστες να:',
+            en: 'T-Parking is a mobile application that allows users to:'
+          },
+          features: {
+            el: [
+              'Βρίσκουν διαθέσιμες θέσεις στάθμευσης σε πραγματικό χρόνο',
+              'Κρατούν θέσεις στάθμευσης (reservations)',
+              'Μοιράζονται θέσεις στάθμευσης όταν ξεπαρκάρουν',
+              'Πλοηγούνται προς θέσεις στάθμευσης (μέσω Google Maps)',
+              'Κερδίζουν πόντους και επιβραβεύσεις',
+              'Λαμβάνουν ειδοποιήσεις για κοντινές διαθέσιμες θέσεις'
+            ],
+            en: [
+              'Find available parking spots in real-time',
+              'Reserve parking spots (reservations)',
+              'Share parking spots when they leave',
+              'Navigate to parking spots (via Google Maps)',
+              'Earn points and rewards',
+              'Receive notifications for nearby available spots'
+            ]
+          },
+          functionalityTitle: {
+            el: '3.2 Λειτουργικότητα',
+            en: '3.2 Functionality'
+          },
+          functionalityContent: {
+            el: 'Η εφαρμογή λειτουργεί σε πραγματικό χρόνο (real-time) χωρίς καθυστερήσεις και χρησιμοποιεί δεδομένα τοποθεσίας (GPS) για την παροχή των υπηρεσιών της. Όλα τα features είναι 100% δωρεάν και διαθέσιμα σε όλους τους χρήστες.',
+            en: 'The app operates in real-time without delays and uses location data (GPS) to provide its services. All features are 100% free and available to all users.'
+          },
+          characteristicsTitle: {
+            el: '3.3 Χαρακτηριστικά',
+            en: '3.3 Features'
+          },
+          characteristics: {
+            el: [
+              'Σύστημα Πόντων: Κερδίζετε πόντους κάθε φορά που μοιράζεστε μια θέση στάθμευσης',
+              'Κρατήσεις: 1 δωρεάν κράτηση ανά 20 επιβεβαιωμένα ξεπαρκαρίσματα',
+              'Ειδοποιήσεις: Push notifications για κοντινές διαθέσιμες θέσεις',
+              'Ιστορικό & Στατιστικά: Προβολή ιστορικού, πόντων, rankings, εξοικονόμησης χρόνου/χρημάτων',
+              'Πλοήγηση: Ενσωματωμένη πλοήγηση μέσω Google Maps'
+            ],
+            en: [
+              'Points System: You earn points every time you share a parking spot',
+              'Reservations: 1 free reservation per 20 confirmed departures',
+              'Notifications: Push notifications for nearby available spots',
+              'History & Statistics: View history, points, rankings, time/money savings',
+              'Navigation: Integrated navigation via Google Maps'
+            ]
+          }
+        },
+        registration: {
+          title: {
+            el: '4. Εγγραφή & Λογαριασμός',
+            en: '4. Registration & Account'
+          },
+          requirementsTitle: {
+            el: '4.1 Απαιτήσεις Εγγραφής',
+            en: '4.1 Registration Requirements'
+          },
+          requirementsIntro: {
+            el: 'Για να χρησιμοποιήσετε το T-Parking, πρέπει να:',
+            en: 'To use T-Parking, you must:'
+          },
+          requirements: {
+            el: [
+              'Έχετε συμπληρώσει το 18ο έτος της ηλικίας σας',
+              'Δημιουργήσετε λογαριασμό με ακριβή και ενημερωμένα στοιχεία',
+              'Παράσχετε έγκυρη διεύθυνση email',
+              'Δημιουργήσετε ασφαλές password (τουλάχιστον 6 χαρακτήρες)'
+            ],
+            en: [
+              'Be at least 18 years of age',
+              'Create an account with accurate and up-to-date information',
+              'Provide a valid email address',
+              'Create a secure password (at least 6 characters)'
+            ]
+          },
+          responsibilityTitle: {
+            el: '4.2 Ευθύνη Χρήστη',
+            en: '4.2 User Responsibility'
+          },
+          responsibilityContent: {
+            el: 'Είστε υπεύθυνος για:',
+            en: 'You are responsible for:'
+          },
+          responsibility: {
+            el: [
+              'Τη διασφάλιση της ασφάλειας του λογαριασμού σας, συμπεριλαμβανομένου του password σας',
+              'Όλη τη δραστηριότητα που γίνεται μέσω του λογαριασμού σας',
+              'Τη διατήρηση ενημερωμένων και ακριβών πληροφοριών στο προφίλ σας'
+            ],
+            en: [
+              'Ensuring the security of your account, including your password',
+              'All activity that occurs through your account',
+              'Maintaining up-to-date and accurate information in your profile'
+            ]
+          },
+          securityTitle: {
+            el: '4.3 Ασφάλεια Λογαριασμού',
+            en: '4.3 Account Security'
+          },
+          securityContent: {
+            el: 'Εάν υποψιάζεστε ότι ο λογαριασμός σας έχει παραβιαστεί, ειδοποιήστε μας άμεσα στο: devtaskhub@gmail.com',
+            en: 'If you suspect that your account has been compromised, notify us immediately at: devtaskhub@gmail.com'
+          },
+          securityDisclaimer: {
+            el: 'Εμείς δεν φέρουμε ευθύνη για ζημίες που προκύπτουν από μη εξουσιοδοτημένη χρήση του λογαριασμού σας.',
+            en: 'We are not responsible for damages arising from unauthorized use of your account.'
+          }
+        },
+        useOfService: {
+          title: {
+            el: '5. Χρήση Υπηρεσίας',
+            en: '5. Use of Service'
+          },
+          lawfulUseTitle: {
+            el: '5.1 Νόμιμη Χρήση',
+            en: '5.1 Lawful Use'
+          },
+          lawfulUseContent: {
+            el: 'Η χρήση της εφαρμογής επιτρέπεται μόνο για νόμιμους σκοπούς.',
+            en: 'Use of the application is permitted only for lawful purposes.'
+          },
+          prohibitedTitle: {
+            el: '5.2 Απαγορευμένες Δραστηριότητες',
+            en: '5.2 Prohibited Activities'
+          },
+          prohibitedIntro: {
+            el: 'Απαγορεύεται αυστηρά:',
+            en: 'The following are strictly prohibited:'
+          },
+          falseInformationTitle: {
+            el: 'Παροχή Ψευδών ή Παραπλανητικών Πληροφοριών:',
+            en: 'Providing False or Misleading Information:'
+          },
+          falseInformation: {
+            el: [
+              'Δημιουργία ψευδών θέσεων στάθμευσης',
+              'Παροχή παραπλανητικών πληροφοριών σχετικά με τη διαθεσιμότητα θέσεων',
+              'Χρήση ψευδών στοιχείων κατά την εγγραφή'
+            ],
+            en: [
+              'Creating fake parking spots',
+              'Providing misleading information about spot availability',
+              'Using false information during registration'
+            ]
+          },
+          abuseTitle: {
+            el: 'Κατάχρηση Υπηρεσίας:',
+            en: 'Service Abuse:'
+          },
+          abuse: {
+            el: [
+              'Χρήση της εφαρμογής για παράνομες δραστηριότητες',
+              'Κατάχρηση του συστήματος πόντων ή κρατήσεων',
+              'Προσπάθεια χειραγώγησης των rankings ή στατιστικών'
+            ],
+            en: [
+              'Using the app for illegal activities',
+              'Abusing the points system or reservations',
+              'Attempting to manipulate rankings or statistics'
+            ]
+          },
+          thirdPartyRightsTitle: {
+            el: 'Παραβίαση Δικαιωμάτων Τρίτων:',
+            en: 'Violation of Third-Party Rights:'
+          },
+          thirdPartyRights: {
+            el: [
+              'Παραβίαση πνευματικών δικαιωμάτων',
+              'Παραβίαση δικαιωμάτων ιδιωτικής ζωής',
+              'Χρήση της εφαρμογής για παρενοχλήσεις ή εκφοβισμούς'
+            ],
+            en: [
+              'Violation of intellectual property rights',
+              'Violation of privacy rights',
+              'Using the app for harassment or intimidation'
+            ]
+          },
+          technicalInterferenceTitle: {
+            el: 'Τεχνικές Επεμβάσεις:',
+            en: 'Technical Interference:'
+          },
+          technicalInterference: {
+            el: [
+              'Hacking, reverse engineering, ή προσπάθεια να παρακάμψετε τα security measures',
+              'Προσπάθεια πρόσβασης σε δεδομένα άλλων χρηστών',
+              'Χρήση bots, scripts, ή automated tools για χειραγώγηση της εφαρμογής'
+            ],
+            en: [
+              'Hacking, reverse engineering, or attempting to bypass security measures',
+              'Attempting to access other users\' data',
+              'Using bots, scripts, or automated tools to manipulate the app'
+            ]
+          },
+          otherProhibitedTitle: {
+            el: 'Άλλες Απαγορευμένες Δραστηριότητες:',
+            en: 'Other Prohibited Activities:'
+          },
+          otherProhibited: {
+            el: [
+              'Χρήση της εφαρμογής με τρόπο που μπορεί να βλάψει την εφαρμογή, τους χρήστες της, ή τρίτους',
+              'Καταστροφή, διαταραχή ή παρεμπόδιση της λειτουργίας της εφαρμογής',
+              'Πωλήσεις, μεταβίβαση, ή ενοικίαση του λογαριασμού σας σε τρίτους'
+            ],
+            en: [
+              'Using the app in a way that may harm the app, its users, or third parties',
+              'Destroying, disrupting, or interfering with the app\'s functionality',
+              'Selling, transferring, or renting your account to third parties'
+            ]
+          },
+          consequencesTitle: {
+            el: '5.3 Συνεπείς',
+            en: '5.3 Consequences'
+          },
+          consequences: {
+            el: [
+              'Τερματισμός ή αναστολή του λογαριασμού σας',
+              'Νομικές ενέργειες (εάν χρειάζεται)',
+              'Αποζημιώσεις για ζημίες που προκύπτουν'
+            ],
+            en: [
+              'Termination or suspension of your account',
+              'Legal action (if necessary)',
+              'Compensation for damages incurred'
+            ]
+          }
+        },
+        reservations: {
+          title: {
+            el: '6. Κρατήσεις & Πόντοι',
+            en: '6. Reservations & Points'
+          },
+          reservationsTitle: {
+            el: '6.1 Σύστημα Κρατήσεων',
+            en: '6.1 Reservation System'
+          },
+          reservations: {
+            el: [
+              'Όλοι οι χρήστες μπορούν να κάνουν κράτηση θέσης εάν έχουν διαθέσιμη δωρεάν κράτηση',
+              '1 δωρεάν κράτηση προμηθεύεται για κάθε 20 επιβεβαιωμένα ξεπαρκαρίσματα',
+              'Κάθε κράτηση έχει διάρκεια έως 2 ώρες',
+              'Μετά τη λήξη, η θέση γίνεται διαθέσιμη για άλλους χρήστες',
+              'Όλα τα features είναι 100% δωρεάν - δεν υπάρχουν premium ή platinum subscriptions με πληρωμή'
+            ],
+            en: [
+              'All users can reserve a spot if they have an available free reservation',
+              '1 free reservation is provided for every 20 confirmed departures',
+              'Each reservation has a duration of up to 2 hours',
+              'After expiration, the spot becomes available for other users',
+              'All features are 100% free - there are no premium or platinum paid subscriptions'
+            ]
+          },
+          pointsTitle: {
+            el: '6.2 Σύστημα Πόντων',
+            en: '6.2 Points System'
+          },
+          pointsIntro: {
+            el: '+1 πόντος για κάθε θέση που μοιράζεστε (Unpark). Οι πόντοι χρησιμοποιούνται για:',
+            en: '+1 point for each spot you share (Unpark). Points are used for:'
+          },
+          points: {
+            el: [
+              'Υπολογισμό rankings',
+              'Στατιστικά',
+              'Επιβραβεύσεις (δωρεάν κρατήσεις)'
+            ],
+            en: [
+              'Ranking calculations',
+              'Statistics',
+              'Rewards (free reservations)'
+            ]
+          },
+          rewardsTitle: {
+            el: '6.3 Επιβραβεύσεις',
+            en: '6.3 Rewards'
+          },
+          rewards: {
+            el: [
+              '1 δωρεάν κράτηση = 20 επιβεβαιωμένα ξεπαρκαρίσματα',
+              'Οι επιβραβεύσεις είναι ατομικές και δεν μπορούν να μεταφερθούν'
+            ],
+            en: [
+              '1 free reservation = 20 confirmed departures',
+              'Rewards are individual and cannot be transferred'
+            ]
+          },
+          availabilityTitle: {
+            el: '6.4 Διαθεσιμότητα Κρατήσεων',
+            en: '6.4 Reservation Availability'
+          },
+          availability: {
+            el: [
+              'Οι κρατήσεις είναι subject to availability',
+              'Δεν εγγυόμαστε ότι μια θέση θα είναι διαθέσιμη όταν φτάσετε',
+              'Δεν φέρουμε ευθύνη για αλλαγές στην κατάσταση μιας θέσης (π.χ. εάν κάποιος άλλος έχει πάρει τη θέση)'
+            ],
+            en: [
+              'Reservations are subject to availability',
+              'We do not guarantee that a spot will be available when you arrive',
+              'We are not responsible for changes in the status of a spot (e.g., if someone else has taken the spot)'
+            ]
+          }
+        },
+        personalData: {
+          title: {
+            el: '7. Προσωπικά Δεδομένα (Σύνοψη - Για πλήρη λεπτομέρειες δείτε Privacy Policy)',
+            en: '7. Personal Data (Summary - For full details see Privacy Policy)'
+          },
+          collectionTitle: {
+            el: '7.1 Συλλογή Δεδομένων',
+            en: '7.1 Data Collection'
+          },
+          collectionContent: {
+            el: 'Συλλέγουμε τα ακόλουθα προσωπικά δεδομένα (για λεπτομέρειες, δείτε την Πολιτική Απορρήτου):',
+            en: 'We collect the following personal data (for details, see the Privacy Policy):'
+          },
+          collection: {
+            el: [
+              'Ονοματεπώνυμο, Email, Password',
+              'Δεδομένα τοποθεσίας (GPS) σε πραγματικό χρόνο',
+              'Δεδομένα χρήσης (ιστορικό, κρατήσεις, πόντοι)',
+              'Δεδομένα συσκευής',
+              'Cookies και analytics data (με συναίνεση)'
+            ],
+            en: [
+              'Full name, Email, Password',
+              'Location data (GPS) in real-time',
+              'Usage data (history, reservations, points)',
+              'Device data',
+              'Cookies and analytics data (with consent)'
+            ]
+          },
+          legalBasisTitle: {
+            el: '7.2 Νομική Βάση (GDPR Article 6)',
+            en: '7.2 Legal Basis (GDPR Article 6)'
+          },
+          legalBasis: {
+            el: [
+              'Εκτέλεση Συμβολαίου: Παροχή βασικών υπηρεσιών',
+              'Συναίνεση: Marketing, analytics (προαιρετικά)',
+              'Νόμιμο Συμφέρον: Βελτίωση εφαρμογής, ασφάλεια',
+              'Νομική Υποχρέωση: Συμμόρφωση με νόμους'
+            ],
+            en: [
+              'Contract Performance: Providing basic services',
+              'Consent: Marketing, analytics (optional)',
+              'Legitimate Interest: App improvement, security',
+              'Legal Obligation: Compliance with laws'
+            ]
+          },
+          purposeTitle: {
+            el: '7.3 Σκοπός Επεξεργασίας',
+            en: '7.3 Purpose of Processing'
+          },
+          purpose: {
+            el: [
+              'Παροχή και βελτίωση υπηρεσιών',
+              'Επεξεργασία κρατήσεων και πόντων',
+              'Αποστολή ειδοποιήσεων',
+              'Ανάλυση και βελτίωση',
+              'Ασφάλεια και πρόληψη απάτης'
+            ],
+            en: [
+              'Service provision and improvement',
+              'Processing reservations and points',
+              'Sending notifications',
+              'Analysis and improvement',
+              'Security and fraud prevention'
+            ]
+          },
+          policyTitle: {
+            el: '7.4 Πολιτική Απορρήτου',
+            en: '7.4 Privacy Policy'
+          },
+          policyContent: {
+            el: 'Για πλήρεις λεπτομέρειες σχετικά με την επεξεργασία προσωπικών δεδομένων, δείτε την Πολιτική Απορρήτου μας στο /privacy-policy.',
+            en: 'For full details regarding the processing of personal data, see our Privacy Policy at /privacy-policy.'
+          }
+        },
+        userRights: {
+          title: {
+            el: '8. Δικαιώματα Χρήστη (GDPR Articles 15-22)',
+            en: '8. User Rights (GDPR Articles 15-22)'
+          },
+          intro: {
+            el: 'Έχετε τα ακόλουθα δικαιώματα σχετικά με τα προσωπικά σας δεδομένα:',
+            en: 'You have the following rights regarding your personal data:'
+          },
+          rights: {
+            el: [
+              'Δικαίωμα Πρόσβασης (Right of Access)',
+              'Δικαίωμα Διόρθωσης (Right to Rectification)',
+              'Δικαίωμα Διαγραφής / "Δικαίωμα στη Λήθη" (Right to Erasure)',
+              'Δικαίωμα Περιορισμού Επεξεργασίας (Right to Restriction)',
+              'Δικαίωμα Φορητότητας Δεδομένων (Right to Data Portability)',
+              'Δικαίωμα Εναντίωσης (Right to Object)',
+              'Δικαίωμα Ανάκλησης Συναίνεσης (Right to Withdraw Consent)'
+            ],
+            en: [
+              'Right of Access',
+              'Right to Rectification',
+              'Right to Erasure / "Right to be Forgotten"',
+              'Right to Restriction of Processing',
+              'Right to Data Portability',
+              'Right to Object',
+              'Right to Withdraw Consent'
+            ]
+          },
+          contact: {
+            el: 'Για να ασκήσετε οποιοδήποτε από αυτά τα δικαιώματα, επικοινωνήστε μαζί μας στο: devtaskhub@gmail.com',
+            en: 'To exercise any of these rights, contact us at: devtaskhub@gmail.com'
+          }
+        },
+        dataRetention: {
+          title: {
+            el: '9. Διατήρηση Δεδομένων',
+            en: '9. Data Retention'
+          },
+          policyTitle: {
+            el: '9.1 Πολιτική Διατήρησης',
+            en: '9.1 Retention Policy'
+          },
+          policy: {
+            el: [
+              'Δεδομένα Λογαριασμού: Διατηρούνται για όσο ο λογαριασμός είναι ενεργός',
+              'Ιστορικό Κοινοποίησης/Κρατήσεων: 6 μήνες',
+              'Δεδομένα Τοποθεσίας: Διαγράφονται άμεσα μετά τη χρήση (εκτός ενεργών κρατήσεων)',
+              'Analytics Data: 24 μήνες'
+            ],
+            en: [
+              'Account Data: Retained for as long as the account is active',
+              'Sharing/Reservation History: 6 months',
+              'Location Data: Deleted immediately after use (except active reservations)',
+              'Analytics Data: 24 months'
+            ]
+          },
+          deletionTitle: {
+            el: '9.2 Διαγραφή μετά τη Διαγραφή Λογαριασμού',
+            en: '9.2 Deletion After Account Deletion'
+          },
+          deletion: {
+            el: 'Μετά τη διαγραφή του λογαριασμού, όλα τα προσωπικά δεδομένα διαγράφονται εντός 30 ημερών (εκτός εάν απαιτείται διατήρηση από το νόμο).',
+            en: 'After deletion of the account, all personal data is deleted within 30 days (unless retention is required by law).'
+          }
+        },
+        thirdParties: {
+          title: {
+            el: '10. Κοινοποίηση σε Τρίτους',
+            en: '10. Disclosure to Third Parties'
+          },
+          intro: {
+            el: 'Κοινοποιούμε τα προσωπικά σας δεδομένα στους ακόλουθους τρίτους (όλοι GDPR-compliant με DPAs):',
+            en: 'We disclose your personal data to the following third parties (all GDPR-compliant with DPAs):'
+          },
+          parties: {
+            el: [
+              'Supabase: Database & Authentication',
+              'Google Maps API: Πλοήγηση και χάρτες',
+              'Cloud Hosting Providers: Hosting & backup',
+              'Analytics Services: Ανάλυση χρήσης (με συναίνεση)'
+            ],
+            en: [
+              'Supabase: Database & Authentication',
+              'Google Maps API: Navigation and maps',
+              'Cloud Hosting Providers: Hosting & backup',
+              'Analytics Services: Usage analysis (with consent)'
+            ]
+          },
+          details: {
+            el: 'Για λεπτομέρειες, δείτε την Πολιτική Απορρήτου μας.',
+            en: 'For details, see our Privacy Policy.'
+          }
+        },
+        securityMeasures: {
+          title: {
+            el: '11. Μέτρα Ασφάλειας (GDPR Article 32)',
+            en: '11. Security Measures (GDPR Article 32)'
+          },
+          intro: {
+            el: 'Εφαρμόζουμε κατάλληλα τεχνικά και οργανωτικά μέτρα:',
+            en: 'We implement appropriate technical and organizational measures:'
+          },
+          measures: {
+            el: [
+              'Κρυπτογράφηση (TLS/SSL)',
+              'Row-Level Security (RLS)',
+              'Authentication & Authorization',
+              'Regular Security Audits',
+              'Access Controls',
+              'Backup & Recovery',
+              'Incident Response Plan'
+            ],
+            en: [
+              'Encryption (TLS/SSL)',
+              'Row-Level Security (RLS)',
+              'Authentication & Authorization',
+              'Regular Security Audits',
+              'Access Controls',
+              'Backup & Recovery',
+              'Incident Response Plan'
+            ]
+          },
+          details: {
+            el: 'Για λεπτομέρειες, δείτε την Πολιτική Απορρήτου μας.',
+            en: 'For details, see our Privacy Policy.'
+          }
+        },
+        cookies: {
+          title: {
+            el: '12. Cookies & Analytics',
+            en: '12. Cookies & Analytics'
+          },
+          intro: {
+            el: 'Η εφαρμογή χρησιμοποιεί cookies για:',
+            en: 'The app uses cookies for:'
+          },
+          uses: {
+            el: [
+              'Session management',
+              'Authentication',
+              'Αποθήκευση προτιμήσεων',
+              'Analytics (με συναίνεση)'
+            ],
+            en: [
+              'Session management',
+              'Authentication',
+              'Storing preferences',
+              'Analytics (with consent)'
+            ]
+          },
+          management: {
+            el: 'Μπορείτε να διαχειριστείτε τα cookies από τις ρυθμίσεις της εφαρμογής ή του browser σας.',
+            en: 'You can manage cookies from the app settings or your browser settings.'
+          }
+        },
+        notifications: {
+          title: {
+            el: '13. Ειδοποιήσεις & Τοποθεσία',
+            en: '13. Notifications & Location'
+          },
+          gpsTitle: {
+            el: '13.1 Χρήση GPS',
+            en: '13.1 Use of GPS'
+          },
+          gpsContent: {
+            el: 'Η εφαρμογή χρησιμοποιεί δεδομένα τοποθεσίας (GPS) σε πραγματικό χρόνο για:',
+            en: 'The app uses location data (GPS) in real-time for:'
+          },
+          gps: {
+            el: [
+              'Εντοπισμό διαθέσιμων θέσεων κοντά σας',
+              'Αποστολή ειδοποιήσεων',
+              'Πλοήγηση'
+            ],
+            en: [
+              'Identifying available spots near you',
+              'Sending notifications',
+              'Navigation'
+            ]
+          },
+          retentionTitle: {
+            el: '13.2 Διατήρηση Δεδομένων Τοποθεσίας',
+            en: '13.2 Location Data Retention'
+          },
+          retention: {
+            el: [
+              'Real-time data: Διαγράφεται άμεσα μετά τη χρήση',
+              'Active reservations: Διατηρείται μόνο για τη διάρκεια της κράτησης'
+            ],
+            en: [
+              'Real-time data: Deleted immediately after use',
+              'Active reservations: Retained only for the duration of the reservation'
+            ]
+          }
+        },
+        dataBreaches: {
+          title: {
+            el: '14. Παραβιάσεις Δεδομένων (GDPR Articles 33-34)',
+            en: '14. Data Breaches (GDPR Articles 33-34)'
+          },
+          intro: {
+            el: 'Σε περίπτωση παραβίασης δεδομένων:',
+            en: 'In case of a data breach:'
+          },
+          notification: {
+            el: [
+              'Ειδοποίηση Αρχής εντός 72 ωρών',
+              'Ειδοποίηση χρηστών χωρίς αδικαιολόγητη καθυστέρηση (εάν ο κίνδυνος είναι υψηλός)'
+            ],
+            en: [
+              'Notification to Authority within 72 hours',
+              'Notification to users without undue delay (if the risk is high)'
+            ]
+          }
+        },
+        dataTransfer: {
+          title: {
+            el: '15. Μεταφορά Δεδομένων εκτός ΕΕ',
+            en: '15. Data Transfer Outside the EU'
+          },
+          intro: {
+            el: 'Ορισμένα από τα προσωπικά σας δεδομένα μπορεί να μεταφέρονται και να επεξεργάζονται εκτός της Ευρωπαϊκής Ένωσης (π.χ. Supabase backup servers, Google services).',
+            en: 'Some of your personal data may be transferred and processed outside the European Union (e.g., Supabase backup servers, Google services).'
+          },
+          safeguards: {
+            el: [
+              'Adequacy Decisions: Οι χώρες έχουν επαρκές επίπεδο προστασίας (Adequacy Decision από την ΕΕ)',
+              'Standard Contractual Clauses (SCCs): Χρησιμοποιούμε Standard Contractual Clauses που έχουν εγκριθεί από την Ευρωπαϊκή Επιτροπή',
+              'Άλλα κατάλληλα μέτρα προστασίας: Σύμφωνα με το GDPR'
+            ],
+            en: [
+              'Adequacy Decisions: Countries have adequate protection level (Adequacy Decision from EU)',
+              'Standard Contractual Clauses (SCCs): We use Standard Contractual Clauses approved by the European Commission',
+              'Other appropriate protection measures: In accordance with GDPR'
+            ]
+          }
+        },
+        contactData: {
+          title: {
+            el: '16. Επικοινωνία & Data Controller',
+            en: '16. Contact & Data Controller'
+          },
+          controller: {
+            el: 'Data Controller:',
+            en: 'Data Controller:'
+          },
+          company: {
+            el: 'T-Parking',
+            en: 'T-Parking'
+          },
+          email: {
+            el: 'Email:',
+            en: 'Email:'
+          },
+          emailValue: {
+            el: 'devtaskhub@gmail.com',
+            en: 'devtaskhub@gmail.com'
+          },
+          support: {
+            el: 'Υποστήριξη:',
+            en: 'Support:'
+          },
+          authority: {
+            el: 'Αρχή Προστασίας Δεδομένων:',
+            en: 'Data Protection Authority:'
+          },
+          authorityValue: {
+            el: 'www.dpa.gr | dpa@dpa.gr',
+            en: 'www.dpa.gr | dpa@dpa.gr'
+          }
+        },
+        liability: {
+          title: {
+            el: '17. Περιορισμός Ευθύνης',
+            en: '17. Limitation of Liability'
+          },
+          asIsTitle: {
+            el: '17.1 "As Is" Provision',
+            en: '17.1 "As Is" Provision'
+          },
+          asIsContent: {
+            el: 'Το T-Parking παρέχεται "ως έχει" (as is). Δεν εγγυόμαστε:',
+            en: 'T-Parking is provided "as is." We do not guarantee:'
+          },
+          guarantees: {
+            el: [
+              'Ότι η εφαρμογή θα λειτουργεί αδιάλειπτα ή χωρίς σφάλματα',
+              'Ότι οι θέσεις στάθμευσης θα είναι διαθέσιμες όταν φτάσετε',
+              'Ότι οι ειδοποιήσεις θα παραδοθούν εγκαίρως ή πάντα',
+              'Ότι δεν θα υπάρξουν technical issues ή downtime'
+            ],
+            en: [
+              'That the app will operate continuously or without errors',
+              'That parking spots will be available when you arrive',
+              'That notifications will be delivered on time or always',
+              'That there will be no technical issues or downtime'
+            ]
+          },
+          limitationTitle: {
+            el: '17.2 Περιορισμός Ευθύνης',
+            en: '17.2 Limitation of Liability'
+          },
+          limitationContent: {
+            el: 'Δεν φέρουμε ευθύνη για:',
+            en: 'We are not responsible for:'
+          },
+          limitations: {
+            el: [
+              'Ζημίες, απώλειες, ή διαφορές που προκύπτουν από τη χρήση ή την αδυναμία χρήσης της εφαρμογής',
+              'Κρατήσεις που δεν είναι διαθέσιμες όταν φτάσετε',
+              'Ειδοποιήσεις που δεν παραδίδονται',
+              'Σφάλματα στην εφαρμογή',
+              'Απώλεια δεδομένων',
+              'Παραβιάσεις ασφάλειας από τρίτους',
+              'Προβλήματα με third-party services (Google Maps, Supabase, κ.ά.)',
+              'Αναμενόμενα ή μη αναμενόμενα downtime'
+            ],
+            en: [
+              'Damages, losses, or differences arising from use or inability to use the app',
+              'Reservations that are not available when you arrive',
+              'Notifications that are not delivered',
+              'Errors in the app',
+              'Data loss',
+              'Security breaches by third parties',
+              'Problems with third-party services (Google Maps, Supabase, etc.)',
+              'Expected or unexpected downtime'
+            ]
+          },
+          maximumTitle: {
+            el: '17.3 Μέγιστη Ευθύνη',
+            en: '17.3 Maximum Liability'
+          },
+          maximum: {
+            el: 'Σημείωση: Η εφαρμογή είναι 100% δωρεάν - δεν υπάρχουν premium, platinum ή άλλα subscriptions με πληρωμή. Όλα τα features είναι διαθέσιμα δωρεάν σε όλους τους χρήστες. Κατά συνέπεια, η μέγιστη ευθύνη μας είναι €0.',
+            en: 'Note: The app is 100% free - there are no premium, platinum, or other paid subscriptions. All features are available for free to all users. Consequently, our maximum liability is €0.'
+          }
+        },
+        modifications: {
+          title: {
+            el: '18. Τροποποιήσεις Όρων',
+            en: '18. Modifications of Terms'
+          },
+          rightTitle: {
+            el: '18.1 Δικαίωμα Τροποποίησης',
+            en: '18.1 Right to Modify'
+          },
+          rightContent: {
+            el: 'Μπορούμε να τροποποιήσουμε αυτούς τους Όρους και Προϋποθέσεις Χρήσης οποιαδήποτε στιγμή.',
+            en: 'We may modify these Terms and Conditions of Use at any time.'
+          },
+          notificationTitle: {
+            el: '18.2 Ειδοποίηση Αλλαγών',
+            en: '18.2 Change Notification'
+          },
+          notification: {
+            el: [
+              'Οι σημαντικές αλλαγές θα ανακοινωθούν μέσω της εφαρμογής ή email',
+              'Η ημερομηνία "Τελευταία Ενημέρωση" θα ενημερώνεται στην κορυφή αυτής της σελίδας'
+            ],
+            en: [
+              'Significant changes will be announced through the app or email',
+              'The "Last Updated" date will be updated at the top of this page'
+            ]
+          },
+          continuedUseTitle: {
+            el: '18.3 Συνεχής Χρήση',
+            en: '18.3 Continued Use'
+          },
+          continuedUse: {
+            el: [
+              'Η συνεχής χρήση της εφαρμογής μετά από τροποποιήσεις συνεπάγεται αποδοχή των νέων όρων',
+              'Σας συνιστούμε να ελέγχετε τακτικά αυτή τη σελίδα για ενημερώσεις'
+            ],
+            en: [
+              'Continued use of the app after modifications implies acceptance of the new terms',
+              'We recommend that you check this page regularly for updates'
+            ]
+          }
+        },
+        termination: {
+          title: {
+            el: '19. Τερματισμός',
+            en: '19. Termination'
+          },
+          byUsTitle: {
+            el: '19.1 Τερματισμός από Εμάς',
+            en: '19.1 Termination by Us'
+          },
+          byUsContent: {
+            el: 'Διατηρούμε το δικαίωμα να τερματίσουμε ή να αναστείλουμε την πρόσβασή σας στην εφαρμογή χωρίς προειδοποίηση σε περίπτωση:',
+            en: 'We reserve the right to terminate or suspend your access to the app without notice in case of:'
+          },
+          byUsReasons: {
+            el: [
+              'Παραβίασης αυτών των όρων',
+              'Παράνομης χρήσης',
+              'Κατάχρησης της υπηρεσίας',
+              'Αίτημα διαγραφής λογαριασμού από εσάς'
+            ],
+            en: [
+              'Violation of these terms',
+              'Illegal use',
+              'Service abuse',
+              'Account deletion request from you'
+            ]
+          },
+          byYouTitle: {
+            el: '19.2 Τερματισμός από Εσάς',
+            en: '19.2 Termination by You'
+          },
+          byYouContent: {
+            el: 'Μπορείτε να τερματίσετε τη χρήση της εφαρμογής οποιαδήποτε στιγμή διαγράφοντας τον λογαριασμό σας.',
+            en: 'You can terminate the use of the app at any time by deleting your account.'
+          },
+          afterTitle: {
+            el: '19.3 Μετά τον Τερματισμό',
+            en: '19.3 After Termination'
+          },
+          after: {
+            el: [
+              'Τα δεδομένα σας θα διαγραφούν σύμφωνα με την πολιτική διατήρησης (30 ημέρες)',
+              'Δεν θα έχετε πρόσβαση στις υπηρεσίες της εφαρμογής',
+              'Οι κρατήσεις και οι πόντοι σας δεν θα είναι διαθέσιμοι'
+            ],
+            en: [
+              'Your data will be deleted according to the retention policy (30 days)',
+              'You will not have access to the app services',
+              'Your reservations and points will not be available'
+            ]
+          }
+        },
+        childrenData: {
+          title: {
+            el: '20. Δεδομένα Παιδιών (Άρθρο 8 GDPR)',
+            en: '20. Children\'s Data (Article 8 GDPR)'
+          },
+          ageRestriction: {
+            el: 'Η εφαρμογή T-Parking προορίζεται για χρήστες άνω των 18 ετών.',
+            en: 'The T-Parking app is intended for users over 18 years of age.'
+          },
+          noChildren: {
+            el: 'Δεν επιτρέπουμε την εγγραφή ή χρήση της εφαρμογής από χρήστες κάτω των 18 ετών.',
+            en: 'We do not allow registration or use of the app by users under 18 years of age.'
+          },
+          termination: {
+            el: 'Εάν ανακαλύψουμε ότι ένας χρήστης είναι κάτω των 18 ετών, θα τερματίσουμε άμεσα τον λογαριασμό του και θα διαγράψουμε όλα τα δεδομένα του.',
+            en: 'If we discover that a user is under 18 years of age, we will immediately terminate their account and delete all their data.'
+          },
+          parentContact: {
+            el: 'Εάν είστε γονέας ή κηδεμόνας και πιστεύετε ότι το παιδί σας έχει δημιουργήσει λογαριασμό, επικοινωνήστε μαζί μας στο: devtaskhub@gmail.com',
+            en: 'If you are a parent or guardian and believe your child has created an account, contact us at: devtaskhub@gmail.com'
+          }
+        },
+        specialCategories: {
+          title: {
+            el: '21. Ειδικές Κατηγορίες Δεδομένων (Άρθρο 9 GDPR)',
+            en: '21. Special Categories of Data (Article 9 GDPR)'
+          },
+          content: {
+            el: 'Δεν συλλέγουμε ή επεξεργαζόμαστε "ειδικές κατηγορίες" προσωπικών δεδομένων όπως ορίζονται στο Άρθρο 9 GDPR.',
+            en: 'We do not collect or process "special categories" of personal data as defined in Article 9 GDPR.'
+          }
+        },
+        automatedDecision: {
+          title: {
+            el: '22. Αυτοματοποιημένη Λήψη Αποφάσεων (Άρθρο 22 GDPR)',
+            en: '22. Automated Decision-Making (Article 22 GDPR)'
+          },
+          content: {
+            el: 'Δεν χρησιμοποιούμε αυτοματοποιημένη λήψη αποφάσεων ή profiling που παράγει νομικά αποτελέσματα ή επηρεάζει σημαντικά τα δικαιώματα ή τις ελευθερίες σας. Το σύστημα πόντων και rankings είναι καθαρά υπολογιστικό.',
+            en: 'We do not use automated decision-making or profiling that produces legal effects or significantly affects your rights or freedoms. The points system and rankings are purely computational.'
+          }
+        },
+        privacyByDesign: {
+          title: {
+            el: '23. Προστασία Δεδομένων από Σχεδιασμό (Άρθρο 25 GDPR)',
+            en: '23. Data Protection by Design (Article 25 GDPR)'
+          },
+          intro: {
+            el: 'Εφαρμόζουμε "Privacy by Design" και "Privacy by Default":',
+            en: 'We apply "Privacy by Design" and "Privacy by Default":'
+          },
+          measures: {
+            el: [
+              'Συλλέγουμε μόνο τα απαραίτητα δεδομένα',
+              'Κρυπτογράφηση ενεργή από προεπιλογή',
+              'Προστατευτικές ρυθμίσεις από προεπιλογή'
+            ],
+            en: [
+              'We collect only necessary data',
+              'Encryption active by default',
+              'Protective settings by default'
+            ]
+          }
+        },
+        processingRecords: {
+          title: {
+            el: '24. Καταγραφές Επεξεργασίας (Άρθρο 30 GDPR)',
+            en: '24. Processing Records (Article 30 GDPR)'
+          },
+          content: {
+            el: 'Διατηρούμε καταγραφές όλων των δραστηριοτήτων επεξεργασίας προσωπικών δεδομένων, διαθέσιμες για έλεγχο από την ΑΠΔΠΧ.',
+            en: 'We maintain records of all personal data processing activities, available for inspection by the HDPA.'
+          }
+        },
+        jurisdiction: {
+          title: {
+            el: '25. Δικαιοδοσία & Εφαρμοστέο Δίκαιο',
+            en: '25. Jurisdiction & Applicable Law'
+          },
+          applicableTitle: {
+            el: '25.1 Εφαρμοστέο Δίκαιο',
+            en: '25.1 Applicable Law'
+          },
+          applicableIntro: {
+            el: 'Αυτοί οι Όροι και Προϋποθέσεις Χρήσης διέπονται από:',
+            en: 'These Terms and Conditions of Use are governed by:'
+          },
+          applicableLaws: {
+            el: [
+              'Ελληνικό Δίκαιο',
+              'GDPR: Κανονισμός (ΕΕ) 2016/679',
+              'Ελληνικός Νόμος 4624/2019'
+            ],
+            en: [
+              'Greek Law',
+              'GDPR: Regulation (EU) 2016/679',
+              'Greek Law 4624/2019'
+            ]
+          },
+          jurisdictionTitle: {
+            el: '25.2 Δικαιοδοσία',
+            en: '25.2 Jurisdiction'
+          },
+          jurisdictionContent: {
+            el: 'Οποιαδήποτε διαφωνία που προκύπτει από ή σχετίζεται με αυτούς τους όρους θα επιλυθεί από τα αρμόδια δικαστήρια της Ελλάδας.',
+            en: 'Any dispute arising from or related to these terms will be resolved by the competent courts of Greece.'
+          },
+          adrTitle: {
+            el: '25.3 Εναλλακτική Επίλυση Διαφορών (ADR)',
+            en: '25.3 Alternative Dispute Resolution (ADR)'
+          },
+          adrContent: {
+            el: 'Για καταναλωτικές διαφορές, έχετε το δικαίωμα να καταφύγετε σε εναλλακτικές διαδικασίες επίλυσης διαφορών (ADR) σύμφωνα με το ελληνικό δίκαιο.',
+            en: 'For consumer disputes, you have the right to resort to alternative dispute resolution (ADR) procedures in accordance with Greek law.'
+          },
+          authorityTitle: {
+            el: '25.4 Εποπτική Αρχή',
+            en: '25.4 Supervisory Authority'
+          },
+          authorityContent: {
+            el: 'Η Ελληνική Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα (ΑΠΔΠΧ) είναι η αρμόδια εποπτική αρχή για θέματα προστασίας δεδομένων.',
+            en: 'The Hellenic Data Protection Authority (HDPA) is the competent supervisory authority for data protection matters.'
+          }
+        },
+        severability: {
+          title: {
+            el: '26. Αναποτελεσματικότητα Ρήτρων',
+            en: '26. Severability'
+          },
+          content: {
+            el: 'Εάν οποιαδήποτε ρήτρα αυτών των όρων κριθεί άκυρη, παράνομη ή μη εφαρμόσιμη, οι υπόλοιπες ρήτρες παραμένουν σε ισχύ.',
+            en: 'If any clause of these terms is found to be invalid, illegal, or unenforceable, the remaining clauses remain in effect.'
+          }
+        },
+        disclaimer: {
+          title: {
+            el: '27. Αποποίηση Εγγυήσεων',
+            en: '27. Disclaimer of Warranties'
+          },
+          intro: {
+            el: 'Δεν παρέχουμε καμία εγγύηση, ρητή ή σιωπηρή, σχετικά με:',
+            en: 'We provide no warranty, express or implied, regarding:'
+          },
+          warranties: {
+            el: [
+              'Τη διαθεσιμότητα ή την αδιάλειπτη λειτουργία της εφαρμογής',
+              'Την ακρίβεια ή την πληρότητα των πληροφοριών',
+              'Την απουσία σφαλμάτων ή bugs',
+              'Τη συμβατότητα με συγκεκριμένες συσκευές ή λειτουργικά συστήματα'
+            ],
+            en: [
+              'The availability or uninterrupted operation of the app',
+              'The accuracy or completeness of information',
+              'The absence of errors or bugs',
+              'Compatibility with specific devices or operating systems'
+            ]
+          }
+        },
+        contact: {
+          title: {
+            el: '28. Επικοινωνία',
+            en: '28. Contact'
+          },
+          intro: {
+            el: 'Για οποιαδήποτε ερώτηση, αίτημα ή ανησυχία σχετικά με αυτούς τους Όρους και Προϋποθέσεις Χρήσης, επικοινωνήστε μαζί μας:',
+            en: 'For any questions, requests, or concerns regarding these Terms and Conditions of Use, please contact us:'
+          },
+          email: {
+            el: 'Email:',
+            en: 'Email:'
+          },
+          emailValue: {
+            el: 'devtaskhub@gmail.com',
+            en: 'devtaskhub@gmail.com'
+          },
+          support: {
+            el: 'Υποστήριξη:',
+            en: 'Support:'
+          },
+          response: {
+            el: 'Θα απαντήσουμε στο αίτημά σας εντός 30 ημερών (ή 90 ημερών σε περίπλοκες περιπτώσεις, με προηγούμενη ειδοποίηση).',
+            en: 'We will respond to your request within 30 days (or 90 days in complex cases, with prior notice).'
+          }
+        },
+        entireAgreement: {
+          title: {
+            el: '29. Ολική Συμφωνία',
+            en: '29. Entire Agreement'
+          },
+          content: {
+            el: 'Αυτοί οι Όροι και Προϋποθέσεις Χρήσης, μαζί με την Πολιτική Απορρήτου μας, αποτελούν την ολική συμφωνία μεταξύ εσάς και του T-Parking σχετικά με τη χρήση της εφαρμογής.',
+            en: 'These Terms and Conditions of Use, together with our Privacy Policy, constitute the entire agreement between you and T-Parking regarding the use of the application.'
+          }
+        },
+      lastUpdate: {
+        el: 'Τελευταία Ενημέρωση: 7 Δεκεμβρίου 2025',
+        en: 'Last Updated: December 7, 2025'
+      },
+      copyright: {
+        el: '© 2025 T-Parking. Όλα τα δικαιώματα διατηρούνται.',
+        en: '© 2025 T-Parking. All rights reserved.'
+      }
     }
   }
-} as const; 
+} as const;
