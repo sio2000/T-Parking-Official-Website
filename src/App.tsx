@@ -17,6 +17,10 @@ import historyImg from './assets/images/history.png';
 import CookiesPage from './components/CookiesPage';
 import PrivacyPage from './components/PrivacyPage';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import AdminLoginModal from './components/admin/AdminLoginModal';
+import AdminDashboard from './components/admin/AdminDashboard';
+import ProtectedRoute from './components/admin/ProtectedRoute';
+import { isAdminAuthenticated } from './lib/adminAuth';
 
 interface Feature {
   key: string;
@@ -34,18 +38,50 @@ interface Step {
 function MainPage({ language, setLanguage }: { language: Language, setLanguage: (lang: Language) => void }) {
   const t = translations[language];
   const navigate = useNavigate();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const handleLoginSuccess = () => {
+    navigate('/admin');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      {/* Language Toggle Button */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="fixed top-4 right-4 z-50 bg-white text-blue-600 px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-        onClick={() => setLanguage(language === 'el' ? 'en' : 'el')}
-      >
-        {language === 'el' ? 'EN' : 'EL'}
-      </motion.button>
+      {/* Language Toggle Button and Admin Login */}
+      <div className="fixed top-4 right-4 z-50 flex gap-2">
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          onClick={() => setLanguage(language === 'el' ? 'en' : 'el')}
+        >
+          {language === 'el' ? 'EN' : 'EL'}
+        </motion.button>
+        {isAdminAuthenticated() ? (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-blue-600 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            onClick={() => navigate('/admin')}
+          >
+            Admin
+          </motion.button>
+        ) : (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="bg-gray-800 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            onClick={() => setShowLoginModal(true)}
+          >
+            Login
+          </motion.button>
+        )}
+      </div>
+
+      <AdminLoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onSuccess={handleLoginSuccess}
+      />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -440,6 +476,14 @@ function App() {
       <Route path="/terms" element={<TermsPage language={language} onBack={() => window.history.back()} />} />
       <Route path="/cookies" element={<CookiesPage language={language} onBack={() => window.history.back()} />} />
       <Route path="/privacy" element={<PrivacyPage language={language} onBack={() => window.history.back()} />} />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
