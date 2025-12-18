@@ -16,6 +16,8 @@ import bonusunparkImg from './assets/images/bonusunpark.png';
 import historyImg from './assets/images/history.png';
 import CookiesPage from './components/CookiesPage';
 import PrivacyPage from './components/PrivacyPage';
+import PrivacyPolicyPage from './components/PrivacyPolicyPage';
+import TermsConditionsPage from './components/TermsConditionsPage';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import AdminLoginModal from './components/admin/AdminLoginModal';
 import AdminDashboard from './components/admin/AdminDashboard';
@@ -442,13 +444,13 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               <ul className="space-y-2">
                 <li>
                   <button
-                    onClick={() => navigate('/terms')}
+                    onClick={() => navigate('/terms-conditions')}
                     className="text-gray-400 hover:text-white transition-colors"
                   >
                     {t.footer.terms}
                   </button>
                 </li>
-                <li><button onClick={() => navigate('/privacy')} className="text-gray-400 hover:text-white transition-colors">{t.footer.privacy[language]}</button></li>
+                <li><button onClick={() => navigate('/privacy-policy')} className="text-gray-400 hover:text-white transition-colors">{t.footer.privacy[language]}</button></li>
                 <li><button onClick={() => navigate('/cookies')} className="text-gray-400 hover:text-white transition-colors">{t.footer.cookies[language]}</button></li>
               </ul>
             </div>
@@ -476,6 +478,8 @@ function App() {
       <Route path="/terms" element={<TermsPage language={language} onBack={() => window.history.back()} />} />
       <Route path="/cookies" element={<CookiesPage language={language} onBack={() => window.history.back()} />} />
       <Route path="/privacy" element={<PrivacyPage language={language} onBack={() => window.history.back()} />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage language={language} setLanguage={setLanguage} onBack={() => window.history.back()} />} />
+      <Route path="/terms-conditions" element={<TermsConditionsPage language={language} setLanguage={setLanguage} onBack={() => window.history.back()} />} />
       <Route
         path="/admin"
         element={
