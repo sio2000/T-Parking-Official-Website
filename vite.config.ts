@@ -19,7 +19,7 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'framer-motion']
+    include: ['react', 'react-dom', 'framer-motion', 'react-is']
   },
   server: {
     port: 3000,
