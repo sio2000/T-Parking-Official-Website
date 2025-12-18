@@ -16,7 +16,7 @@ const PrivacyPage = ({ language, onBack }: PrivacyPageProps) => {
   }
 
   // Αν υπάρχει fullContent, το χρησιμοποιούμε (νέα δομή)
-  if (t.fullContent && t.fullContent[language]) {
+  if ('fullContent' in t && t.fullContent && (t.fullContent as any)[language]) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-20">
         <div className="container mx-auto px-4">
@@ -35,7 +35,7 @@ const PrivacyPage = ({ language, onBack }: PrivacyPageProps) => {
             </button>
             <div 
               className="prose prose-lg max-w-none prose-headings:text-blue-900 prose-h1:text-3xl prose-h1:md:text-4xl prose-h1:font-bold prose-h2:text-2xl prose-h2:font-semibold prose-h2:text-blue-800 prose-h2:mt-8 prose-h2:mb-4 prose-p:text-gray-700 prose-p:mb-4 prose-ul:list-disc prose-ul:pl-6 prose-li:mb-2 prose-strong:text-blue-900 prose-a:text-blue-600 prose-a:underline"
-              dangerouslySetInnerHTML={{ __html: t.fullContent[language] }}
+              dangerouslySetInnerHTML={{ __html: (t.fullContent as any)[language] }}
             />
           </motion.div>
         </div>

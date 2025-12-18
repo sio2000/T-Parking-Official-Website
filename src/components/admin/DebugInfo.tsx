@@ -19,7 +19,7 @@ export default function DebugInfo() {
       console.log('[DebugInfo] Checking Supabase connection...');
       
       const info: any = {
-        supabaseUrl: supabase.supabaseUrl,
+        supabaseUrl: import.meta.env.VITE_SUPABASE_URL || 'Not configured',
         timestamp: new Date().toISOString(),
       };
 
