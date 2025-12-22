@@ -36,6 +36,8 @@ cp .env.example .env
 ```
 
 **⚠️ ΣΗΜΑΝΤΙΚΟ - Environment Variables:**
+
+### Local Development (.env file):
 Πρέπει να ρυθμίσετε τα παρακάτω environment variables στο `.env` αρχείο:
 
 ```env
@@ -53,6 +55,15 @@ VITE_ADMIN_PASSWORD=your-secure-admin-password-here
 # Google Maps API Key
 VITE_GOOGLE_MAPS_API_KEY=your-google-maps-api-key-here
 ```
+
+### Production (Netlify):
+Για το Netlify, πρέπει να προσθέσεις τα environment variables στο **Netlify Dashboard**:
+
+1. Πήγαινε στο Netlify Dashboard > Site Settings > Environment variables
+2. Πρόσθεσε όλα τα variables με prefix `VITE_` (όπως παραπάνω)
+3. Κάνε **Redeploy** το site μετά την προσθήκη
+
+**📋 Για λεπτομερείς οδηγίες, δες το αρχείο `NETLIFY_SETUP.md`**
 
 4. Ξεκινήστε τον development server:
 ```bash

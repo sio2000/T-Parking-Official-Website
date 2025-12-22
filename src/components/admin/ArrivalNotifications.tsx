@@ -6,7 +6,8 @@ import { supabaseAdmin } from '../../lib/supabaseAdmin';
 const getSupabaseClient = () => supabaseAdmin || supabase;
 
 export default function ArrivalNotifications() {
-  const [notificationCount, setNotificationCount] = useState<number>(0);
+  const [totalNotifications, setTotalNotifications] = useState<number>(0);
+  const [uniqueUsers, setUniqueUsers] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,36 +23,36 @@ export default function ArrivalNotifications() {
       
       const client = getSupabaseClient();
       
-      // Use destination_reached table (confirmed from database structure)
-      let count = 0;
+      // First, get the total count using count query (more efficient)
+      const { count: totalCount, error: countError } = await client
+        .from('destination_reached')
+        .select('*', { count: 'exact', head: true });
       
-      try {
-        // Query destination_reached table to count unique users
-        const { data: destinationReached, error: destError } = await client
-          .from('destination_reached')
-          .select('user_id');
-        
-        if (destError) {
-          console.error('[ArrivalNotifications] Error fetching destination_reached:', destError);
-          throw destError;
-        }
-        
-        if (destinationReached && destinationReached.length > 0) {
-          // Count unique users
-          const uniqueUsers = new Set(destinationReached.map((item: any) => item.user_id).filter(Boolean));
-          count = uniqueUsers.size;
-          console.log('[ArrivalNotifications] Found in destination_reached table:', count, 'unique users out of', destinationReached.length, 'total records');
-        }
-      } catch (e: any) {
-        console.error('[ArrivalNotifications] Error with destination_reached table:', e);
-        setError(`Σφάλμα κατά τη φόρτωση: ${e.message || 'Άγνωστο σφάλμα'}`);
-        setLoading(false);
-        return;
+      if (countError) {
+        console.error('[ArrivalNotifications] Error fetching count:', countError);
+        throw countError;
       }
-
-      setNotificationCount(count);
       
-      if (count === 0) {
+      console.log('[ArrivalNotifications] Total count from destination_reached:', totalCount);
+      setTotalNotifications(totalCount || 0);
+      
+      // Then get unique users
+      const { data: destinationReached, error: destError } = await client
+        .from('destination_reached')
+        .select('user_id');
+      
+      if (destError) {
+        console.error('[ArrivalNotifications] Error fetching destination_reached:', destError);
+        throw destError;
+      }
+      
+      if (destinationReached && destinationReached.length > 0) {
+        // Count unique users
+        const uniqueUserSet = new Set(destinationReached.map((item: any) => item.user_id).filter(Boolean));
+        setUniqueUsers(uniqueUserSet.size);
+        console.log('[ArrivalNotifications] Unique users:', uniqueUserSet.size, 'out of', destinationReached.length, 'total records');
+      } else {
+        setUniqueUsers(0);
         console.log('[ArrivalNotifications] No destination_reached records found');
       }
     } catch (err: any) {
@@ -84,28 +85,61 @@ export default function ArrivalNotifications() {
           </div>
         </div>
       ) : (
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-8 shadow-lg">
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
-              <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+        <div className="space-y-6">
+          {/* Κύρια κάρτα - Συνολικές Ειδοποιήσεις */}
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-8 shadow-lg">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
+                <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">
+                {totalNotifications.toLocaleString('el-GR')}
+              </h3>
+              <p className="text-xl text-gray-700 font-medium mb-1">Συνολικές Ειδοποιήσεις Άφιξης</p>
+              <p className="text-gray-600 text-sm">
+                Φορές που εμφανίστηκε η ειδοποίηση "Συγχαρητήρια, φτάσατε!"
+              </p>
             </div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-2">
-              {notificationCount.toLocaleString('el-GR')}
-            </h3>
-            <p className="text-xl text-gray-700 font-medium mb-1">Χρήστες</p>
-            <p className="text-gray-600 text-sm">
-              Έλαβαν την ειδοποίηση "Συγχαρητήρια, φτάσατε!" όταν έφτασαν στον προορισμό τους
-            </p>
+          </div>
+
+          {/* Δεύτερη κάρτα - Μοναδικοί Χρήστες */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="inline-flex items-center justify-center w-14 h-14 bg-blue-100 rounded-full mr-4">
+                  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {uniqueUsers.toLocaleString('el-GR')}
+                  </h3>
+                  <p className="text-gray-600">Μοναδικοί Χρήστες</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-sm text-gray-500">
+                  Μέσος όρος ανά χρήστη
+                </p>
+                <p className="text-lg font-semibold text-blue-600">
+                  {uniqueUsers > 0 ? (totalNotifications / uniqueUsers).toFixed(1) : '0'} αφίξεις
+                </p>
+              </div>
+            </div>
           </div>
           
-          <div className="mt-6 pt-6 border-t border-green-200">
+          <div className="pt-4">
             <button
               onClick={loadNotificationCount}
-              className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+              className="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium flex items-center justify-center"
             >
-              🔄 Ανανέωση
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Ανανέωση
             </button>
           </div>
         </div>
