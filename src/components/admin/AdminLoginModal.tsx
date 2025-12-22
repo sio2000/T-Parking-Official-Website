@@ -18,13 +18,19 @@ export default function AdminLoginModal({ isOpen, onClose, onSuccess }: AdminLog
     setError('');
     setLoading(true);
 
-    if (checkAdminPassword(password)) {
+    console.log('[AdminLoginModal] Attempting login with password length:', password.length);
+    
+    const isValid = checkAdminPassword(password);
+    console.log('[AdminLoginModal] Password check result:', isValid);
+    
+    if (isValid) {
       setAdminSession();
       setPassword('');
       setLoading(false);
       onSuccess();
       onClose();
     } else {
+      console.error('[AdminLoginModal] Login failed - incorrect password');
       setError('Λάθος κωδικός πρόσβασης');
       setLoading(false);
     }
@@ -63,10 +69,20 @@ export default function AdminLoginModal({ isOpen, onClose, onSuccess }: AdminLog
                 type="password"
                 value={password}
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  const newPassword = e.target.value;
+                  console.log('[AdminLoginModal] Password changed, length:', newPassword.length);
+                  setPassword(newPassword);
                   setError('');
                 }}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleSubmit(e as any);
+                  }
+                }}
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  error ? 'border-red-500' : 'border-gray-300'
+                }`}
                 placeholder="Εισάγετε τον κωδικό πρόσβασης"
                 disabled={loading}
                 autoFocus
