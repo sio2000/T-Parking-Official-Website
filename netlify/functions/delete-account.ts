@@ -1,24 +1,44 @@
 import { createClient } from '@supabase/supabase-js';
 import { Handler } from '@netlify/functions';
 
-const supabaseUrl = process.env.SUPABASE_URL || 'https://utuoppaqarwowecxxjqw.supabase.co';
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+// Support both VITE_ prefixed and non-prefixed env vars
+const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || 'https://utuoppaqarwowecxxjqw.supabase.co';
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_SERVICE_ROLE_KEY || '';
+
+const headers = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+};
 
 const handler: Handler = async (event) => {
+  // Handle CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
+      headers,
       body: JSON.stringify({ error: 'Method not allowed' }),
     };
   }
 
+  console.log('[delete-account] Function invoked');
+  console.log('[delete-account] Has service role key:', !!supabaseServiceRoleKey);
+  console.log('[delete-account] Supabase URL:', supabaseUrl);
+
   // Check if service role key is configured
-  if (!supabaseServiceRoleKey) {
-    console.error('[delete-account] Service role key not configured');
+  if (!supabaseServiceRoleKey || !supabaseServiceRoleKey.startsWith('eyJ')) {
+    console.error('[delete-account] Service role key not configured or invalid');
+    console.error('[delete-account] Key length:', supabaseServiceRoleKey?.length || 0);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Server configuration error' }),
+      headers,
+      body: JSON.stringify({ error: 'Server configuration error - service role key missing' }),
     };
   }
 
@@ -28,6 +48,7 @@ const handler: Handler = async (event) => {
     if (!userId || !accessToken) {
       return {
         statusCode: 400,
+        headers,
         body: JSON.stringify({ error: 'Missing userId or accessToken' }),
       };
     }
@@ -47,6 +68,7 @@ const handler: Handler = async (event) => {
       console.error('[delete-account] Token verification failed:', userError);
       return {
         statusCode: 401,
+        headers,
         body: JSON.stringify({ error: 'Unauthorized' }),
       };
     }
@@ -78,6 +100,7 @@ const handler: Handler = async (event) => {
       console.error('[delete-account] Error deleting auth user:', authDeleteError);
       return {
         statusCode: 500,
+        headers,
         body: JSON.stringify({ error: 'Failed to delete auth account: ' + authDeleteError.message }),
       };
     }
@@ -86,12 +109,14 @@ const handler: Handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify({ success: true, message: 'Account deleted successfully' }),
     };
   } catch (error: any) {
     console.error('[delete-account] Error:', error);
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ error: error.message || 'Internal server error' }),
     };
   }
