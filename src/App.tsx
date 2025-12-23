@@ -18,6 +18,7 @@ import CookiesPage from './components/CookiesPage';
 import PrivacyPage from './components/PrivacyPage';
 import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import TermsConditionsPage from './components/TermsConditionsPage';
+import DeleteAccountPage from './components/DeleteAccountPage';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import AdminLoginModal from './components/admin/AdminLoginModal';
 import AdminDashboard from './components/admin/AdminDashboard';
@@ -480,6 +481,7 @@ function App() {
       <Route path="/privacy" element={<PrivacyPage language={language} onBack={() => window.history.back()} />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage language={language} setLanguage={setLanguage} onBack={() => window.history.back()} />} />
       <Route path="/terms-conditions" element={<TermsConditionsPage language={language} setLanguage={setLanguage} onBack={() => window.history.back()} />} />
+      <Route path="/delete-account" element={<DeleteAccountPage />} />
       <Route
         path="/admin"
         element={
