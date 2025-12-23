@@ -92,7 +92,7 @@ export default function AnalyticsDashboard() {
       const client = getSupabaseClient();
       const { start, end } = getDateRange();
       
-      // Fetch spots created over time
+      // Fetch spots created over time from parking_spots (active spots)
       const { data: spots, error: spotsError } = await client
         .from('parking_spots')
         .select('created_at, is_active, size')
@@ -100,11 +100,49 @@ export default function AnalyticsDashboard() {
         .lte('created_at', end.toISOString())
         .order('created_at', { ascending: true });
       
-      if (spotsError) throw spotsError;
+      if (spotsError) {
+        console.warn('[AnalyticsDashboard] Error fetching parking_spots:', spotsError);
+      }
       
-      // Process spots created over time
+      // Fetch deleted spots from parking_history (to include them in analytics)
+      console.log('[AnalyticsDashboard] Fetching parking_history for deleted spots...');
+      const { data: historySpots, error: historyError } = await client
+        .from('parking_history')
+        .select('created_at, size')
+        .gte('created_at', start.toISOString())
+        .lte('created_at', end.toISOString())
+        .order('created_at', { ascending: true });
+      
+      if (historyError) {
+        console.warn('[AnalyticsDashboard] Error fetching parking_history (non-fatal):', historyError);
+      }
+      
+      // Combine spots from parking_spots and parking_history
+      // Normalize history spots to match spots structure (is_active will be false for deleted spots)
+      const normalizedHistorySpots = (historySpots || []).map((h: any) => ({
+        created_at: h.created_at,
+        is_active: false, // History spots are always inactive (deleted)
+        size: h.size || 'unknown'
+      }));
+      
+      // Combine all spots (active + deleted)
+      const allSpotsCombined = [
+        ...(spots || []),
+        ...normalizedHistorySpots
+      ];
+      
+      console.log('[AnalyticsDashboard] Combined spots:', {
+        fromParkingSpots: (spots || []).length,
+        fromHistory: (historySpots || []).length,
+        total: allSpotsCombined.length
+      });
+      
+      // Use combined spots for all calculations
+      const spotsForAnalytics = allSpotsCombined;
+      
+      // Process spots created over time (using combined spots)
       const spotsByDate: Record<string, number> = {};
-      (spots || []).forEach((spot: any) => {
+      spotsForAnalytics.forEach((spot: any) => {
         const date = format(new Date(spot.created_at), 'yyyy-MM-dd');
         spotsByDate[date] = (spotsByDate[date] || 0) + 1;
       });
@@ -113,17 +151,62 @@ export default function AnalyticsDashboard() {
         count,
       }));
       
-      // Active vs Inactive
-      const activeCount = (spots || []).filter((s: any) => s.is_active).length;
-      const inactiveCount = (spots || []).length - activeCount;
+      // Active vs Inactive - Calculate based on expiration time, not current is_active status
+      // This ensures we count all spots created in the period, even if they've expired/deleted
+      let spotExpirationMinutes = 6; // default
+      try {
+        const storedSettings = localStorage.getItem('admin_settings');
+        if (storedSettings) {
+          const settings = JSON.parse(storedSettings);
+          if (settings.spotExpirationTime) {
+            spotExpirationMinutes = settings.spotExpirationTime;
+          }
+        }
+      } catch (err) {
+        console.warn('[AnalyticsDashboard] Could not load settings, using default expiration time:', err);
+      }
+      
+      const now = new Date();
+      const expirationThreshold = new Date(now.getTime() - (spotExpirationMinutes * 60 * 1000));
+      
+      let activeCount = 0;
+      let inactiveCount = 0;
+      
+      // Count all spots created in the period based on expiration (using combined spots)
+      spotsForAnalytics.forEach((spot: any) => {
+        if (spot.created_at) {
+          const spotCreatedAt = new Date(spot.created_at);
+          // Spot is active if created_at + expirationMinutes > now
+          // Which means: created_at > (now - expirationMinutes)
+          if (spotCreatedAt > expirationThreshold) {
+            activeCount++;
+          } else {
+            inactiveCount++;
+          }
+        } else {
+          // If no created_at, count as inactive
+          inactiveCount++;
+        }
+      });
+      
+      console.log('[AnalyticsDashboard] Active vs Inactive calculation:', {
+        totalSpots: spotsForAnalytics.length,
+        activeCount,
+        inactiveCount,
+        expirationMinutes: spotExpirationMinutes,
+        expirationThreshold: expirationThreshold.toISOString(),
+        fromParkingSpots: (spots || []).length,
+        fromHistory: (historySpots || []).length
+      });
+      
       const activeVsInactive = [
         { name: 'Ενεργές', value: activeCount },
         { name: 'Ανενεργές', value: inactiveCount },
       ];
       
-      // Spots by size
+      // Spots by size (using combined spots)
       const sizeCounts: Record<string, number> = {};
-      (spots || []).forEach((spot: any) => {
+      spotsForAnalytics.forEach((spot: any) => {
         const size = spot.size || 'unknown';
         sizeCounts[size] = (sizeCounts[size] || 0) + 1;
       });
@@ -164,9 +247,9 @@ export default function AnalyticsDashboard() {
         score: score.score || 0,
       }));
       
-      // Spots by hour
+      // Spots by hour (using combined spots)
       const hourCounts: Record<number, number> = {};
-      (spots || []).forEach((spot: any) => {
+      spotsForAnalytics.forEach((spot: any) => {
         const hour = new Date(spot.created_at).getHours();
         hourCounts[hour] = (hourCounts[hour] || 0) + 1;
       });
@@ -184,12 +267,8 @@ export default function AnalyticsDashboard() {
         spotsByHour,
       });
       
-      // Calculate metrics
-      const { data: allSpots, error: allSpotsError } = await client
-        .from('parking_spots')
-        .select('is_active')
-        .gte('created_at', start.toISOString())
-        .lte('created_at', end.toISOString());
+      // Calculate metrics (using combined spots - already loaded above)
+      // Note: allSpotsCombined is already filtered by date range, so we use it directly
       
       const { data: allUsers, error: allUsersError } = await client
         .from('profiles')
@@ -201,11 +280,23 @@ export default function AnalyticsDashboard() {
         .from('user_scores')
         .select('score');
       
-      const activeCountTotal = (allSpots || []).filter((s: any) => s.is_active).length;
+      // Calculate active spots based on expiration time (using combined spots)
+      let activeCountTotal = 0;
+      if (spotsForAnalytics && spotsForAnalytics.length > 0) {
+        spotsForAnalytics.forEach((spot: any) => {
+          if (spot.created_at) {
+            const spotCreatedAt = new Date(spot.created_at);
+            if (spotCreatedAt > expirationThreshold) {
+              activeCountTotal++;
+            }
+          }
+        });
+      }
+      
       const days = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
       
       setMetrics({
-        totalSpotsCreated: (allSpots || []).length,
+        totalSpotsCreated: spotsForAnalytics.length,
         activeSpotsAverage: Math.round(activeCountTotal / days),
         newUsers: (allUsers || []).length,
         reservationsMade: 0, // Would need to fetch from reserved_spots

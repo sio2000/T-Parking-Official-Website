@@ -44,21 +44,70 @@ export default function StatisticsDashboard() {
         data: totalSpotsResult.data 
       });
 
-      console.log('[StatisticsDashboard] Fetching parking_spots (active)...');
-      const activeSpotsQuery = client.from('parking_spots').select('*', { count: 'exact', head: true }).eq('is_active', true);
-      const activeSpotsResult = await activeSpotsQuery;
-      console.log('[StatisticsDashboard] Active spots result:', { 
-        count: activeSpotsResult.count, 
-        error: activeSpotsResult.error 
+      // Load spot expiration time from settings (default 6 minutes)
+      let spotExpirationMinutes = 6; // default
+      try {
+        const storedSettings = localStorage.getItem('admin_settings');
+        if (storedSettings) {
+          const settings = JSON.parse(storedSettings);
+          if (settings.spotExpirationTime) {
+            spotExpirationMinutes = settings.spotExpirationTime;
+          }
+        }
+      } catch (err) {
+        console.warn('[StatisticsDashboard] Could not load settings, using default expiration time:', err);
+      }
+      
+      console.log('[StatisticsDashboard] Using spot expiration time:', spotExpirationMinutes, 'minutes');
+      
+      // Calculate expiration threshold: spots created before this time are inactive
+      const now = new Date();
+      const expirationThreshold = new Date(now.getTime() - (spotExpirationMinutes * 60 * 1000));
+      console.log('[StatisticsDashboard] Current time:', now.toISOString());
+      console.log('[StatisticsDashboard] Expiration threshold (spots created after this are active):', expirationThreshold.toISOString());
+
+      // Fetch all spots with created_at to calculate active/inactive based on expiration
+      console.log('[StatisticsDashboard] Fetching parking_spots (with created_at for expiration check)...');
+      const { data: allSpots, error: allSpotsError } = await client
+        .from('parking_spots')
+        .select('id, created_at');
+      
+      if (allSpotsError) {
+        console.error('[StatisticsDashboard] Error fetching spots for expiration check:', allSpotsError);
+        throw new Error(`Parking Spots: ${allSpotsError.message || allSpotsError.code || 'Unknown error'}`);
+      }
+
+      // Calculate active/inactive based on expiration time
+      let activeCount = 0;
+      let inactiveCount = 0;
+      
+      if (allSpots && allSpots.length > 0) {
+        allSpots.forEach((spot: any) => {
+          if (spot.created_at) {
+            const spotCreatedAt = new Date(spot.created_at);
+            // Spot is active if created_at + expirationMinutes > now
+            // Which means: created_at > (now - expirationMinutes)
+            if (spotCreatedAt > expirationThreshold) {
+              activeCount++;
+            } else {
+              inactiveCount++;
+            }
+          } else {
+            // If no created_at, count as inactive
+            inactiveCount++;
+          }
+        });
+      }
+      
+      console.log('[StatisticsDashboard] Active/Inactive calculation:', {
+        totalSpots: allSpots?.length || 0,
+        activeCount,
+        inactiveCount,
+        expirationMinutes: spotExpirationMinutes
       });
 
-      console.log('[StatisticsDashboard] Fetching parking_spots (inactive)...');
-      const inactiveSpotsQuery = client.from('parking_spots').select('*', { count: 'exact', head: true }).eq('is_active', false);
-      const inactiveSpotsResult = await inactiveSpotsQuery;
-      console.log('[StatisticsDashboard] Inactive spots result:', { 
-        count: inactiveSpotsResult.count, 
-        error: inactiveSpotsResult.error 
-      });
+      const activeSpotsResult = { count: activeCount, error: null };
+      const inactiveSpotsResult = { count: inactiveCount, error: null };
 
       // Try to get users count - first try profiles, then try to count from parking_spots unique user_ids
       console.log('[StatisticsDashboard] Fetching profiles...');
@@ -152,14 +201,6 @@ export default function StatisticsDashboard() {
         console.error('[StatisticsDashboard] Error in totalSpots:', totalSpotsResult.error);
         throw new Error(`Parking Spots: ${totalSpotsResult.error.message || totalSpotsResult.error.code || 'Unknown error'}`);
       }
-      if (activeSpotsResult.error) {
-        console.error('[StatisticsDashboard] Error in activeSpots:', activeSpotsResult.error);
-        throw new Error(`Active Spots: ${activeSpotsResult.error.message || activeSpotsResult.error.code || 'Unknown error'}`);
-      }
-      if (inactiveSpotsResult.error) {
-        console.error('[StatisticsDashboard] Error in inactiveSpots:', inactiveSpotsResult.error);
-        throw new Error(`Inactive Spots: ${inactiveSpotsResult.error.message || inactiveSpotsResult.error.code || 'Unknown error'}`);
-      }
       // Don't throw error for users if we have a fallback count
       if (totalUsersResult?.error && !totalUsersResult?.count) {
         console.warn('[StatisticsDashboard] Warning in totalUsers (non-fatal):', totalUsersResult.error);
@@ -212,6 +253,7 @@ export default function StatisticsDashboard() {
       icon: '🅿️',
       bgColor: 'bg-blue-50',
       textColor: 'text-blue-600',
+      description: undefined,
     },
     {
       title: 'Ενεργές Θέσεις',
@@ -219,6 +261,7 @@ export default function StatisticsDashboard() {
       icon: '✅',
       bgColor: 'bg-green-50',
       textColor: 'text-green-600',
+      description: 'Στον χάρτη αυτή τη στιγμή',
     },
     {
       title: 'Μη Ενεργές Θέσεις',
@@ -226,6 +269,7 @@ export default function StatisticsDashboard() {
       icon: '❌',
       bgColor: 'bg-red-50',
       textColor: 'text-red-600',
+      description: 'Δεν εμφανίζονται πλέον',
     },
     {
       title: 'Συνολικοί Χρήστες',
@@ -233,6 +277,7 @@ export default function StatisticsDashboard() {
       icon: '👥',
       bgColor: 'bg-purple-50',
       textColor: 'text-purple-600',
+      description: undefined,
     },
     {
       title: 'Κρατήσεις',
@@ -240,6 +285,7 @@ export default function StatisticsDashboard() {
       icon: '📅',
       bgColor: 'bg-orange-50',
       textColor: 'text-orange-600',
+      description: undefined,
     },
   ];
 
@@ -263,6 +309,9 @@ export default function StatisticsDashboard() {
               {card.value.toLocaleString('el-GR')}
             </div>
             <div className="text-gray-700 font-medium">{card.title}</div>
+            {card.description && (
+              <div className="text-xs text-gray-500 mt-1">{card.description}</div>
+            )}
           </div>
         ))}
       </div>
