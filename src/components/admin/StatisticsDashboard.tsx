@@ -126,13 +126,26 @@ export default function StatisticsDashboard() {
         error: totalUsersResult?.error 
       });
 
-      console.log('[StatisticsDashboard] Fetching reserved_spots...');
-      const totalReservationsQuery = client.from('reserved_spots').select('*', { count: 'exact', head: true });
+      // Count reservations from user_reservation_stock table
+      console.log('[StatisticsDashboard] Fetching user_reservation_stock...');
+      const totalReservationsQuery = client.from('user_reservation_stock').select('*', { count: 'exact', head: true });
       const totalReservationsResult = await totalReservationsQuery;
       console.log('[StatisticsDashboard] Total reservations result:', { 
         count: totalReservationsResult.count, 
         error: totalReservationsResult.error 
       });
+      
+      // Fallback to reserved_spots if user_reservation_stock is empty or has error
+      if ((totalReservationsResult.count === 0 || totalReservationsResult.error) && !totalReservationsResult.count) {
+        console.log('[StatisticsDashboard] Trying fallback to reserved_spots...');
+        const fallbackQuery = client.from('reserved_spots').select('*', { count: 'exact', head: true });
+        const fallbackResult = await fallbackQuery;
+        if (fallbackResult.count && fallbackResult.count > 0) {
+          console.log('[StatisticsDashboard] Using reserved_spots fallback:', fallbackResult.count);
+          totalReservationsResult.count = fallbackResult.count;
+          totalReservationsResult.error = fallbackResult.error;
+        }
+      }
 
       // Check for errors
       if (totalSpotsResult.error) {
