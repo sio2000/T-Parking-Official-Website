@@ -53,6 +53,46 @@ export const translations = {
       contactSupport: "Πώς επικοινωνώ με την υποστήριξη;",
       contactAnswer: "Στείλτε μας email στο support@t-parking.gr ή χρησιμοποιήστε τη συνομιλία στην εφαρμογή για άμεση βοήθεια."
     },
+    cta: {
+      title: "Ξεκινήστε Τώρα",
+      subtitle: "Κατεβάστε την εφαρμογή και βρείτε parking σε πραγματικό χρόνο",
+      downloadNow: "Κατεβάστε Τώρα",
+      getStarted: "Ξεκινήστε",
+      readyToStart: "Έτοιμοι να ξεκινήσετε;",
+      joinCommunity: "Εγγραφείτε και γίνετε μέλος της κοινότητας μας",
+      ctaTitle: "Μην Χάσετε Άλλο Χρόνο",
+      ctaSubtitle: "Κατεβάστε την εφαρμογή τώρα και βρείτε parking σε δευτερόλεπτα"
+    },
+    testimonials: {
+      title: "Τι Λένε οι Χρήστες μας",
+      subtitle: "Εκατοντάδες οδηγοί εμπιστεύονται την T-Parking",
+      user1: {
+        name: "Μαρία Κ.",
+        location: "Αθήνα",
+        text: "Η καλύτερη εφαρμογή για parking! Έχει γλιτώσει τόσες ώρες από αναζήτηση θέσης."
+      },
+      user2: {
+        name: "Νίκος Π.",
+        location: "Θεσσαλονίκη",
+        text: "Το σύστημα πόντων είναι εξαιρετικό. Έχω ήδη κερδίσει πολλές δωρεάν κρατήσεις!"
+      },
+      user3: {
+        name: "Ελένη Δ.",
+        location: "Πάτρα",
+        text: "Τα real-time notifications είναι game changer. Ποτέ δεν χάνονται θέσεις πια!"
+      }
+    },
+    stats: {
+      title: "Μας Εμπιστεύονται",
+      users: "4.3M+",
+      usersLabel: "Εγγεγραμμένοι Χρήστες",
+      spots: "50K+",
+      spotsLabel: "Θέσεις Ημερησίως",
+      cities: "100+",
+      citiesLabel: "Πόλεις",
+      savings: "2.5M€",
+      savingsLabel: "Εξοικονόμηση Χρόνου/Χρημάτων"
+    },
     footer: {
       quickLinks: "Γρήγοροι Σύνδεσμοι",
       legal: "Νομικά",
@@ -71,7 +111,7 @@ export const translations = {
         el: 'Cookies',
         en: 'Cookies'
       },
-      email: "Email: support@t-parking.gr",
+      email: "Email: devtaskhub@gmail.com",
       phone: "Τηλέφωνο: +30 210 1234567"
     },
     features: {
@@ -2810,6 +2850,46 @@ export const translations = {
       contactSupport: "How do I contact support?",
       contactAnswer: "Email us at support@t-parking.gr or use the in-app chat for immediate assistance."
     },
+    cta: {
+      title: "Get Started Now",
+      subtitle: "Download the app and find parking in real-time",
+      downloadNow: "Download Now",
+      getStarted: "Get Started",
+      readyToStart: "Ready to Start?",
+      joinCommunity: "Sign up and join our community",
+      ctaTitle: "Don't Waste Another Minute",
+      ctaSubtitle: "Download the app now and find parking in seconds"
+    },
+    testimonials: {
+      title: "What Our Users Say",
+      subtitle: "Hundreds of drivers trust T-Parking",
+      user1: {
+        name: "Maria K.",
+        location: "Athens",
+        text: "The best parking app! It has saved me so many hours of searching for a spot."
+      },
+      user2: {
+        name: "Nikos P.",
+        location: "Thessaloniki",
+        text: "The points system is excellent. I've already earned many free reservations!"
+      },
+      user3: {
+        name: "Eleni D.",
+        location: "Patras",
+        text: "Real-time notifications are a game changer. Never miss a spot again!"
+      }
+    },
+    stats: {
+      title: "Trusted By Many",
+      users: "4.3M+",
+      usersLabel: "Registered Users",
+      spots: "50K+",
+      spotsLabel: "Daily Spots",
+      cities: "100+",
+      citiesLabel: "Cities",
+      savings: "2.5M€",
+      savingsLabel: "Time/Money Saved"
+    },
     footer: {
       quickLinks: "Quick Links",
       legal: "Legal",
@@ -2828,7 +2908,7 @@ export const translations = {
         el: 'Cookies',
         en: 'Cookies'
       },
-      email: "Email: support@t-parking.gr",
+      email: "Email: devtaskhub@gmail.com",
       phone: "Phone: +30 210 1234567"
     },
     features: {

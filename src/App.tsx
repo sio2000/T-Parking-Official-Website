@@ -20,10 +20,10 @@ import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import TermsConditionsPage from './components/TermsConditionsPage';
 import DeleteAccountPage from './components/DeleteAccountPage';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import AdminLoginModal from './components/admin/AdminLoginModal';
 import AdminDashboard from './components/admin/AdminDashboard';
 import ProtectedRoute from './components/admin/ProtectedRoute';
-import { isAdminAuthenticated } from './lib/adminAuth';
+import ImageModal from './components/ImageModal';
+import ClickableImage from './components/ClickableImage';
 
 interface Feature {
   key: string;
@@ -41,50 +41,22 @@ interface Step {
 function MainPage({ language, setLanguage }: { language: Language, setLanguage: (lang: Language) => void }) {
   const t = translations[language];
   const navigate = useNavigate();
-  const [showLoginModal, setShowLoginModal] = useState(false);
-
-  const handleLoginSuccess = () => {
-    navigate('/admin');
-  };
+  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      {/* Language Toggle Button and Admin Login */}
-      <div className="fixed top-4 right-4 z-50 flex gap-2">
+      {/* Language Toggle Button */}
+      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50 flex gap-2">
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="bg-white text-blue-600 px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          className="bg-white text-blue-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           onClick={() => setLanguage(language === 'el' ? 'en' : 'el')}
         >
           {language === 'el' ? 'EN' : 'EL'}
         </motion.button>
-        {isAdminAuthenticated() ? (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-blue-600 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            onClick={() => navigate('/admin')}
-          >
-            Admin
-          </motion.button>
-        ) : (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-gray-800 text-white px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-            onClick={() => setShowLoginModal(true)}
-          >
-            Login
-          </motion.button>
-        )}
       </div>
-
-      <AdminLoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onSuccess={handleLoginSuccess}
-      />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -103,7 +75,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             transition={{ duration: 0.8 }}
             className="mb-4"
           >
-            <img src={logoSidebar} alt="T-Parking Logo" className="w-40 h-40 mx-auto mb-4 rounded-full shadow-2xl" />
+            <img src={logoSidebar} alt="T-Parking Logo" className="w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-4 rounded-full shadow-2xl" />
             <div className="text-3xl font-bold text-white drop-shadow-lg">T-Parking</div>
           </motion.div>
           <motion.h1 
@@ -213,19 +185,23 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       </section>
 
       {/* Interactive Map Section */}
-      <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
+      <section className="py-12 md:py-20 bg-gradient-to-b from-blue-50 to-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 md:mb-16 text-blue-800 tracking-tight">
             {t.sections.interactiveMap}
           </h2>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <img src={menuImg} alt="Menu" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8">
+            <ClickableImage
+              src={menuImg}
+              alt="Menu"
+              onClick={() => setModalImage({ src: menuImg, alt: 'Menu' })}
+            />
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true }}
-              className="bg-white rounded-3xl shadow-xl p-10 flex flex-col items-start border border-blue-100 hover:shadow-blue-200 transition-all duration-300 max-w-xl w-full"
+              className="bg-white rounded-2xl md:rounded-3xl shadow-lg md:shadow-xl p-6 md:p-10 flex flex-col items-start border border-blue-100 hover:shadow-blue-200 transition-all duration-300 max-w-xl w-full"
             >
               <h3 className="text-2xl font-bold mb-4 text-blue-700 flex items-center gap-2">
                 <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" /></svg>
@@ -247,46 +223,68 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 </li>
               </ul>
             </motion.div>
-            <img src={mapImg} alt="Map" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
+            <ClickableImage
+              src={mapImg}
+              alt="Map"
+              onClick={() => setModalImage({ src: mapImg, alt: 'Map' })}
+            />
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+      {/* Stats Section */}
+      <section id="features" className="py-16 md:py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
-            {t.sections.features}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {appData.features.map((feature: Feature, index: number) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: index * 0.12, type: 'spring', bounce: 0.3 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-3xl shadow-xl hover:shadow-blue-200 transition-all duration-300 p-8 flex flex-col items-center border border-blue-100 hover:border-blue-300 hover:-translate-y-2 group"
-              >
-                <div className="mb-6 flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 shadow-md group-hover:bg-blue-100 transition-colors duration-300">
-                  {feature.icon}
-                </div>
-                <div className="text-xl font-bold text-blue-800 mb-2 text-center tracking-tight">
-                  {t.features[feature.key as keyof typeof t.features].title}
-                </div>
-                <div className="text-gray-500 text-center text-base leading-relaxed">
-                  {t.features[feature.key as keyof typeof t.features].description}
-                </div>
-              </motion.div>
-            ))}
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">{t.stats.title}</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-extrabold mb-2">{t.stats.users}</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.stats.usersLabel}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-extrabold mb-2">{t.stats.spots}</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.stats.spotsLabel}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-extrabold mb-2">{t.stats.cities}</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.stats.citiesLabel}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-extrabold mb-2">{t.stats.savings}</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.stats.savingsLabel}</div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Points & Rewards Section */}
-      <section id="points-rewards" className="py-20 bg-gradient-to-b from-blue-50 to-white">
+      <section id="points-rewards" className="py-12 md:py-20 bg-gradient-to-b from-blue-50 to-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 md:mb-16 text-blue-800 tracking-tight">
             {t.sections.pointsRewards}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -322,27 +320,32 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl p-8 flex items-center justify-center shadow-lg min-h-[320px]"
+              className="bg-white md:bg-gradient-to-br md:from-blue-100 md:to-blue-200 rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-8 flex items-center justify-center shadow-none md:shadow-lg"
             >
-              <img src={bonusunparkImg} alt="Bonus Unpark" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain" />
+              <ClickableImage
+                src={bonusunparkImg}
+                alt="Bonus Unpark"
+                onClick={() => setModalImage({ src: bonusunparkImg, alt: 'Bonus Unpark' })}
+                variant="no-border"
+              />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Notifications & Settings Section (Merged) */}
-      <section id="settings" className="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+      <section id="settings" className="py-12 md:py-20 bg-gradient-to-b from-white via-blue-50 to-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 md:mb-16 text-blue-800 tracking-tight">
             {t.sections.settings} & {t.sections.notifications}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true }}
-              className="bg-white rounded-3xl shadow-xl p-10 flex flex-col items-start border border-blue-100 hover:shadow-blue-200 transition-all duration-300"
+              className="bg-white rounded-2xl md:rounded-3xl shadow-lg md:shadow-xl p-6 md:p-10 flex flex-col items-start border border-blue-100 hover:shadow-blue-200 transition-all duration-300"
             >
               <h3 className="text-2xl font-bold mb-4 text-blue-700 flex items-center gap-2">
                 <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
@@ -388,28 +391,37 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl p-8 flex items-center justify-center shadow-lg min-h-[320px]"
+              className="bg-white md:bg-gradient-to-br md:from-blue-100 md:to-blue-200 rounded-2xl md:rounded-3xl p-2 sm:p-4 md:p-8 flex items-center justify-center shadow-none md:shadow-lg"
             >
-              <img src={historyImg} alt="History" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain" />
+              <ClickableImage
+                src={historyImg}
+                alt="History"
+                onClick={() => setModalImage({ src: historyImg, alt: 'History' })}
+                variant="no-border"
+              />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Smart Parking Solution Section */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-blue-800 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-blue-800 tracking-tight">
             {language === 'el' ? t.smartSection.elTitle : t.smartSection.title}
           </h2>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <img src={fuelscoreImg} alt="Fuel Score" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8">
+            <ClickableImage
+              src={fuelscoreImg}
+              alt="Fuel Score"
+              onClick={() => setModalImage({ src: fuelscoreImg, alt: 'Fuel Score' })}
+            />
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-10 shadow-xl border border-blue-100 hover:shadow-blue-200 transition-all duration-300 max-w-2xl mx-auto"
+              className="bg-white md:bg-gradient-to-br md:from-blue-50 md:to-blue-100 rounded-2xl md:rounded-3xl p-6 md:p-10 shadow-lg md:shadow-xl border border-blue-100 hover:shadow-blue-200 transition-all duration-300 max-w-2xl mx-auto w-full"
             >
               {(language === 'el' ? t.smartSection.el : t.smartSection.en).map((line, idx) => (
                 <p key={idx} className={`text-lg ${idx === 0 ? 'md:text-2xl text-blue-900 font-semibold mb-6' : idx === 4 ? 'text-blue-800 font-bold' : 'text-gray-700'} mb-4 text-center`}>
@@ -417,8 +429,301 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 </p>
               ))}
             </motion.div>
-            <img src={timescoreImg} alt="Time Score" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
+            <ClickableImage
+              src={timescoreImg}
+              alt="Time Score"
+              onClick={() => setModalImage({ src: timescoreImg, alt: 'Time Score' })}
+            />
           </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-16 md:py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">{t.stats.title}</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-extrabold mb-2">{t.stats.users}</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.stats.usersLabel}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-extrabold mb-2">{t.stats.spots}</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.stats.spotsLabel}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-extrabold mb-2">{t.stats.cities}</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.stats.citiesLabel}</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-extrabold mb-2">{t.stats.savings}</div>
+              <div className="text-blue-100 text-sm md:text-base">{t.stats.savingsLabel}</div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-16 md:py-20 bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 md:mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4">{t.testimonials.title}</h2>
+            <p className="text-gray-600 text-lg">{t.testimonials.subtitle}</p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
+            >
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-lg mr-4">
+                  {t.testimonials.user1.name.charAt(0)}
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900">{t.testimonials.user1.name}</div>
+                  <div className="text-sm text-gray-500">{t.testimonials.user1.location}</div>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">"{t.testimonials.user1.text}"</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
+            >
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-lg mr-4">
+                  {t.testimonials.user2.name.charAt(0)}
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900">{t.testimonials.user2.name}</div>
+                  <div className="text-sm text-gray-500">{t.testimonials.user2.location}</div>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">"{t.testimonials.user2.text}"</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
+            >
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-lg mr-4">
+                  {t.testimonials.user3.name.charAt(0)}
+                </div>
+                <div>
+                  <div className="font-bold text-gray-900">{t.testimonials.user3.name}</div>
+                  <div className="text-sm text-gray-500">{t.testimonials.user3.location}</div>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">"{t.testimonials.user3.text}"</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 md:mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4">{t.support.title}</h2>
+          </motion.div>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {/* FAQ Item 1 */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="bg-blue-50 rounded-xl border border-blue-100 overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenFAQ(openFAQ === 0 ? null : 0)}
+                className="w-full p-6 md:p-8 flex items-center justify-between text-left hover:bg-blue-100 transition-colors"
+              >
+                <h3 className="text-xl font-bold text-blue-900 pr-4">{t.support.howToEarn}</h3>
+                <svg
+                  className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${openFAQ === 0 ? 'rotate-180' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <motion.div
+                initial={false}
+                animate={{ height: openFAQ === 0 ? 'auto' : 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="px-6 md:px-8 pb-6 md:pb-8">
+                  <p className="text-gray-700">{t.support.earnAnswer}</p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* FAQ Item 2 */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="bg-blue-50 rounded-xl border border-blue-100 overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenFAQ(openFAQ === 1 ? null : 1)}
+                className="w-full p-6 md:p-8 flex items-center justify-between text-left hover:bg-blue-100 transition-colors"
+              >
+                <h3 className="text-xl font-bold text-blue-900 pr-4">{t.support.premiumBenefits}</h3>
+                <svg
+                  className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${openFAQ === 1 ? 'rotate-180' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <motion.div
+                initial={false}
+                animate={{ height: openFAQ === 1 ? 'auto' : 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="px-6 md:px-8 pb-6 md:pb-8">
+                  <p className="text-gray-700">{t.support.premiumAnswer}</p>
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* FAQ Item 3 */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-blue-50 rounded-xl border border-blue-100 overflow-hidden"
+            >
+              <button
+                onClick={() => setOpenFAQ(openFAQ === 2 ? null : 2)}
+                className="w-full p-6 md:p-8 flex items-center justify-between text-left hover:bg-blue-100 transition-colors"
+              >
+                <h3 className="text-xl font-bold text-blue-900 pr-4">{t.support.contactSupport}</h3>
+                <svg
+                  className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${openFAQ === 2 ? 'rotate-180' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <motion.div
+                initial={false}
+                animate={{ height: openFAQ === 2 ? 'auto' : 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="px-6 md:px-8 pb-6 md:pb-8">
+                  <p className="text-gray-700">{t.support.contactAnswer}</p>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pre-Footer CTA Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">{t.cta.ctaTitle}</h2>
+            <p className="text-xl md:text-2xl text-blue-100 mb-10">{t.cta.ctaSubtitle}</p>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="h-16 w-64 flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all"
+              >
+                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                  <img
+                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                    alt="Download on App Store"
+                    className="h-full w-full object-contain block mx-auto p-2 scale-110"
+                  />
+                </div>
+              </motion.a>
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="h-16 w-64 flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all"
+              >
+                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                  <img
+                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                    alt="Get it on Google Play"
+                    className="h-full w-full object-contain block mx-auto p-2 scale-150"
+                  />
+                </div>
+              </motion.a>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -458,7 +763,14 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             <div>
               <h4 className="text-lg font-semibold mb-4">{t.footer.contact}</h4>
               <ul className="space-y-2">
-                <li className="text-gray-400 hover:text-white transition-colors">{t.footer.email}</li>
+                <li>
+                  <a 
+                    href="mailto:devtaskhub@gmail.com"
+                    className="text-gray-400 hover:text-white transition-colors underline-offset-2 hover:underline"
+                  >
+                    {t.footer.email}
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -467,6 +779,13 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
           </div>
         </div>
       </footer>
+
+      <ImageModal
+        isOpen={modalImage !== null}
+        onClose={() => setModalImage(null)}
+        imageSrc={modalImage?.src || ''}
+        imageAlt={modalImage?.alt || ''}
+      />
     </div>
   );
 }
