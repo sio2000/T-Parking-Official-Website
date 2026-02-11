@@ -3,17 +3,32 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
+
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
   }
   
   body {
     @apply antialiased text-gray-900;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
 }
 
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full;
   }
 } 

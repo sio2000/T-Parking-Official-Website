@@ -81,20 +81,20 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-8"
+            className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 w-full px-4 sm:px-0"
           >
-            <div className="flex flex-row items-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
               <motion.a 
                 href="#"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="h-20 w-56 flex items-center justify-center bg-black rounded-xl shadow-lg"
+                className="h-20 w-full sm:w-56 flex items-center justify-center flex-shrink-0"
               >
-                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                <div className="h-full w-full flex items-center justify-center overflow-hidden px-2">
                   <img 
                     src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
                     alt="Download on App Store" 
-                    className="h-full w-full object-contain block mx-auto p-2 scale-110"
+                    className="h-full object-contain block mx-auto p-2 scale-110"
                   />
                 </div>
               </motion.a>
@@ -102,13 +102,13 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 href="#"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="h-20 w-56 flex items-center justify-center bg-black rounded-xl shadow-lg"
+                className="h-20 w-full sm:w-56 flex items-center justify-center flex-shrink-0"
               >
-                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                <div className="h-full w-full flex items-center justify-center overflow-hidden px-2">
                   <img 
                     src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
                     alt="Get it on Google Play" 
-                    className="h-full w-full object-contain block mx-auto p-2 scale-150"
+                    className="h-full object-contain block mx-auto p-2 scale-150"
                   />
                 </div>
               </motion.a>
@@ -132,8 +132,8 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
 
       {/* How It Works Section */}
       <section id="how-it-works" className="py-24 bg-gradient-to-br from-blue-50 via-white to-blue-100 relative overflow-hidden">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-200 opacity-30 rounded-full blur-3xl z-0"></div>
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-blue-300 opacity-20 rounded-full blur-3xl z-0"></div>
+        <div className="hidden lg:block absolute -top-32 -left-32 w-96 h-96 bg-blue-200 opacity-30 rounded-full blur-3xl z-0"></div>
+        <div className="hidden lg:block absolute -bottom-32 -right-32 w-96 h-96 bg-blue-300 opacity-20 rounded-full blur-3xl z-0"></div>
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-20 text-blue-900 drop-shadow-lg tracking-tight">
             {t.sections.howItWorks}
@@ -176,13 +176,13 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       </section>
 
       {/* Interactive Map Section */}
-      <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
+      <section className="py-20 bg-gradient-to-b from-blue-50 to-white overflow-x-hidden">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
             {t.sections.interactiveMap}
           </h2>
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <img src={menuImg} alt="Menu" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
+            <img src={menuImg} alt="Menu" className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -210,13 +210,13 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 </li>
               </ul>
             </motion.div>
-            <img src={mapImg} alt="Map" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
+            <img src={mapImg} alt="Map" className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+      <section id="features" className="py-20 bg-gradient-to-b from-white via-blue-50 to-white overflow-x-hidden">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
             {t.sections.features}
@@ -247,7 +247,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       </section>
 
       {/* Points & Rewards Section */}
-      <section id="points-rewards" className="py-20 bg-gradient-to-b from-blue-50 to-white">
+      <section id="points-rewards" className="py-20 bg-gradient-to-b from-blue-50 to-white overflow-x-hidden">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
             {t.sections.pointsRewards}
@@ -285,16 +285,16 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl p-8 flex items-center justify-center shadow-lg min-h-[320px]"
+              className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl p-8 flex items-center justify-center shadow-lg min-h-[320px] w-full"
             >
-              <img src={bonusunparkImg} alt="Bonus Unpark" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain" />
+              <img src={bonusunparkImg} alt="Bonus Unpark" className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto object-contain" />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Notifications & Settings Section (Merged) */}
-      <section id="settings" className="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+      <section id="settings" className="py-20 bg-gradient-to-b from-white via-blue-50 to-white overflow-x-hidden">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
             {t.sections.settings} & {t.sections.notifications}
@@ -351,28 +351,28 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl p-8 flex items-center justify-center shadow-lg min-h-[320px]"
+              className="bg-gradient-to-br from-blue-100 to-blue-200 rounded-3xl p-8 flex items-center justify-center shadow-lg min-h-[320px] w-full"
             >
-              <img src={historyImg} alt="History" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain" />
+              <img src={historyImg} alt="History" className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto object-contain" />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Smart Parking Solution Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white overflow-x-hidden">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 text-blue-800 tracking-tight">
             {language === 'el' ? t.smartSection.elTitle : t.smartSection.title}
           </h2>
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <img src={fuelscoreImg} alt="Fuel Score" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
+            <img src={fuelscoreImg} alt="Fuel Score" className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, type: 'spring', bounce: 0.3 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-10 shadow-xl border border-blue-100 hover:shadow-blue-200 transition-all duration-300 max-w-2xl mx-auto"
+              className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-10 shadow-xl border border-blue-100 hover:shadow-blue-200 transition-all duration-300 max-w-2xl mx-auto w-full"
             >
               {(language === 'el' ? t.smartSection.el : t.smartSection.en).map((line, idx) => (
                 <p key={idx} className={`text-lg ${idx === 0 ? 'md:text-2xl text-blue-900 font-semibold mb-6' : idx === 4 ? 'text-blue-800 font-bold' : 'text-gray-700'} mb-4 text-center`}>
@@ -380,13 +380,13 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 </p>
               ))}
             </motion.div>
-            <img src={timescoreImg} alt="Time Score" className="w-full md:w-[36rem] h-auto md:h-[48rem] object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
+            <img src={timescoreImg} alt="Time Score" className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-900 text-white py-12 overflow-x-hidden">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center">
