@@ -6,6 +6,9 @@ import FeatureCard from './components/FeatureCard';
 import StepCard from './components/StepCard';
 import PricingCard from './components/PricingCard';
 import TermsPage from './components/TermsPage';
+import AdminDashboard from './components/admin/AdminDashboard';
+import AdminLogin from './components/admin/AdminLogin';
+import ProtectedRoute from './components/ProtectedRoute';
 import logoSidebar from './assets/images/logosidebar.png';
 import parkImage from './assets/images/park.jpg';
 import fuelscoreImg from './assets/images/fuelscore.png';
@@ -14,6 +17,7 @@ import menuImg from './assets/images/menu.png';
 import mapImg from './assets/images/map.png';
 import bonusunparkImg from './assets/images/bonusunpark.png';
 import historyImg from './assets/images/history.png';
+import profileImg from './assets/images/profile.png';
 import CookiesPage from './components/CookiesPage';
 import PrivacyPage from './components/PrivacyPage';
 import PrivacyPolicyPage from './components/PrivacyPolicyPage';
@@ -36,18 +40,115 @@ interface Step {
 function MainPage({ language, setLanguage }: { language: Language, setLanguage: (lang: Language) => void }) {
   const t = translations[language];
   const navigate = useNavigate();
+  const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
-      {/* Language Toggle Button */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="fixed top-4 right-4 z-50 bg-white text-blue-600 px-4 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-        onClick={() => setLanguage(language === 'el' ? 'en' : 'el')}
-      >
-        {language === 'el' ? 'EN' : 'EL'}
-      </motion.button>
+      {/* Language Toggle Button - Desktop Only */}
+      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50 hidden sm:flex gap-2">
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="bg-white text-blue-600 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          onClick={() => setLanguage(language === 'el' ? 'en' : 'el')}
+        >
+          {language === 'el' ? 'EN' : 'EL'}
+        </motion.button>
+      </div>
+
+      {/* Mobile Menu Button */}
+      <div className="fixed top-4 right-4 z-50 sm:hidden">
+        <motion.button
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="bg-blue-600 text-white p-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all duration-300 hover:scale-105"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+          </svg>
+        </motion.button>
+
+        {/* Mobile Menu Dropdown */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: mobileMenuOpen ? 1 : 0, y: mobileMenuOpen ? 0 : -10 }}
+          transition={{ duration: 0.2 }}
+          className={`absolute top-full right-0 mt-3 bg-white rounded-2xl shadow-2xl border border-blue-200 overflow-hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}
+          style={{ pointerEvents: mobileMenuOpen ? 'auto' : 'none' }}
+        >
+          <div className="py-2 min-w-max">
+            {/* Language Options */}
+            <div className="px-4 py-2 text-xs font-bold text-blue-600 uppercase tracking-wide border-b border-blue-100">
+              {t.footer.quickLinks}
+            </div>
+            
+            <button
+              onClick={() => {
+                setLanguage('el');
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full px-6 py-3 text-left font-medium flex items-center gap-3 transition-colors ${language === 'el' ? 'bg-blue-50 text-blue-900 border-r-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
+            >
+              <span className="text-lg">🇬🇷</span>
+              <span>Ελληνικά</span>
+            </button>
+            
+            <button
+              onClick={() => {
+                setLanguage('en');
+                setMobileMenuOpen(false);
+              }}
+              className={`w-full px-6 py-3 text-left font-medium flex items-center gap-3 transition-colors border-t border-gray-100 ${language === 'en' ? 'bg-blue-50 text-blue-900 border-r-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
+            >
+              <span className="text-lg">🇬🇧</span>
+              <span>English</span>
+            </button>
+
+            {/* Divider */}
+            <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-2"></div>
+
+            {/* Quick Links */}
+            <a
+              href="#"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
+            >
+              🏠 {t.footer.home}
+            </a>
+            <a
+              href="#how-it-works"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
+            >
+              📍 {t.sections.howItWorks}
+            </a>
+            <a
+              href="#features"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
+            >
+              ⭐ {t.sections.features}
+            </a>
+            <a
+              href="#points-rewards"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
+            >
+              🎁 {t.sections.pointsRewards}
+            </a>
+            <a
+              href="#settings"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
+            >
+              ⚙️ {t.sections.settings}
+            </a>
+          </div>
+        </motion.div>
+      </div>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -85,7 +186,9 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
           >
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
               <motion.a 
-                href="#"
+                href="https://apps.apple.com/us/app/t-parking/id6756634872"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="h-20 w-full sm:w-56 flex items-center justify-center flex-shrink-0"
@@ -99,7 +202,9 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 </div>
               </motion.a>
               <motion.a 
-                href="#"
+                href="https://play.google.com/store/apps/details?id=com.tparking.app&hl=en-US&ah=pD_WYmdyMOmmgUMM47rfiftyZlo&pli=1"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="h-20 w-full sm:w-56 flex items-center justify-center flex-shrink-0"
@@ -246,6 +351,23 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
         </div>
       </section>
 
+      {/* Stats & Impact Section */}
+      <section id="impact" className="py-16 md:py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">{t.stats.title}</h2>
+          
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {t.stats.items && t.stats.items.map((item: any, idx: number) => (
+              <div key={idx} className="bg-blue-700 rounded-xl p-8 shadow-lg text-center hover:bg-blue-600 transform hover:scale-105 transition-all">
+                <div className="text-4xl md:text-5xl font-bold text-yellow-300 mb-3">{item.number}</div>
+                <div className="text-lg text-blue-50 font-semibold">{item.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Points & Rewards Section */}
       <section id="points-rewards" className="py-20 bg-gradient-to-b from-blue-50 to-white overflow-x-hidden">
         <div className="container mx-auto px-4">
@@ -385,6 +507,178 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-16 md:py-20 bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 md:mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4">{t.testimonials.title}</h2>
+            <p className="text-gray-600 text-lg">{t.testimonials.subtitle}</p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
+            >
+              <div className="flex items-center mb-4">
+                <img src={t.testimonials.user1.image || profileImg} alt={t.testimonials.user1.name} className="w-12 h-12 rounded-full mr-4 object-cover" />
+                <div>
+                  <div className="font-bold text-gray-900">{t.testimonials.user1.name}</div>
+                  <div className="text-sm text-gray-500">{t.testimonials.user1.location}</div>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">"{t.testimonials.user1.text}"</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
+            >
+              <div className="flex items-center mb-4">
+                <img src={t.testimonials.user2.image || profileImg} alt={t.testimonials.user2.name} className="w-12 h-12 rounded-full mr-4 object-cover" />
+                <div>
+                  <div className="font-bold text-gray-900">{t.testimonials.user2.name}</div>
+                  <div className="text-sm text-gray-500">{t.testimonials.user2.location}</div>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">"{t.testimonials.user2.text}"</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
+            >
+              <div className="flex items-center mb-4">
+                <img src={t.testimonials.user3.image || profileImg} alt={t.testimonials.user3.name} className="w-12 h-12 rounded-full mr-4 object-cover" />
+                <div>
+                  <div className="font-bold text-gray-900">{t.testimonials.user3.name}</div>
+                  <div className="text-sm text-gray-500">{t.testimonials.user3.location}</div>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed">"{t.testimonials.user3.text}"</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-12 md:mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4">{t.support.title}</h2>
+          </motion.div>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {t.support.faq && t.support.faq.map((item: any, idx: number) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                viewport={{ once: true }}
+                className="bg-blue-50 rounded-xl border border-blue-100 overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFAQ(openFAQ === idx ? null : idx)}
+                  className="w-full p-6 md:p-8 flex items-center justify-between text-left hover:bg-blue-100 transition-colors"
+                >
+                  <h3 className="text-xl font-bold text-blue-900 pr-4">{item.question}</h3>
+                  <svg
+                    className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${openFAQ === idx ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <motion.div
+                  initial={false}
+                  animate={{ height: openFAQ === idx ? 'auto' : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-6 md:px-8 pb-6 md:pb-8">
+                    <p className="text-gray-700">{item.answer}</p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pre-Footer CTA Section */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">{t.cta.ctaTitle}</h2>
+            <p className="text-xl md:text-2xl text-blue-100 mb-10">{t.cta.ctaSubtitle}</p>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+              <motion.a
+                href="https://apps.apple.com/us/app/t-parking/id6756634872"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="h-16 w-64 flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all"
+              >
+                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                  <img
+                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                    alt="Download on App Store"
+                    className="h-full w-full object-contain block mx-auto p-2 scale-110"
+                  />
+                </div>
+              </motion.a>
+              <motion.a
+                href="https://play.google.com/store/apps/details?id=com.tparking.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="h-16 w-64 flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all"
+              >
+                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                  <img
+                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                    alt="Get it on Google Play"
+                    className="h-full w-full object-contain block mx-auto p-2 scale-150"
+                  />
+                </div>
+              </motion.a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 overflow-x-hidden">
         <div className="container mx-auto px-4">
@@ -420,9 +714,59 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             </div>
             <div>
               <h4 className="text-lg font-semibold mb-4">{t.footer.contact}</h4>
-              <ul className="space-y-2">
-                <li className="text-gray-400 hover:text-white transition-colors">{t.footer.email}</li>
+              <ul className="space-y-4">
+                <li>
+                  <a 
+                    href="mailto:devtaskhub@gmail.com"
+                    className="text-gray-400 hover:text-white transition-colors underline-offset-2 hover:underline flex items-center gap-2"
+                  >
+                    <span>📧</span>
+                    {t.footer.email}
+                  </a>
+                </li>
               </ul>
+              
+              {/* Social Media Icons */}
+              <div className="mt-6 flex gap-4">
+                {/* Facebook */}
+                <a 
+                  href="https://www.facebook.com/tparking"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center justify-center transition-colors transform hover:scale-110"
+                  title="Follow us on Facebook"
+                >
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                
+                {/* Instagram */}
+                <a 
+                  href="https://www.instagram.com/tparking"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-gradient-to-br from-pink-500 to-orange-400 hover:from-pink-600 hover:to-orange-500 rounded-full flex items-center justify-center transition-colors transform hover:scale-110"
+                  title="Follow us on Instagram"
+                >
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.322a1.44 1.44 0 110 2.881 1.44 1.44 0 010-2.881z"/>
+                  </svg>
+                </a>
+                
+                {/* TikTok */}
+                <a 
+                  href="https://www.tiktok.com/@tparking"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors transform hover:scale-110 border border-gray-600 hover:border-white"
+                  title="Follow us on TikTok"
+                >
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.86 2.86 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.44-.05z"/>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
@@ -444,6 +788,15 @@ function App() {
       <Route path="/privacy" element={<PrivacyPage language={language} onBack={() => window.history.back()} />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage language={language} setLanguage={setLanguage} onBack={() => window.history.back()} />} />
       <Route path="/terms-conditions" element={<TermsConditionsPage language={language} setLanguage={setLanguage} onBack={() => window.history.back()} />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route 
+        path="/admin" 
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } 
+      />
     </Routes>
   );
 }

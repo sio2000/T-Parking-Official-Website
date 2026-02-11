@@ -27,7 +27,7 @@ export const translations = {
       title: "Κερδίστε Ενώ Σταθμεύετε",
       description: "Μοιραστείτε τη θέση σας όταν φεύγετε και κερδίστε πόντους για δωρεάν κρατήσεις. Παρακολουθήστε την παγκόσμια κατάταξή σας.",
       pointPerRelease: "1 πόντος ανά απελευθέρωση θέσης",
-      freeReservation: "Δωρεάν κράτηση κάθε 30 πόντους",
+      freeReservation: "Δωρεάν κράτηση κάθε 20 πόντους",
       globalRanking: "Παγκόσμια κατάταξη"
     },
     notifications: {
@@ -46,12 +46,93 @@ export const translations = {
     },
     support: {
       title: "Συχνές Ερωτήσεις",
-      howToEarn: "Πώς κερδίζω πόντους;",
-      earnAnswer: "Μοιραστείτε τη θέση σας όταν φεύγετε και κερδίστε +1 πόντο για κάθε επιβεβαιωμένη απελευθέρωση.",
-      premiumBenefits: "Ποια είναι τα οφέλη του Premium;",
-      premiumAnswer: "Λάβετε προτεραιότητα στις ειδοποιήσεις, προηγμένα φίλτρα και λεπτομερή στατιστικά με το Premium.",
-      contactSupport: "Πώς επικοινωνώ με την υποστήριξη;",
-      contactAnswer: "Στείλτε μας email στο support@t-parking.gr ή χρησιμοποιήστε τη συνομιλία στην εφαρμογή για άμεση βοήθεια."
+      faq: [
+        {
+          question: "Η εφαρμογή λειτουργεί σε όλες τις πόλεις;",
+          answer: "Ναι! Το T-Parking είναι διαθέσιμο σε πάνω από 100 πόλεις και συνεχώς επεκτείνεται."
+        },
+        {
+          question: "Είναι ασφαλές να μοιράζομαι τη θέση μου;",
+          answer: "Απόλυτα ασφαλές — η τοποθεσία σας προστατεύεται και η θέση μοιράζεται μόνο όταν την αφήνετε."
+        },
+        {
+          question: "Ποιοι τύποι οχημάτων υποστηρίζονται;",
+          answer: "Υποστηρίζονται όλα τα κοινά επιβατικά οχήματα."
+        },
+        {
+          question: "Μπορώ να χρησιμοποιήσω την εφαρμογή χωρίς Internet;",
+          answer: "Χρειάζεται σύνδεση στο Internet για live ενημέρωση θέσεων και πόντων."
+        },
+        {
+          question: "Πώς επικοινωνώ με την υποστήριξη;",
+          answer: "Στείλτε μας email στο devtaskhub@gmail.com"
+        },
+        {
+          question: "Τι σημαίνουν τα χρώματα των θέσεων;",
+          answer: "Κόκκινο = μικρή, Κίτρινο = μεσαία, Πράσινο = μεγάλη."
+        },
+        {
+          question: "Πώς πηγαίνω σε μια θέση που βρήκα;",
+          answer: "Πατήστε τη θέση στον χάρτη και μετά «Πλοήγηση». Θα ανοίξουν οδηγίες στην εφαρμογή χαρτών."
+        },
+        {
+          question: "Πώς μοιράζομαι μία θέση στάθμευσης;",
+          answer: "Επιλέξτε το μέγεθος της θέσης, πατήστε «Ξεπαρκάρω» και επιβεβαιώστε — η θέση μοιράζεται αυτόματα και κερδίζετε πόντους."
+        }
+      ]
+    },
+    cta: {
+      title: "Ξεκινήστε Τώρα",
+      subtitle: "Κατεβάστε την εφαρμογή και βρείτε parking σε πραγματικό χρόνο",
+      downloadNow: "Κατεβάστε Τώρα",
+      getStarted: "Ξεκινήστε",
+      readyToStart: "Έτοιμοι να ξεκινήσετε;",
+      joinCommunity: "Εγγραφείτε και γίνετε μέλος της κοινότητας μας",
+      ctaTitle: "Μην Χάσετε Άλλο Χρόνο",
+      ctaSubtitle: "Κατεβάστε την εφαρμογή τώρα και βρείτε parking σε δευτερόλεπτα"
+    },
+    testimonials: {
+      title: "Τι Λένε οι Χρήστες μας",
+      subtitle: "Εκατοντάδες οδηγοί εμπιστεύονται την T-Parking",
+      user1: {
+        name: "Μαρία Κ. — Αθήνα",
+        location: "Αθήνα",
+        text: "Ειλικρινά μου έχει λύσει τα χέρια. Παλιά έκανα κύκλους για ώρα μέχρι να βρω θέση· τώρα βρίσκω πολύ πιο γρήγορα και χωρίς άγχος.",
+        image: "https://randomuser.me/api/portraits/women/65.jpg"
+      },
+      user2: {
+        name: "Νίκος Π. — Θεσσαλονίκη",
+        location: "Θεσσαλονίκη",
+        text: "Δεν το περίμενα ότι το σύστημα πόντων θα είναι τόσο χρήσιμο. Ήδη έχω κερδίσει δωρεάν κρατήσεις απλά χρησιμοποιώντας την εφαρμογή.",
+        image: "https://randomuser.me/api/portraits/men/32.jpg"
+      },
+      user3: {
+        name: "Ελένη Δ. — Πάτρα",
+        location: "Πάτρα",
+        text: "Τα notifications όταν αδειάζει θέση είναι φοβερά. Έχω προλάβει parking που παλιά θα έχανα σίγουρα.",
+        image: "https://randomuser.me/api/portraits/women/12.jpg"
+      }
+    },
+    stats: {
+      title: "Μας Εμπιστεύονται",
+      items: [
+        {
+          number: "1000+",
+          label: "Εγγεγραμμένοι Χρήστες"
+        },
+        {
+          number: "100+",
+          label: "Πόλεις"
+        },
+        {
+          number: "65%",
+          label: "Λιγότερος χρόνος αναζήτησης θέσης"
+        },
+        {
+          number: "30%",
+          label: "Λιγότερη κατανάλωση καυσίμου"
+        }
+      ]
     },
     footer: {
       quickLinks: "Γρήγοροι Σύνδεσμοι",
@@ -2784,7 +2865,7 @@ export const translations = {
       title: "Earn While You Park",
       description: "Share your spot when leaving and earn points for free reservations. Track your global ranking and compete with other users.",
       pointPerRelease: "1 point per spot release",
-      freeReservation: "Free reservation every 30 points",
+      freeReservation: "Free reservation every 20 points",
       globalRanking: "Global leaderboard ranking"
     },
     notifications: {
@@ -2803,12 +2884,93 @@ export const translations = {
     },
     support: {
       title: "Frequently Asked Questions",
-      howToEarn: "How do I earn points?",
-      earnAnswer: "Share your spot when leaving and earn +1 point for each confirmed release.",
-      premiumBenefits: "What are the benefits of Premium?",
-      premiumAnswer: "Get priority alerts, advanced filters, and detailed statistics with Premium.",
-      contactSupport: "How do I contact support?",
-      contactAnswer: "Email us at support@t-parking.gr or use the in-app chat for immediate assistance."
+      faq: [
+        {
+          question: "Does the app work in all cities?",
+          answer: "Yes! T-Parking is available in over 100 cities and expanding continuously."
+        },
+        {
+          question: "Is it safe to share my spot?",
+          answer: "Absolutely safe — your location is protected and the spot is shared only when you leave."
+        },
+        {
+          question: "What types of vehicles are supported?",
+          answer: "All common passenger vehicles are supported."
+        },
+        {
+          question: "Can I use the app without Internet?",
+          answer: "Internet connection is required for real-time updates and points synchronization."
+        },
+        {
+          question: "How do I contact support?",
+          answer: "Email us at devtaskhub@gmail.com"
+        },
+        {
+          question: "What do the spot colors mean?",
+          answer: "Red = small, Yellow = medium, Green = large."
+        },
+        {
+          question: "How do I navigate to a spot I found?",
+          answer: "Tap the spot on the map and then \"Navigate\". Directions will open in the maps app."
+        },
+        {
+          question: "How do I share a parking spot?",
+          answer: "Select the spot size, tap \"Unpark\" and confirm — the spot is shared automatically and you earn points."
+        }
+      ]
+    },
+    cta: {
+      title: "Get Started Now",
+      subtitle: "Download the app and find parking in real-time",
+      downloadNow: "Download Now",
+      getStarted: "Get Started",
+      readyToStart: "Ready to Start?",
+      joinCommunity: "Sign up and join our community",
+      ctaTitle: "Don't Waste Another Minute",
+      ctaSubtitle: "Download the app now and find parking in seconds"
+    },
+    testimonials: {
+      title: "What Our Users Say",
+      subtitle: "Hundreds of drivers trust T-Parking",
+      user1: {
+        name: "Maria K.",
+        location: "Athens",
+        text: "The best parking app! It has saved me so many hours of searching for a spot.",
+        image: "https://randomuser.me/api/portraits/women/65.jpg"
+      },
+      user2: {
+        name: "Nikos P.",
+        location: "Thessaloniki",
+        text: "The points system is excellent. I've already earned many free reservations!",
+        image: "https://randomuser.me/api/portraits/men/32.jpg"
+      },
+      user3: {
+        name: "Eleni D.",
+        location: "Patras",
+        text: "Real-time notifications are a game changer. Never miss a spot again!",
+        image: "https://randomuser.me/api/portraits/women/12.jpg"
+      }
+    },
+    stats: {
+      title: "Trusted By Many",
+      items: [
+        {
+          number: "1,000+",
+          label: "Registered Users"
+        },
+        {
+          number: "100+",
+          label: "Cities"
+        },
+        {
+          number: "65%",
+          label: "Less Search Time for Parking"
+        },
+        {
+          number: "30%",
+          label: "Less Fuel Consumption"
+        }
+      ]
     },
     footer: {
       quickLinks: "Quick Links",
