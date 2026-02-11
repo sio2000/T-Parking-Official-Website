@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { checkAdminPassword, setAdminSession } from '../../lib/adminAuth';
+import { loginAdmin } from '../../lib/adminAuth';
 
 interface AdminLoginModalProps {
   isOpen: boolean;
@@ -20,11 +20,10 @@ export default function AdminLoginModal({ isOpen, onClose, onSuccess }: AdminLog
 
     console.log('[AdminLoginModal] Attempting login with password length:', password.length);
     
-    const isValid = checkAdminPassword(password);
+    const isValid = loginAdmin(password);
     console.log('[AdminLoginModal] Password check result:', isValid);
     
     if (isValid) {
-      setAdminSession();
       setPassword('');
       setLoading(false);
       onSuccess();
