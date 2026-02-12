@@ -1,3 +1,46 @@
+/* Custom animations for How It Works section */
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+}
+.animate-fade-in-up.delay-100 {
+  animation-delay: 0.1s;
+}
+.animate-fade-in-up.delay-200 {
+  animation-delay: 0.2s;
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 1.6s infinite;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-pop {
+  animation: pop 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+}
+
+@keyframes arrow-flow {
+  0% { opacity: 0; transform: translateY(20px); }
+  60% { opacity: 1; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-arrow-flow {
+  animation: arrow-flow 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
+}
+.animate-arrow-flow.delay-100 {
+  animation-delay: 0.1s;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

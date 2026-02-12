@@ -183,34 +183,16 @@ export const translations = {
     },
     steps: {
       openApp: {
-        title: {
-          el: 'Ανοίξτε την Εφαρμογή',
-          en: 'Open the App',
-        },
-        description: {
-          el: 'Κατεβάστε <span class="font-bold text-black">Δωρεάν</span> την εφαρμογή και δημιουργήστε λογαριασμό',
-          en: 'Download the app for <span class="font-bold text-black">free</span> and create an account',
-        },
+        title: { el: 'Ανοίξτε την Εφαρμογή', en: 'Open the App' },
+        description: { el: 'Κατεβάστε <span class="font-bold text-black">Δωρεάν</span> την εφαρμογή και δημιουργήστε λογαριασμό', en: 'Download the app for <span class="font-bold text-black">free</span> and create an account' },
       },
       findSpot: {
-        title: {
-          el: 'Βρείτε Θέση',
-          en: 'Find a Spot',
-        },
-        description: {
-          el: 'Χρησιμοποιήστε τον χάρτη για να βρείτε διαθέσιμες θέσεις κοντά σας',
-          en: 'Use the map to find available spots near you',
-        },
+        title: { el: 'Περιηγηθείτε στον χάρτη', en: 'Browse the map' },
+        description: { el: 'Χρησιμοποιήστε τον χάρτη για να βρείτε διαθέσιμες θέσεις κοντά σας', en: 'Use the map to find available spots near you' },
       },
       reserveOrShare: {
-        title: {
-          el: 'Κρατήστε ή Μοιραστείτε',
-          en: 'Reserve or Share',
-        },
-        description: {
-          el: 'Κλείστε μια θέση με ένα πάτημα ή μοιραστείτε τη δική σας όταν αποχωρείτε , κερδίζοντας πόντους κάθε φορά.',
-          en: 'Book a spot with one tap or share your own when leaving, earning points every time.',
-        },
+        title: { el: 'Βρίσκετε εύκολα parking!', en: 'You find parking easily!' },
+        description: { el: 'Η εφαρμογή σε βοηθά να βρείτε θέση γρήγορα και εύκολα, χωρίς άγχος.', en: 'The app helps you find a spot quickly and easily, stress-free.' },
       },
     },
     smartSection: {

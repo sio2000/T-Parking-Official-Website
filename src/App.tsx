@@ -45,7 +45,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex flex-col" style={{ WebkitOverflowScrolling: 'touch', overflow: 'auto' }}>
       {/* Language Toggle Button - Desktop Only */}
       <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50 hidden sm:flex gap-2">
         <motion.button
@@ -58,100 +58,20 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
         </motion.button>
       </div>
 
-      {/* Mobile Menu Button */}
-      <div className="fixed top-4 right-4 z-50 sm:hidden">
+      {/* Language Toggle Button - Mobile Only */}
+      <div className="fixed top-2 right-2 z-50 flex sm:hidden gap-2">
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="bg-blue-600 text-white p-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all duration-300 hover:scale-105"
+          className="bg-white text-blue-600 px-3 py-1.5 rounded-full font-semibold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+          onClick={() => setLanguage(language === 'el' ? 'en' : 'el')}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-          </svg>
+          {language === 'el' ? 'EN' : 'EL'}
         </motion.button>
-
-        {/* Mobile Menu Dropdown */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: mobileMenuOpen ? 1 : 0, y: mobileMenuOpen ? 0 : -10 }}
-          transition={{ duration: 0.2 }}
-          className={`absolute top-full right-0 mt-3 bg-white rounded-2xl shadow-2xl border border-blue-200 overflow-hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}
-          style={{ pointerEvents: mobileMenuOpen ? 'auto' : 'none' }}
-        >
-          <div className="py-2 min-w-max">
-            {/* Language Options */}
-            <div className="px-4 py-2 text-xs font-bold text-blue-600 uppercase tracking-wide border-b border-blue-100">
-              {t.footer.quickLinks}
-            </div>
-            
-            <button
-              onClick={() => {
-                setLanguage('el');
-                setMobileMenuOpen(false);
-              }}
-              className={`w-full px-6 py-3 text-left font-medium flex items-center gap-3 transition-colors ${language === 'el' ? 'bg-blue-50 text-blue-900 border-r-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
-            >
-              <span className="text-lg">🇬🇷</span>
-              <span>Ελληνικά</span>
-            </button>
-            
-            <button
-              onClick={() => {
-                setLanguage('en');
-                setMobileMenuOpen(false);
-              }}
-              className={`w-full px-6 py-3 text-left font-medium flex items-center gap-3 transition-colors border-t border-gray-100 ${language === 'en' ? 'bg-blue-50 text-blue-900 border-r-4 border-blue-600' : 'text-gray-700 hover:bg-gray-50'}`}
-            >
-              <span className="text-lg">🇬🇧</span>
-              <span>English</span>
-            </button>
-
-            {/* Divider */}
-            <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-2"></div>
-
-            {/* Quick Links */}
-            <a
-              href="#"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
-            >
-              🏠 {t.footer.home}
-            </a>
-            <a
-              href="#how-it-works"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
-            >
-              📍 {t.sections.howItWorks}
-            </a>
-            <a
-              href="#features"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
-            >
-              ⭐ {t.sections.features}
-            </a>
-            <a
-              href="#points-rewards"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
-            >
-              🎁 {t.sections.pointsRewards}
-            </a>
-            <a
-              href="#settings"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-6 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent hover:border-blue-600"
-            >
-              ⚙️ {t.sections.settings}
-            </a>
-          </div>
-        </motion.div>
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ WebkitOverflowScrolling: 'touch' }}>
         <div className="absolute inset-0">
           <img 
             src={parkImage} 
@@ -174,7 +94,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-6xl md:text-7xl font-bold mb-6 text-white"
+            className="w-full text-4xl md:text-6xl font-bold mb-8 py-6 px-4 rounded-none shadow-xl border-0 text-white drop-shadow-lg"
           >
             {t.hero.title}
           </motion.h1>
@@ -224,7 +144,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             initial={{ y: 0 }}
             animate={{ y: [0, 30, 0] }}
             transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
-            className="flex justify-center mt-16"
+            className="flex justify-center mt-10"
           >
             <a href="#how-it-works" aria-label="Scroll to How It Works">
               <svg width="64" height="64" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -236,46 +156,53 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-24 bg-gradient-to-br from-blue-50 via-white to-blue-100 relative overflow-hidden">
-        <div className="hidden lg:block absolute -top-32 -left-32 w-96 h-96 bg-blue-200 opacity-30 rounded-full blur-3xl z-0"></div>
-        <div className="hidden lg:block absolute -bottom-32 -right-32 w-96 h-96 bg-blue-300 opacity-20 rounded-full blur-3xl z-0"></div>
+      <section id="how-it-works" className="py-24 bg-gradient-to-br from-blue-50 via-white to-blue-100 relative overflow-hidden" style={{ WebkitOverflowScrolling: 'touch' }}>
         <div className="container mx-auto px-4 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-20 text-blue-900 drop-shadow-lg tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-10 text-blue-900 drop-shadow-lg tracking-tight">
             {t.sections.howItWorks}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {appData.steps.map((step: Step, index: number) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8, y: 60 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: index * 0.18, type: 'spring', bounce: 0.5 }}
-                viewport={{ once: true }}
-                className="relative rounded-3xl bg-white/70 backdrop-blur-xl shadow-2xl hover:shadow-blue-300 hover:-translate-y-4 transition-all duration-300 p-10 flex flex-col items-center border border-blue-100 hover:border-blue-400 group min-h-[420px]"
-              >
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-20">
-                  <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow-xl border-4 border-white group-hover:scale-110 transition-transform duration-300">
-                    {step.icon}
-                  </div>
-                </div>
-                <div className="mt-16 text-4xl font-extrabold text-blue-700 mb-2 drop-shadow-sm">{step.number}</div>
-                <div className="text-2xl font-bold text-gray-900 mb-3 text-center group-hover:text-blue-700 transition-colors duration-300">
-                  {typeof t.steps[step.key as keyof typeof t.steps].title === 'object'
-                    ? (t.steps[step.key as keyof typeof t.steps].title as any)[language]
-                    : t.steps[step.key as keyof typeof t.steps].title}
-                </div>
-                {step.key === 'openApp' && language === 'el' ? (
-                  <div className="text-gray-600 text-lg text-center leading-relaxed group-hover:text-blue-900 transition-colors duration-300" dangerouslySetInnerHTML={{ __html: (t.steps.openApp.description as any).el }} />
-                ) : (
-                  <div className="text-gray-600 text-lg text-center leading-relaxed group-hover:text-blue-900 transition-colors duration-300">
-                    {typeof t.steps[step.key as keyof typeof t.steps].description === 'object'
-                      ? (t.steps[step.key as keyof typeof t.steps].description as any)[language]
-                      : t.steps[step.key as keyof typeof t.steps].description}
-                  </div>
-                )}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-16 h-2 bg-gradient-to-r from-blue-300 via-blue-500 to-blue-300 rounded-full opacity-60 group-hover:opacity-100 transition-all"></div>
-              </motion.div>
-            ))}
+          <div className="flex flex-col items-center justify-center p-0 md:p-0 max-w-sm mx-auto">
+            {/* Step 1 */}
+            <div className="flex flex-col items-center mb-6 animate-fade-in-up">
+              <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 shadow-lg mb-2 animate-bounce-slow">
+                {appData.steps[0].icon}
+              </span>
+              <span className="text-2xl font-extrabold text-blue-700 mb-1 animate-pop">1</span>
+              <span className="text-lg font-bold text-blue-900 mb-1">{typeof t.steps.openApp.title === 'object' ? t.steps.openApp.title[language] : t.steps.openApp.title}</span>
+              <span className="text-sm text-gray-700 text-center" dangerouslySetInnerHTML={{ __html: typeof t.steps.openApp.description === 'object' ? t.steps.openApp.description[language] : t.steps.openApp.description }}></span>
+            </div>
+            {/* Arrow */}
+            <div className="flex flex-col items-center mb-6 animate-arrow-flow">
+              <svg width="36" height="60" viewBox="0 0 36 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 10v40" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round"/>
+                <polygon points="18,50 28,40 8,40" fill="#3B82F6" />
+              </svg>
+            </div>
+            {/* Step 2 */}
+            <div className="flex flex-col items-center mb-6 animate-fade-in-up delay-100">
+              <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-400 to-green-600 shadow-lg mb-2 animate-bounce-slow">
+                {appData.steps[1].icon}
+              </span>
+              <span className="text-2xl font-extrabold text-blue-700 mb-1 animate-pop">2</span>
+              <span className="text-lg font-bold text-blue-900 mb-1">{typeof t.steps.findSpot.title === 'object' ? t.steps.findSpot.title[language] : t.steps.findSpot.title}</span>
+              <span className="text-sm text-gray-700 text-center">{typeof t.steps.findSpot.description === 'object' ? t.steps.findSpot.description[language] : t.steps.findSpot.description}</span>
+            </div>
+            {/* Arrow */}
+            <div className="flex flex-col items-center mb-6 animate-arrow-flow delay-100">
+              <svg width="36" height="60" viewBox="0 0 36 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 10v40" stroke="#FBBF24" strokeWidth="4" strokeLinecap="round"/>
+                <polygon points="18,50 28,40 8,40" fill="#FBBF24" />
+              </svg>
+            </div>
+            {/* Step 3 */}
+            <div className="flex flex-col items-center mb-2 animate-fade-in-up delay-200">
+              <span className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-lg mb-2 animate-bounce-slow">
+                {appData.steps[2].icon}
+              </span>
+              <span className="text-2xl font-extrabold text-blue-700 mb-1 animate-pop">3</span>
+              <span className="text-lg font-bold text-blue-900 mb-1">{typeof t.steps.reserveOrShare.title === 'object' ? t.steps.reserveOrShare.title[language] : t.steps.reserveOrShare.title}</span>
+              <span className="text-sm text-gray-700 text-center">{typeof t.steps.reserveOrShare.description === 'object' ? t.steps.reserveOrShare.description[language] : t.steps.reserveOrShare.description}</span>
+            </div>
           </div>
         </div>
       </section>
@@ -283,9 +210,12 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       {/* Interactive Map Section */}
       <section className="py-20 bg-gradient-to-b from-blue-50 to-white overflow-x-hidden">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
-            {t.sections.interactiveMap}
-          </h2>
+          <div className="w-screen relative left-1/2 right-1/2 -translate-x-1/2 mb-10">
+            <div className="bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600 text-white text-2xl md:text-3xl font-bold py-5 px-4 w-full shadow-xl border-0 flex items-center justify-center">
+              <svg className="w-7 h-7 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" /></svg>
+              {t.sections.interactiveMap}
+            </div>
+          </div>
           <div className="flex flex-col md:flex-row items-center justify-center gap-8">
             <img src={menuImg} alt="Menu" className="w-full max-w-sm md:max-w-md lg:max-w-lg h-auto object-contain rounded-2xl shadow-2xl bg-white p-2 border border-gray-100" />
             <motion.div
@@ -295,10 +225,6 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               viewport={{ once: true }}
               className="bg-white rounded-3xl shadow-xl p-10 flex flex-col items-start border border-blue-100 hover:shadow-blue-200 transition-all duration-300 max-w-xl w-full"
             >
-              <h3 className="text-2xl font-bold mb-4 text-blue-700 flex items-center gap-2">
-                <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" /></svg>
-                {t.map.title}
-              </h3>
               <p className="text-gray-600 mb-6 text-lg leading-relaxed">{t.map.description}</p>
               <ul className="space-y-4 w-full">
                 <li className="flex items-center bg-blue-50 rounded-xl px-4 py-3 shadow-sm">
@@ -323,29 +249,22 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       {/* Features Section */}
       <section id="features" className="py-20 bg-gradient-to-b from-white via-blue-50 to-white overflow-x-hidden">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
-            {t.sections.features}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="flex items-center justify-center mb-10">
+            <span className="inline-flex items-center px-6 py-2 rounded-full bg-blue-600 text-white text-xl font-bold shadow-lg">
+              {t.sections.features}
+            </span>
+          </div>
+          <div className="flex flex-col items-center justify-center bg-white/90 rounded-3xl shadow-2xl p-6 md:p-10 max-w-md mx-auto animate-fade-in-up">
             {appData.features.map((feature: Feature, index: number) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: index * 0.12, type: 'spring', bounce: 0.3 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-3xl shadow-xl hover:shadow-blue-200 transition-all duration-300 p-8 flex flex-col items-center border border-blue-100 hover:border-blue-300 hover:-translate-y-2 group"
-              >
-                <div className="mb-6 flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 shadow-md group-hover:bg-blue-100 transition-colors duration-300">
+              <div key={index} className="flex flex-row items-center gap-4 mb-6 last:mb-0">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow-lg">
                   {feature.icon}
+                </span>
+                <div className="flex flex-col">
+                  <span className="text-lg font-bold text-blue-800 mb-1">{t.features[feature.key as keyof typeof t.features].title}</span>
+                  <span className="text-sm text-gray-700">{t.features[feature.key as keyof typeof t.features].description}</span>
                 </div>
-                <div className="text-xl font-bold text-blue-800 mb-2 text-center tracking-tight">
-                  {t.features[feature.key as keyof typeof t.features].title}
-                </div>
-                <div className="text-gray-500 text-center text-base leading-relaxed">
-                  {t.features[feature.key as keyof typeof t.features].description}
-                </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -417,10 +336,17 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
 
       {/* Notifications & Settings Section (Merged) */}
       <section id="settings" className="py-20 bg-gradient-to-b from-white via-blue-50 to-white overflow-x-hidden">
+        <div className="w-full mb-8">
+          <div className="bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 text-white text-3xl md:text-4xl font-extrabold py-6 px-4 w-full shadow-xl border-0 flex items-center justify-center rounded-none">
+            <span>{language === 'el' ? t.sections.settings + ' & ' + t.sections.notifications : 'Settings & Notifications'}</span>
+          </div>
+        </div>
+        <div className="w-full mb-8">
+          <div className="bg-gradient-to-r from-blue-200 via-blue-50 to-blue-200 text-blue-900 text-lg font-bold py-4 px-4 w-full shadow-md border-0 flex items-center justify-center rounded-none">
+            <span>{language === 'el' ? 'Διαχειρίσου τις ρυθμίσεις και τις ειδοποιήσεις σου εύκολα!' : 'Manage your settings and notifications easily!'}</span>
+          </div>
+        </div>
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-blue-800 tracking-tight">
-            {t.sections.settings} & {t.sections.notifications}
-          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
@@ -482,7 +408,18 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       </section>
 
       {/* Smart Parking Solution Section */}
-      <section className="py-20 bg-white overflow-x-hidden">
+      {/* Playful Break Element */}
+      <div className="w-full flex justify-center items-center py-8">
+        <div className="relative w-32 h-32">
+          <svg viewBox="0 0 128 128" className="w-full h-full">
+            <circle cx="64" cy="64" r="60" fill="#FBBF24" stroke="#3B82F6" strokeWidth="6" />
+          </svg>
+          <div className="absolute left-0 w-full flex items-center justify-center pointer-events-none" style={{top: '48px'}}>
+            <span className="text-3xl font-extrabold text-blue-700 animate-bounce text-center">Parking Fun!!</span>
+          </div>
+        </div>
+      </div>
+      <section className="py-20 bg-gradient-to-br from-yellow-50 via-blue-50 to-white overflow-x-hidden">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 text-blue-800 tracking-tight">
             {language === 'el' ? t.smartSection.elTitle : t.smartSection.title}
@@ -510,6 +447,11 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       {/* Testimonials Section */}
       <section className="py-16 md:py-20 bg-gradient-to-b from-white to-blue-50">
         <div className="container mx-auto px-4">
+          <div className="w-screen relative left-1/2 right-1/2 -translate-x-1/2 mb-8">
+            <div className="bg-gradient-to-r from-blue-500 via-blue-300 to-blue-500 text-white text-2xl md:text-3xl font-bold py-5 px-4 w-full shadow-xl border-0 flex items-center justify-center">
+              {t.testimonials.title}
+            </div>
+          </div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -517,8 +459,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             viewport={{ once: true }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4">{t.testimonials.title}</h2>
-            <p className="text-gray-600 text-lg">{t.testimonials.subtitle}</p>
+            <p className="text-black font-bold text-lg">{t.testimonials.subtitle}</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             <motion.div
@@ -680,7 +621,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 overflow-x-hidden">
+      <footer className="bg-gray-900 text-white py-12 overflow-x-hidden" style={{ WebkitOverflowScrolling: 'touch' }}>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center">
@@ -801,4 +742,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
