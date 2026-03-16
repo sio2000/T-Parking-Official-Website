@@ -75,6 +75,13 @@ const handler: Handler = async (event) => {
 
     console.log('[delete-account] Starting deletion for user:', userId);
 
+    // Log deletion for admin dashboard (before deleting profile)
+    const { data: profile } = await supabaseAdmin.from('profiles').select('email').eq('id', userId).single();
+    await supabaseAdmin.from('deleted_accounts_log').insert({
+      user_id: userId,
+      email: profile?.email || null,
+    });
+
     // Delete user's parking spots
     await supabaseAdmin.from('parking_spots').delete().eq('user_id', userId);
     

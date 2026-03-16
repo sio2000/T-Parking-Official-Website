@@ -12,6 +12,7 @@ interface UserReservationStock {
   stock: number;
   created_at: string;
   updated_at: string;
+  profiles?: { full_name?: string | null; email?: string | null } | null;
 }
 
 export default function ReservedSpotsManagement() {
@@ -20,37 +21,21 @@ export default function ReservedSpotsManagement() {
   const [uniqueUsers, setUniqueUsers] = useState<number>(0);
   const [totalStock, setTotalStock] = useState<number>(0);
   const [loading, setLoading] = useState(true);
-  const [userNamesMap, setUserNamesMap] = useState<Map<string, string>>(new Map());
-
   useEffect(() => {
     loadReservations();
   }, []);
 
+  const getDisplayName = (reservation: UserReservationStock): string => {
+    const p = reservation.profiles;
+    const name = (p?.full_name && String(p.full_name).trim()) || '';
+    const email = (p?.email && String(p.email).trim()) || '';
+    return name || email || `Χρήστης ${reservation.user_id?.slice(0, 8) || '-'}`;
+  };
+
   const loadReservations = async () => {
     try {
       setLoading(true);
-      console.log('[ReservedSpotsManagement] Starting to load reservations from user_reservation_stock...');
-
       const client = getSupabaseClient();
-      
-      // Load user names from profiles table
-      console.log('[ReservedSpotsManagement] Loading user names from profiles...');
-      const { data: profiles, error: profilesError } = await client
-        .from('profiles')
-        .select('id, full_name');
-      
-      if (profilesError) {
-        console.warn('[ReservedSpotsManagement] Error loading profiles:', profilesError);
-      } else {
-        const namesMap = new Map<string, string>();
-        (profiles || []).forEach((profile: any) => {
-          if (profile.id && profile.full_name) {
-            namesMap.set(profile.id, profile.full_name);
-          }
-        });
-        setUserNamesMap(namesMap);
-        console.log('[ReservedSpotsManagement] Loaded', namesMap.size, 'user names');
-      }
       
       // Get total count
       const { count: totalCount, error: countError } = await client
@@ -64,10 +49,10 @@ export default function ReservedSpotsManagement() {
         console.log('[ReservedSpotsManagement] Total reservations count:', totalCount);
       }
       
-      // Get all records
+      // Get all records with profile join για Ονοματεπώνυμο
       const { data, error } = await client
         .from('user_reservation_stock')
-        .select('*')
+        .select('*, profiles!user_reservation_stock_user_id_fkey(full_name, email)')
         .order('created_at', { ascending: false });
 
       console.log('[ReservedSpotsManagement] Query result:', {
@@ -324,9 +309,7 @@ export default function ReservedSpotsManagement() {
                         {reservation.id}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {reservation.user_id 
-                          ? (userNamesMap.get(reservation.user_id) || `${reservation.user_id.slice(0, 8)}...`)
-                          : '-'}
+                        {getDisplayName(reservation)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         <span

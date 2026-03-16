@@ -17,6 +17,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { extractCityFromAddress } from '../../lib/extractCity';
+import { getCityFromCoords } from '../../lib/geocode';
 
 // Use admin client if available (bypasses RLS), otherwise fall back to regular client
 const getSupabaseClient = () => supabaseAdmin || supabase;
@@ -28,6 +30,8 @@ interface AnalyticsData {
   userGrowth: any[];
   topUsers: any[];
   spotsByHour: any[];
+  spotsByCity: any[];
+  unparkByUser: any[];
 }
 
 const COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
@@ -42,10 +46,12 @@ export default function AnalyticsDashboard() {
     userGrowth: [],
     topUsers: [],
     spotsByHour: [],
+    spotsByCity: [],
+    unparkByUser: [],
   });
   const [metrics, setMetrics] = useState({
     totalSpotsCreated: 0,
-    activeSpotsAverage: 0,
+    activeSpotsNow: 0,
     newUsers: 0,
     reservationsMade: 0,
     averageScore: 0,
@@ -104,11 +110,10 @@ export default function AnalyticsDashboard() {
         console.warn('[AnalyticsDashboard] Error fetching parking_spots:', spotsError);
       }
       
-      // Fetch deleted spots from parking_history (to include them in analytics)
-      console.log('[AnalyticsDashboard] Fetching parking_history for deleted spots...');
+      // Fetch parking_history (no size column in schema)
       const { data: historySpots, error: historyError } = await client
         .from('parking_history')
-        .select('created_at, size')
+        .select('created_at')
         .gte('created_at', start.toISOString())
         .lte('created_at', end.toISOString())
         .order('created_at', { ascending: true });
@@ -117,12 +122,10 @@ export default function AnalyticsDashboard() {
         console.warn('[AnalyticsDashboard] Error fetching parking_history (non-fatal):', historyError);
       }
       
-      // Combine spots from parking_spots and parking_history
-      // Normalize history spots to match spots structure (is_active will be false for deleted spots)
       const normalizedHistorySpots = (historySpots || []).map((h: any) => ({
         created_at: h.created_at,
-        is_active: false, // History spots are always inactive (deleted)
-        size: h.size || 'unknown'
+        is_active: false,
+        size: 'unknown'
       }));
       
       // Combine all spots (active + deleted)
@@ -151,64 +154,28 @@ export default function AnalyticsDashboard() {
         count,
       }));
       
-      // Active vs Inactive - Calculate based on expiration time, not current is_active status
-      // This ensures we count all spots created in the period, even if they've expired/deleted
-      let spotExpirationMinutes = 6; // default
-      try {
-        const storedSettings = localStorage.getItem('admin_settings');
-        if (storedSettings) {
-          const settings = JSON.parse(storedSettings);
-          if (settings.spotExpirationTime) {
-            spotExpirationMinutes = settings.spotExpirationTime;
-          }
-        }
-      } catch (err) {
-        console.warn('[AnalyticsDashboard] Could not load settings, using default expiration time:', err);
-      }
-      
-      const now = new Date();
-      const expirationThreshold = new Date(now.getTime() - (spotExpirationMinutes * 60 * 1000));
-      
-      let activeCount = 0;
-      let inactiveCount = 0;
-      
-      // Count all spots created in the period based on expiration (using combined spots)
-      spotsForAnalytics.forEach((spot: any) => {
-        if (spot.created_at) {
-          const spotCreatedAt = new Date(spot.created_at);
-          // Spot is active if created_at + expirationMinutes > now
-          // Which means: created_at > (now - expirationMinutes)
-          if (spotCreatedAt > expirationThreshold) {
-            activeCount++;
-          } else {
-            inactiveCount++;
-          }
-        } else {
-          // If no created_at, count as inactive
-          inactiveCount++;
-        }
-      });
-      
-      console.log('[AnalyticsDashboard] Active vs Inactive calculation:', {
-        totalSpots: spotsForAnalytics.length,
-        activeCount,
-        inactiveCount,
-        expirationMinutes: spotExpirationMinutes,
-        expirationThreshold: expirationThreshold.toISOString(),
-        fromParkingSpots: (spots || []).length,
-        fromHistory: (historySpots || []).length
-      });
+      // Ενεργές = τελευταία 6 λεπτά (όπως στον χάρτη)
+      const sixMinutesAgo = new Date(Date.now() - 6 * 60 * 1000).toISOString();
+      const { count: activeSpotsCount } = await client
+        .from('parking_spots')
+        .select('*', { count: 'exact', head: true })
+        .gte('created_at', sixMinutesAgo);
+      const activeCount = activeSpotsCount ?? 0;
+      const { count: totalSpotsCount } = await client.from('parking_spots').select('*', { count: 'exact', head: true });
+      const inactiveCount = (totalSpotsCount ?? 0) - activeCount + (historySpots || []).length;
       
       const activeVsInactive = [
         { name: 'Ενεργές', value: activeCount },
         { name: 'Ανενεργές', value: inactiveCount },
       ];
       
-      // Spots by size (using combined spots)
+      // Spots by size - ΜΟΝΟ από parking_spots (όχι unknown από history)
       const sizeCounts: Record<string, number> = {};
-      spotsForAnalytics.forEach((spot: any) => {
-        const size = spot.size || 'unknown';
-        sizeCounts[size] = (sizeCounts[size] || 0) + 1;
+      (spots || []).forEach((spot: any) => {
+        const size = spot.size || 'medium';
+        if (size && size !== 'unknown') {
+          sizeCounts[size] = (sizeCounts[size] || 0) + 1;
+        }
       });
       const spotsBySize = Object.entries(sizeCounts).map(([name, value]) => ({
         name: name === 'small' ? 'Μικρή' : name === 'medium' ? 'Μεσαία' : name === 'large' ? 'Μεγάλη' : name,
@@ -235,17 +202,89 @@ export default function AnalyticsDashboard() {
         count,
       }));
       
-      // Top users by score
-      const { data: scores, error: scoresError } = await client
+      // Top users by score (with emails)
+      const { data: scores } = await client
         .from('user_scores')
         .select('user_id, score')
         .order('score', { ascending: false })
         .limit(10);
       
+      const scoreUserIds = (scores || []).map((s: any) => s.user_id).filter(Boolean);
+      const { data: scoreProfiles } = await client
+        .from('profiles')
+        .select('id, email, full_name')
+        .in('id', scoreUserIds.length ? scoreUserIds : ['00000000-0000-0000-0000-000000000000']);
+      const profileMap = new Map((scoreProfiles || []).map((p: any) => [
+        p.id,
+        (p.full_name && String(p.full_name).trim()) || p.email || `Χρήστης ${p.id.substring(0, 8)}`,
+      ]));
       const topUsers = (scores || []).map((score: any) => ({
-        name: score.user_id.substring(0, 8),
+        name: profileMap.get(score.user_id) || `Χρήστης ${score.user_id.substring(0, 8)}`,
         score: score.score || 0,
       }));
+
+      // Spots by city - address πρώτα, αν Άγνωστο τότε reverse geocode από lat/lng
+      const { data: spotsForCity } = await client.from('parking_spots').select('address, latitude, longitude');
+      const { data: historyForCity } = await client.from('parking_history').select('address, latitude, longitude');
+      const cityCounts: Record<string, number> = {};
+      const isPostalCode = (s: string) => /^\d{3}\s?\d{2}$/.test(s.replace(/\s/g, '')) || /^\d{5}$/.test(s.replace(/\s/g, ''));
+      const addToCity = (city: string) => {
+        if (city && city !== 'Άγνωστο' && !isPostalCode(city)) {
+          cityCounts[city] = (cityCounts[city] || 0) + 1;
+        }
+      };
+      const allForCity = [...(spotsForCity || []), ...(historyForCity || [])];
+      const needGeocode: { lat: number; lng: number }[] = [];
+      allForCity.forEach((r: any) => {
+        const city = extractCityFromAddress(r.address);
+        if (city === 'Άγνωστο' && r.latitude != null && r.longitude != null) {
+          needGeocode.push({ lat: r.latitude, lng: r.longitude });
+        } else {
+          addToCity(city);
+        }
+      });
+      const coordCounts = new Map<string, { lat: number; lng: number; count: number }>();
+      needGeocode.forEach((c) => {
+        const key = `${c.lat.toFixed(4)},${c.lng.toFixed(4)}`;
+        const cur = coordCounts.get(key);
+        if (cur) cur.count++; else coordCounts.set(key, { ...c, count: 1 });
+      });
+      const uniqueCoords = Array.from(coordCounts.values()).slice(0, 50);
+      await Promise.all(uniqueCoords.map(async (c) => {
+        const city = await getCityFromCoords(c.lat, c.lng);
+        for (let i = 0; i < c.count; i++) addToCity(city);
+      }));
+      const spotsByCity = Object.entries(cityCounts)
+        .filter(([k]) => !isPostalCode(k))
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([name, value]) => ({ name, value }));
+
+      // Unpark by user (top 10) - use max of both tables to avoid double count
+      const { data: unparkData } = await client.from('user_unpark_counts').select('profile_id, unpark_count');
+      const { data: unparkResData } = await client.from('unparkreservation').select('user_id, unpark_count');
+      const unparkByUserId: Record<string, number> = {};
+      (unparkData || []).forEach((r: any) => {
+        const id = r.profile_id;
+        unparkByUserId[id] = Math.max(unparkByUserId[id] || 0, r.unpark_count || 0);
+      });
+      (unparkResData || []).forEach((r: any) => {
+        const id = r.user_id;
+        unparkByUserId[id] = Math.max(unparkByUserId[id] || 0, r.unpark_count || 0);
+      });
+      const unparkUserIds = Object.keys(unparkByUserId);
+      const { data: unparkProfiles } = await client
+        .from('profiles')
+        .select('id, email, full_name')
+        .in('id', unparkUserIds.length ? unparkUserIds : ['00000000-0000-0000-0000-000000000000']);
+      const unparkProfileMap = new Map((unparkProfiles || []).map((p: any) => [
+        p.id,
+        (p.full_name && String(p.full_name).trim()) || p.email || `Χρήστης ${p.id.substring(0, 8)}`,
+      ]));
+      const unparkByUser = Object.entries(unparkByUserId)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([userId, count]) => ({ name: unparkProfileMap.get(userId) || `Χρήστης ${userId.substring(0, 8)}`, count }));
       
       // Spots by hour (using combined spots)
       const hourCounts: Record<number, number> = {};
@@ -265,41 +304,34 @@ export default function AnalyticsDashboard() {
         userGrowth,
         topUsers,
         spotsByHour,
+        spotsByCity,
+        unparkByUser,
       });
       
       // Calculate metrics (using combined spots - already loaded above)
       // Note: allSpotsCombined is already filtered by date range, so we use it directly
       
-      const { data: allUsers, error: allUsersError } = await client
+      const { data: allUsers } = await client
         .from('profiles')
         .select('created_at')
         .gte('created_at', start.toISOString())
         .lte('created_at', end.toISOString());
       
-      const { data: allScores, error: allScoresError } = await client
+      const { data: allScores } = await client
         .from('user_scores')
         .select('score');
-      
-      // Calculate active spots based on expiration time (using combined spots)
-      let activeCountTotal = 0;
-      if (spotsForAnalytics && spotsForAnalytics.length > 0) {
-        spotsForAnalytics.forEach((spot: any) => {
-          if (spot.created_at) {
-            const spotCreatedAt = new Date(spot.created_at);
-            if (spotCreatedAt > expirationThreshold) {
-              activeCountTotal++;
-            }
-          }
-        });
-      }
-      
-      const days = Math.max(1, Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
+
+      const { count: reservedCount } = await client
+        .from('reserved_spots')
+        .select('*', { count: 'exact', head: true })
+        .gte('created_at', start.toISOString())
+        .lte('created_at', end.toISOString());
       
       setMetrics({
         totalSpotsCreated: spotsForAnalytics.length,
-        activeSpotsAverage: Math.round(activeCountTotal / days),
+        activeSpotsNow: activeCount,
         newUsers: (allUsers || []).length,
-        reservationsMade: 0, // Would need to fetch from reserved_spots
+        reservationsMade: reservedCount ?? 0,
         averageScore: (allScores || []).length > 0
           ? Math.round((allScores || []).reduce((sum: number, s: any) => sum + (s.score || 0), 0) / (allScores || []).length)
           : 0,
@@ -316,10 +348,9 @@ export default function AnalyticsDashboard() {
   };
 
   const exportToCSV = () => {
-    // Simple CSV export of key metrics
     const csv = `Metric,Value
 Total Spots Created,${metrics.totalSpotsCreated}
-Active Spots Average,${metrics.activeSpotsAverage}
+Active Spots Now,${metrics.activeSpotsNow}
 New Users,${metrics.newUsers}
 Average Score,${metrics.averageScore}`;
     
@@ -387,8 +418,8 @@ Average Score,${metrics.averageScore}`;
           <div className="text-2xl font-bold text-gray-900">{metrics.totalSpotsCreated}</div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-sm text-gray-600 mb-1">Μέσος Όρος Ενεργών</div>
-          <div className="text-2xl font-bold text-blue-600">{metrics.activeSpotsAverage}</div>
+          <div className="text-sm text-gray-600 mb-1">Ενεργές Θέσεις (τώρα)</div>
+          <div className="text-2xl font-bold text-blue-600">{metrics.activeSpotsNow}</div>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="text-sm text-gray-600 mb-1">Νέοι Χρήστες</div>
@@ -532,6 +563,42 @@ Average Score,${metrics.averageScore}`;
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="count" fill="#ef4444" name="Spots" />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+
+        {/* Spots by City */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Spots ανά Πόλη</h3>
+          {loading ? (
+            <div className="text-center py-8 text-gray-600">Φόρτωση...</div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={analyticsData.spotsByCity} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis dataKey="name" type="category" width={100} />
+                <Tooltip />
+                <Bar dataKey="value" fill="#06b6d4" name="Πλήθος" />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+
+        {/* Unpark by User */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Top 10 Unpark ανά Χρήστη</h3>
+          {loading ? (
+            <div className="text-center py-8 text-gray-600">Φόρτωση...</div>
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={analyticsData.unparkByUser} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis dataKey="name" type="category" width={100} />
+                <Tooltip />
+                <Bar dataKey="count" fill="#f59e0b" name="Unpark" />
               </BarChart>
             </ResponsiveContainer>
           )}

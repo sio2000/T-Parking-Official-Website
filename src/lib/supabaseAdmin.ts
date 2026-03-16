@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js'
 // Get your service_role key from: Supabase Dashboard > Settings > API > service_role key (secret)
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://utuoppaqarwowecxxjqw.supabase.co'
-const supabaseServiceRoleKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || ''
+const supabaseServiceRoleKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY || import.meta.env.SUPABASE_SERVICE_ROLE_KEY || ''
 
 // Check if service_role key is set (valid JWT token starts with 'eyJ')
 const hasServiceRoleKey = supabaseServiceRoleKey && 

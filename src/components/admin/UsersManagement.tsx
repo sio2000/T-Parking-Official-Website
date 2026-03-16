@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { supabaseAdmin } from '../../lib/supabaseAdmin';
 import { format } from 'date-fns';
+import { extractCityFromAddress } from '../../lib/extractCity';
 
-// Use admin client if available (bypasses RLS), otherwise fall back to regular client
 const getSupabaseClient = () => supabaseAdmin || supabase;
 
 interface UserProfile {
@@ -16,18 +16,28 @@ interface UserProfile {
   score?: number;
   totalSpots?: number;
   totalReservations?: number;
+  unparkCount?: number;
+  reservationStock?: number;
+  primaryCity?: string;
 }
+
+type EditMode = 'score' | 'profile' | 'stock' | null;
 
 export default function UsersManagement() {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchEmail, setSearchEmail] = useState('');
   const [filterSubscription, setFilterSubscription] = useState<string>('Όλα');
+  const [filterCity, setFilterCity] = useState<string>('Όλες');
   const [sortBy, setSortBy] = useState<string>('created_at');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(50);
   const [editingUser, setEditingUser] = useState<UserProfile | null>(null);
+  const [editMode, setEditMode] = useState<EditMode>(null);
   const [editScore, setEditScore] = useState<number>(0);
+  const [editFullName, setEditFullName] = useState('');
+  const [editSubscription, setEditSubscription] = useState('');
+  const [editStock, setEditStock] = useState(0);
 
   useEffect(() => {
     loadUsers();
@@ -36,161 +46,171 @@ export default function UsersManagement() {
   const loadUsers = async () => {
     try {
       setLoading(true);
-      console.log('[UsersManagement] Loading users...');
-      
       const client = getSupabaseClient();
-      
-      // Fetch profiles
-      const { data: profiles, error: profilesError } = await client
-        .from('profiles')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (profilesError) throw profilesError;
-      
-      // Fetch scores
-      const { data: scores, error: scoresError } = await client
-        .from('user_scores')
-        .select('*');
-      
-      // Fetch spot counts
-      const { data: spots, error: spotsError } = await client
-        .from('parking_spots')
-        .select('user_id');
-      
-      // Fetch reservation counts
-      const { data: reservations, error: reservationsError } = await client
-        .from('reserved_spots')
-        .select('spot_id');
-      
-      // Combine data
-      const usersWithStats: UserProfile[] = (profiles || []).map((profile: any) => {
-        const score = scores?.find((s: any) => s.user_id === profile.id);
-        const spotCount = spots?.filter((s: any) => s.user_id === profile.id).length || 0;
-        // Note: reservations are linked via spot_id, so we'd need to join with parking_spots for accurate count
-        const reservationCount = 0; // Simplified for now
-        
+
+      const [profilesRes, scoresRes, spotsRes, unparkCountsRes, unparkResRes, stockRes] = await Promise.all([
+        client.from('profiles').select('*').order('created_at', { ascending: false }),
+        client.from('user_scores').select('*'),
+        client.from('parking_spots').select('user_id, address'),
+        client.from('user_unpark_counts').select('profile_id, unpark_count'),
+        client.from('unparkreservation').select('user_id, unpark_count'),
+        client.from('user_reservation_stock').select('user_id, stock'),
+      ]);
+
+      const profiles = profilesRes.data || [];
+      const scores = scoresRes.data || [];
+      const spots = spotsRes.data || [];
+      const unparkCounts = unparkCountsRes.data || [];
+      const unparkRes = unparkResRes.data || [];
+      const stockRows = stockRes.data || [];
+
+      const cityByUser: Record<string, string[]> = {};
+      spots.forEach((s: { user_id?: string; address?: string }) => {
+        if (s.user_id) {
+          const city = extractCityFromAddress(s.address);
+          if (!cityByUser[s.user_id]) cityByUser[s.user_id] = [];
+          cityByUser[s.user_id].push(city);
+        }
+      });
+
+      const isPostalCode = (s: string) => /^\d{3}\s?\d{2}$/.test(s.replace(/\s/g, '')) || /^\d{5}$/.test(s.replace(/\s/g, ''));
+      const getPrimaryCity = (userId: string) => {
+        const cities = (cityByUser[userId] || []).filter((c) => c && c !== 'Άγνωστο' && !isPostalCode(c));
+        if (cities.length === 0) return 'Άγνωστο';
+        const counts: Record<string, number> = {};
+        cities.forEach((c) => { counts[c] = (counts[c] || 0) + 1; });
+        return Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Άγνωστο';
+      };
+
+      // Spots = πλήθος parking_spots ανά χρήστη
+      const usersWithStats: UserProfile[] = profiles.map((profile: Record<string, unknown> & { id: string }) => {
+        const uid = profile.id;
+        const score = scores.find((s: { user_id: string }) => s.user_id === uid);
+        const spotCount = spots.filter((s: { user_id: string }) => s.user_id === uid).length;
+        const unparkU = unparkCounts.find((u: { profile_id: string }) => u.profile_id === uid);
+        const unparkR = unparkRes.find((u: { user_id: string }) => u.user_id === uid);
+        const unparkCount = Math.max(unparkU?.unpark_count || 0, unparkR?.unpark_count || 0);
+        const stockRow = stockRows.find((s: { user_id: string }) => s.user_id === uid);
+        const reservationStock = stockRow?.stock ?? 0;
+
         return {
-          ...profile,
-          score: score?.score || 0,
+          id: uid,
+          email: profile.email as string | undefined,
+          full_name: profile.full_name as string | undefined,
+          subscription_status: profile.subscription_status as string | undefined,
+          created_at: profile.created_at as string | undefined,
+          updated_at: profile.updated_at as string | undefined,
+          score: score?.score ?? 0,
           totalSpots: spotCount,
-          totalReservations: reservationCount,
+          totalReservations: 0,
+          unparkCount,
+          reservationStock,
+          primaryCity: getPrimaryCity(uid),
         };
       });
-      
+
       setUsers(usersWithStats);
-      console.log('[UsersManagement] Loaded', usersWithStats.length, 'users');
-    } catch (error: any) {
-      console.error('[UsersManagement] Error loading users:', error);
-      alert(`Σφάλμα κατά τη φόρτωση των χρηστών:\n\n${error.message || 'Άγνωστο σφάλμα'}`);
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : 'Άγνωστο σφάλμα';
+      alert(`Σφάλμα κατά τη φόρτωση:\n\n${msg}`);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleEditScore = async (userId: string) => {
-    const user = users.find((u) => u.id === userId);
-    if (!user) return;
-
+  const openEdit = (user: UserProfile, mode: EditMode) => {
     setEditingUser(user);
-    setEditScore(user.score || 0);
+    setEditMode(mode);
+    setEditScore(user.score ?? 0);
+    setEditFullName(user.full_name ?? '');
+    setEditSubscription(user.subscription_status ?? 'free');
+    setEditStock(user.reservationStock ?? 0);
+  };
+
+  const closeEdit = () => {
+    setEditingUser(null);
+    setEditMode(null);
   };
 
   const handleSaveScore = async () => {
     if (!editingUser) return;
-
     try {
       setLoading(true);
-      console.log('[UsersManagement] Updating score for user:', editingUser.id, 'to', editScore);
-      
       const client = getSupabaseClient();
-      
-      // Check if user_scores record exists
-      const { data: existingScore, error: checkError } = await client
-        .from('user_scores')
-        .select('*')
-        .eq('user_id', editingUser.id)
-        .single();
-      
-      if (checkError && checkError.code !== 'PGRST116') {
-        // PGRST116 = no rows returned, which is fine
-        throw checkError;
-      }
-      
-      if (existingScore) {
-        // Update existing score
-        const { error: updateError } = await client
-          .from('user_scores')
-          .update({ score: editScore })
-          .eq('user_id', editingUser.id);
-        
-        if (updateError) throw updateError;
+      const { data: existing } = await client.from('user_scores').select('*').eq('user_id', editingUser.id).single();
+      if (existing) {
+        await client.from('user_scores').update({ score: editScore }).eq('user_id', editingUser.id);
       } else {
-        // Insert new score record
-        const { error: insertError } = await client
-          .from('user_scores')
-          .insert({ user_id: editingUser.id, score: editScore });
-        
-        if (insertError) throw insertError;
+        await client.from('user_scores').insert({ user_id: editingUser.id, score: editScore });
       }
-      
-      alert(`Το score του χρήστη ενημερώθηκε επιτυχώς σε ${editScore}!`);
-      setEditingUser(null);
-      setEditScore(0);
+      alert(`Score ενημερώθηκε σε ${editScore}!`);
+      closeEdit();
       loadUsers();
-    } catch (error: any) {
-      console.error('[UsersManagement] Error updating score:', error);
-      alert(`Σφάλμα κατά την ενημέρωση του score:\n\n${error.message || 'Άγνωστο σφάλμα'}`);
+    } catch (e: unknown) {
+      alert(`Σφάλμα: ${e instanceof Error ? e.message : 'Άγνωστο'}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveProfile = async () => {
+    if (!editingUser) return;
+    try {
+      setLoading(true);
+      await getSupabaseClient()
+        .from('profiles')
+        .update({
+          full_name: editFullName || null,
+          subscription_status: editSubscription,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', editingUser.id);
+      alert('Προφίλ ενημερώθηκε!');
+      closeEdit();
+      loadUsers();
+    } catch (e: unknown) {
+      alert(`Σφάλμα: ${e instanceof Error ? e.message : 'Άγνωστο'}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveStock = async () => {
+    if (!editingUser) return;
+    try {
+      setLoading(true);
+      const client = getSupabaseClient();
+      const { data: existing } = await client.from('user_reservation_stock').select('*').eq('user_id', editingUser.id).single();
+      if (existing) {
+        await client.from('user_reservation_stock').update({ stock: editStock, updated_at: new Date().toISOString() }).eq('user_id', editingUser.id);
+      } else {
+        await client.from('user_reservation_stock').insert({ user_id: editingUser.id, stock: editStock });
+      }
+      alert(`Stock ενημερώθηκε σε ${editStock}!`);
+      closeEdit();
+      loadUsers();
+    } catch (e: unknown) {
+      alert(`Σφάλμα: ${e instanceof Error ? e.message : 'Άγνωστο'}`);
     } finally {
       setLoading(false);
     }
   };
 
   const handleDeleteUser = async (userId: string, userEmail?: string) => {
-    const confirmed = window.confirm(
-      `Είστε σίγουρος ότι θέλετε να διαγράψετε τον χρήστη ${userEmail || userId}?\n\nΑυτή η ενέργεια θα διαγράψει όλα τα δεδομένα του χρήστη!\n\nΑυτή η ενέργεια δεν μπορεί να αναιρεθεί!`
-    );
-
-    if (!confirmed) return;
-
+    if (!window.confirm(`Διαγραφή χρήστη ${userEmail || userId};\nΌλα τα δεδομένα θα διαγραφούν!`)) return;
     try {
       setLoading(true);
-      console.log('[UsersManagement] Deleting user:', userId);
-      
       const client = getSupabaseClient();
-      
-      // Delete user's parking spots first
-      const { error: spotsError } = await client
-        .from('parking_spots')
-        .delete()
-        .eq('user_id', userId);
-      
-      if (spotsError) console.warn('[UsersManagement] Error deleting spots:', spotsError);
-      
-      // Delete user's reservations
-      // Note: This would require joining with parking_spots, simplified for now
-      
-      // Delete user's scores
-      const { error: scoresError } = await client
-        .from('user_scores')
-        .delete()
-        .eq('user_id', userId);
-      
-      if (scoresError) console.warn('[UsersManagement] Error deleting scores:', scoresError);
-      
-      // Delete profile
-      const { error: profileError } = await client
-        .from('profiles')
-        .delete()
-        .eq('id', userId);
-      
-      if (profileError) throw profileError;
-      
-      alert('Ο χρήστης διαγράφηκε επιτυχώς!');
+      await client.from('parking_spots').delete().eq('user_id', userId);
+      await client.from('user_scores').delete().eq('user_id', userId);
+      await client.from('user_unpark_counts').delete().eq('profile_id', userId);
+      await client.from('unparkreservation').delete().eq('user_id', userId);
+      await client.from('user_reservation_stock').delete().eq('user_id', userId);
+      await client.from('profiles').delete().eq('id', userId);
+      alert('Ο χρήστης διαγράφηκε!');
       loadUsers();
-    } catch (error: any) {
-      console.error('[UsersManagement] Error deleting user:', error);
-      alert(`Σφάλμα κατά τη διαγραφή του χρήστη:\n\n${error.message || 'Άγνωστο σφάλμα'}`);
+    } catch (e: unknown) {
+      alert(`Σφάλμα: ${e instanceof Error ? e.message : 'Άγνωστο'}`);
     } finally {
       setLoading(false);
     }
@@ -201,82 +221,69 @@ export default function UsersManagement() {
     alert('Αντιγράφηκε!');
   };
 
-  // Filter and sort users
+  const cities = [...new Set(users.map((u) => u.primaryCity).filter(Boolean))].sort();
+
   const filteredUsers = users
-    .filter((user) => {
-      if (searchEmail && user.email && !user.email.toLowerCase().includes(searchEmail.toLowerCase())) {
-        return false;
-      }
-      if (filterSubscription !== 'Όλα' && user.subscription_status !== filterSubscription) {
-        return false;
-      }
+    .filter((u) => {
+      if (searchEmail && u.email && !u.email.toLowerCase().includes(searchEmail.toLowerCase())) return false;
+      if (filterSubscription !== 'Όλα' && u.subscription_status !== filterSubscription) return false;
+      if (filterCity !== 'Όλες' && u.primaryCity !== filterCity) return false;
       return true;
     })
     .sort((a, b) => {
       switch (sortBy) {
         case 'score':
-          return (b.score || 0) - (a.score || 0);
+          return (b.score ?? 0) - (a.score ?? 0);
         case 'totalSpots':
-          return (b.totalSpots || 0) - (a.totalSpots || 0);
+          return (b.totalSpots ?? 0) - (a.totalSpots ?? 0);
+        case 'unparkCount':
+          return (b.unparkCount ?? 0) - (a.unparkCount ?? 0);
         case 'created_at':
-          return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
         default:
-          return 0;
+          return new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime();
       }
     });
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedUsers = filteredUsers.slice(startIndex, endIndex);
+  const paginatedUsers = filteredUsers.slice(startIndex, startIndex + itemsPerPage);
 
-  // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchEmail, filterSubscription, sortBy]);
+  }, [searchEmail, filterSubscription, filterCity, sortBy]);
 
-  // Calculate statistics
   const totalUsers = users.length;
   const premiumUsers = users.filter((u) => u.subscription_status === 'premium' || u.subscription_status === 'Premium').length;
-  const today = new Date();
-  const newUsersToday = users.filter((u) => {
-    const created = new Date(u.created_at || 0);
-    return created.toDateString() === today.toDateString();
-  }).length;
+  const newUsersToday = users.filter((u) => new Date(u.created_at || 0).toDateString() === new Date().toDateString()).length;
 
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-900 mb-4">Διαχείριση Χρηστών</h2>
-      <p className="text-gray-600 mb-6">Προβολή και διαχείριση όλων των χρηστών της εφαρμογής</p>
+      <p className="text-gray-600 mb-6">Προβολή και επεξεργασία όλων των χρηστών</p>
 
-      {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-sm text-gray-600 mb-1">Συνολικοί Χρήστες</div>
+        <div className="bg-white rounded-lg shadow-sm border p-4">
+          <div className="text-sm text-gray-600">Συνολικοί Χρήστες</div>
           <div className="text-2xl font-bold text-gray-900">{totalUsers}</div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-sm text-gray-600 mb-1">Premium Χρήστες</div>
+        <div className="bg-white rounded-lg shadow-sm border p-4">
+          <div className="text-sm text-gray-600">Premium</div>
           <div className="text-2xl font-bold text-blue-600">{premiumUsers}</div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-sm text-gray-600 mb-1">Νέοι Σήμερα</div>
+        <div className="bg-white rounded-lg shadow-sm border p-4">
+          <div className="text-sm text-gray-600">Νέοι Σήμερα</div>
           <div className="text-2xl font-bold text-green-600">{newUsersToday}</div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-          <div className="text-sm text-gray-600 mb-1">Μέσος Score</div>
+        <div className="bg-white rounded-lg shadow-sm border p-4">
+          <div className="text-sm text-gray-600">Μέσος Score</div>
           <div className="text-2xl font-bold text-purple-600">
-            {users.length > 0
-              ? Math.round(users.reduce((sum, u) => sum + (u.score || 0), 0) / users.length)
-              : 0}
+            {users.length > 0 ? Math.round(users.reduce((s, u) => s + (u.score ?? 0), 0) / users.length) : 0}
           </div>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="bg-white rounded-lg shadow-sm border p-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Αναζήτηση Email</label>
             <input
@@ -284,7 +291,7 @@ export default function UsersManagement() {
               value={searchEmail}
               onChange={(e) => setSearchEmail(e.target.value)}
               placeholder="Αναζήτηση..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -292,7 +299,7 @@ export default function UsersManagement() {
             <select
               value={filterSubscription}
               onChange={(e) => setFilterSubscription(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="Όλα">Όλα</option>
               <option value="free">Free</option>
@@ -301,22 +308,35 @@ export default function UsersManagement() {
             </select>
           </div>
           <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Πόλη</label>
+            <select
+              value={filterCity}
+              onChange={(e) => setFilterCity(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="Όλες">Όλες</option>
+              {cities.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+          <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Ταξινόμηση</label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="created_at">Ημερομηνία</option>
               <option value="score">Score</option>
-              <option value="totalSpots">Πλήθος Spots</option>
+              <option value="totalSpots">Spots</option>
             </select>
           </div>
           <div className="flex items-end">
             <button
               onClick={loadUsers}
               disabled={loading}
-              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
             >
               {loading ? 'Φόρτωση...' : 'Ανανέωση'}
             </button>
@@ -324,8 +344,7 @@ export default function UsersManagement() {
         </div>
       </div>
 
-      {/* Users Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
         {loading && users.length === 0 ? (
           <div className="text-center py-8 text-gray-600">Φόρτωση χρηστών...</div>
         ) : filteredUsers.length === 0 ? (
@@ -335,77 +354,50 @@ export default function UsersManagement() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Όνομα</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subscription</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spots</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Εγγραφή</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ενέργειες</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Όνομα</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Πόλη</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Subscription</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Score</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Spots</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Εγγραφή</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ενέργειες</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {paginatedUsers.map((user) => (
                   <tr key={user.id} className="hover:bg-gray-50">
                     <td className="px-4 py-3 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-900 font-mono">{user.id.substring(0, 8)}...</span>
-                        <button
-                          onClick={() => copyToClipboard(user.id)}
-                          className="text-blue-600 hover:text-blue-800"
-                          title="Αντιγραφή ID"
-                        >
-                          📋
-                        </button>
-                      </div>
+                      <span className="text-sm font-mono">{user.id.substring(0, 8)}...</span>
+                      <button onClick={() => copyToClipboard(user.id)} className="ml-1 text-blue-600" title="Αντιγραφή">📋</button>
                     </td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm">
+                      {user.email ? <a href={`mailto:${user.email}`} className="text-blue-600">{user.email}</a> : '-'}
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm">{user.full_name || '-'}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm">{user.primaryCity || '-'}</td>
                     <td className="px-4 py-3 whitespace-nowrap">
-                      {user.email ? (
-                        <a href={`mailto:${user.email}`} className="text-sm text-blue-600 hover:text-blue-800">
-                          {user.email}
-                        </a>
-                      ) : (
-                        <span className="text-sm text-gray-500">-</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
-                      {user.full_name || '-'}
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <span
-                        className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                          user.subscription_status === 'premium' || user.subscription_status === 'Premium'
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : user.subscription_status === 'platinum' || user.subscription_status === 'Platinum'
-                            ? 'bg-purple-100 text-purple-800'
-                            : 'bg-gray-100 text-gray-800'
-                        }`}
-                      >
-                        {user.subscription_status || 'Free'}
+                      <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                        user.subscription_status === 'premium' ? 'bg-yellow-100 text-yellow-800' :
+                        user.subscription_status === 'platinum' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {user.subscription_status || 'free'}
                       </span>
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{user.score || 0}</td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{user.totalSpots || 0}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm font-medium">{user.score ?? 0}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm">{user.totalSpots ?? 0}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-sm">{user.reservationStock ?? 0}</td>
                     <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-500">
                       {user.created_at ? format(new Date(user.created_at), 'dd/MM/yyyy') : '-'}
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sm">
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => handleEditScore(user.id)}
-                          disabled={loading}
-                          className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          Επεξεργασία Score
-                        </button>
-                        <button
-                          onClick={() => handleDeleteUser(user.id, user.email)}
-                          disabled={loading}
-                          className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          Διαγραφή
-                        </button>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <div className="flex flex-wrap gap-1">
+                        <button onClick={() => openEdit(user, 'score')} disabled={loading} className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 disabled:opacity-50">Score</button>
+                        <button onClick={() => openEdit(user, 'profile')} disabled={loading} className="px-2 py-1 bg-indigo-600 text-white rounded text-xs hover:bg-indigo-700 disabled:opacity-50">Προφίλ</button>
+                        <button onClick={() => openEdit(user, 'stock')} disabled={loading} className="px-2 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700 disabled:opacity-50">Stock</button>
+                        <button onClick={() => handleDeleteUser(user.id, user.email)} disabled={loading} className="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700 disabled:opacity-50">Διαγραφή</button>
                       </div>
                     </td>
                   </tr>
@@ -415,130 +407,105 @@ export default function UsersManagement() {
           </div>
         )}
 
-        {/* Pagination */}
         {filteredUsers.length > itemsPerPage && (
-          <div className="bg-gray-50 px-4 py-3 flex items-center justify-between border-t border-gray-200">
-            <div className="flex-1 flex justify-between sm:hidden">
+          <div className="bg-gray-50 px-4 py-3 flex justify-between items-center border-t">
+            <span className="text-sm text-gray-700">
+              {startIndex + 1}-{Math.min(startIndex + itemsPerPage, filteredUsers.length)} από {filteredUsers.length}
+            </span>
+            <div className="flex gap-2">
               <button
-                onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-1 border rounded disabled:opacity-50"
               >
                 Προηγούμενο
               </button>
               <button
-                onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-3 py-1 border rounded disabled:opacity-50"
               >
                 Επόμενο
               </button>
-            </div>
-            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm text-gray-700">
-                  Εμφάνιση <span className="font-medium">{startIndex + 1}</span> έως{' '}
-                  <span className="font-medium">{Math.min(endIndex, filteredUsers.length)}</span> από{' '}
-                  <span className="font-medium">{filteredUsers.length}</span> χρήστες
-                </p>
-              </div>
-              <div>
-                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                  <button
-                    onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-                    disabled={currentPage === 1}
-                    className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Προηγούμενο
-                  </button>
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                    // Show first page, last page, current page, and pages around current
-                    if (
-                      page === 1 ||
-                      page === totalPages ||
-                      (page >= currentPage - 2 && page <= currentPage + 2)
-                    ) {
-                      return (
-                        <button
-                          key={page}
-                          onClick={() => setCurrentPage(page)}
-                          className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
-                            currentPage === page
-                              ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                              : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                          }`}
-                        >
-                          {page}
-                        </button>
-                      );
-                    } else if (page === currentPage - 3 || page === currentPage + 3) {
-                      return (
-                        <span key={page} className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
-                          ...
-                        </span>
-                      );
-                    }
-                    return null;
-                  })}
-                  <button
-                    onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
-                    disabled={currentPage === totalPages}
-                    className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Επόμενο
-                  </button>
-                </nav>
-              </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* Edit Score Modal */}
-      {editingUser && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div className="mt-3">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Επεξεργασία Score</h3>
-              <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">
-                  <strong>Χρήστης:</strong> {editingUser.email || editingUser.id.substring(0, 8)}
-                </p>
-                <p className="text-sm text-gray-600 mb-4">
-                  <strong>Τρέχον Score:</strong> {editingUser.score || 0}
-                </p>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Νέο Score</label>
+      {/* Edit Modals */}
+      {editingUser && editMode && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
+            <h3 className="text-lg font-semibold mb-4">
+              {editMode === 'score' && 'Επεξεργασία Score'}
+              {editMode === 'profile' && 'Επεξεργασία Προφίλ'}
+              {editMode === 'stock' && 'Επεξεργασία Stock'}
+            </h3>
+            <p className="text-sm text-gray-600 mb-4">{editingUser.email}</p>
+
+            {editMode === 'score' && (
+              <>
+                <label className="block text-sm font-medium mb-2">Score</label>
                 <input
                   type="number"
                   value={editScore}
                   onChange={(e) => setEditScore(parseInt(e.target.value) || 0)}
-                  min="0"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  min={0}
+                  className="w-full px-3 py-2 border rounded-lg mb-4"
                 />
-              </div>
-              <div className="flex gap-2 justify-end">
-                <button
-                  onClick={() => {
-                    setEditingUser(null);
-                    setEditScore(0);
-                  }}
-                  className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                <div className="flex gap-2 justify-end">
+                  <button onClick={closeEdit} className="px-4 py-2 bg-gray-200 rounded-lg">Ακύρωση</button>
+                  <button onClick={handleSaveScore} disabled={loading} className="px-4 py-2 bg-blue-600 text-white rounded-lg">Αποθήκευση</button>
+                </div>
+              </>
+            )}
+
+            {editMode === 'profile' && (
+              <>
+                <label className="block text-sm font-medium mb-2">Όνομα</label>
+                <input
+                  type="text"
+                  value={editFullName}
+                  onChange={(e) => setEditFullName(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-lg mb-4"
+                />
+                <label className="block text-sm font-medium mb-2">Subscription</label>
+                <select
+                  value={editSubscription}
+                  onChange={(e) => setEditSubscription(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-lg mb-4"
                 >
-                  Ακύρωση
-                </button>
-                <button
-                  onClick={handleSaveScore}
-                  disabled={loading}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loading ? 'Αποθήκευση...' : 'Αποθήκευση'}
-                </button>
-              </div>
-            </div>
+                  <option value="free">Free</option>
+                  <option value="premium">Premium</option>
+                  <option value="platinum">Platinum</option>
+                </select>
+                <div className="flex gap-2 justify-end">
+                  <button onClick={closeEdit} className="px-4 py-2 bg-gray-200 rounded-lg">Ακύρωση</button>
+                  <button onClick={handleSaveProfile} disabled={loading} className="px-4 py-2 bg-blue-600 text-white rounded-lg">Αποθήκευση</button>
+                </div>
+              </>
+            )}
+
+            {editMode === 'stock' && (
+              <>
+                <label className="block text-sm font-medium mb-2">Reservation Stock</label>
+                <input
+                  type="number"
+                  value={editStock}
+                  onChange={(e) => setEditStock(parseInt(e.target.value) || 0)}
+                  min={0}
+                  className="w-full px-3 py-2 border rounded-lg mb-4"
+                />
+                <div className="flex gap-2 justify-end">
+                  <button onClick={closeEdit} className="px-4 py-2 bg-gray-200 rounded-lg">Ακύρωση</button>
+                  <button onClick={handleSaveStock} disabled={loading} className="px-4 py-2 bg-blue-600 text-white rounded-lg">Αποθήκευση</button>
+                </div>
+              </>
+            )}
+
           </div>
         </div>
       )}
     </div>
   );
 }
-
