@@ -25,6 +25,9 @@ import ProtectedRoute from './components/admin/ProtectedRoute';
 import ImageModal from './components/ImageModal';
 import ClickableImage from './components/ClickableImage';
 
+const APP_STORE_URL = 'https://apps.apple.com/gr/app/t-parking/id6756634872';
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.tparking.app';
+
 interface Feature {
   key: string;
   icon: React.ReactNode;
@@ -94,7 +97,9 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
           >
             <div className="flex flex-row items-center gap-6">
               <motion.a 
-                href="#"
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="h-20 w-56 flex items-center justify-center bg-black rounded-xl shadow-lg"
@@ -108,7 +113,9 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 </div>
               </motion.a>
               <motion.a 
-                href="#"
+                href={PLAY_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="h-20 w-56 flex items-center justify-center bg-black rounded-xl shadow-lg"
@@ -695,7 +702,9 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             <p className="text-xl md:text-2xl text-blue-100 mb-10">{t.cta.ctaSubtitle}</p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
               <motion.a
-                href="#"
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="h-16 w-64 flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all"
@@ -709,7 +718,9 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 </div>
               </motion.a>
               <motion.a
-                href="#"
+                href={PLAY_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="h-16 w-64 flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all"
