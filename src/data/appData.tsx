@@ -17,13 +17,13 @@ const features = [
     key: 'shareEarn',
     icon: <FuelIcon className="w-10 h-10 text-orange-500 bg-orange-100 rounded-full p-2 shadow-lg" />,
     title: 'Share & Earn',
-    description: 'Earn points by sharing your spot'
+    description: 'Unpark, share your spot—earn points and retail coupons in Greece'
   },
   {
     key: 'pointsSystem',
     icon: <ChartBarIcon className="w-10 h-10 text-green-500 bg-green-100 rounded-full p-2 shadow-lg" />,
-    title: 'Points System',
-    description: 'Earn rewards for your contributions'
+    title: 'Coupons & rewards',
+    description: 'Redeem coupons and offers at top retail stores in Greece as you participate'
   },
   {
     key: 'realTimeUpdates',
@@ -37,24 +37,6 @@ const features = [
     title: 'Community Driven',
     description: 'Join a growing community of users'
   }
-];
-
-const steps = [
-  {
-    number: '1',
-    key: 'openApp',
-    icon: <MapIcon className="w-12 h-12 text-pink-500 bg-pink-100 rounded-full p-2 shadow-lg" />,
-  },
-  {
-    number: '2',
-    key: 'findSpot',
-    icon: <ClockIcon className="w-12 h-12 text-emerald-500 bg-emerald-100 rounded-full p-2 shadow-lg" />,
-  },
-  {
-    number: '3',
-    key: 'reserveOrShare',
-    icon: <FuelIcon className="w-12 h-12 text-yellow-500 bg-yellow-100 rounded-full p-2 shadow-lg" />,
-  },
 ];
 
 const pricingPlans = [
@@ -134,7 +116,6 @@ const notifications = [
 
 export const appData = {
   features,
-  steps,
   pricingPlans,
   pointsRewards,
   notifications

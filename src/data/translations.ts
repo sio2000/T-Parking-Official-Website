@@ -11,7 +11,7 @@ export const translations = {
       howItWorks: "Πώς Λειτουργεί",
       interactiveMap: "Διαδραστικός Χάρτης",
       features: "Βασικά Χαρακτηριστικά",
-      pointsRewards: "Πόντοι & Ανταμοιβές",
+      pointsRewards: "Πόντοι, κουπόνια & ανταμοιβές",
       notifications: "Ειδοποιήσεις",
       settings: "Ρυθμίσεις",
       support: "Υποστήριξη"
@@ -24,11 +24,14 @@ export const translations = {
       largeSpots: "Μεγάλες θέσεις"
     },
     points: {
-      title: "Κερδίστε Ενώ Σταθμεύετε",
-      description: "Μοιραστείτε τη θέση σας όταν φεύγετε και κερδίστε πόντους για δωρεάν κρατήσεις. Παρακολουθήστε την παγκόσμια κατάταξή σας.",
-      pointPerRelease: "1 πόντος ανά απελευθέρωση θέσης",
-      freeReservation: "Δωρεάν κράτηση κάθε 30 πόντους",
-      globalRanking: "Παγκόσμια κατάταξη"
+      title: "Κερδίζεις όσο βοηθάς την κοινότητα",
+      description:
+        "Κάθε ξεπαρκάρισμα και κάθε φορά που μοιράζεσαι τη θέση parking σου μετράει. Συγκεντρώνεις πόντους και δωρεάν κρατήσεις — και πλέον κερδίζεις κουπόνια και προσφορές σε κορυφαία καταστήματα σε όλη την Ελλάδα.",
+      pointPerRelease: "+1 πόντος κάθε φορά που επιβεβαιώνεις ότι παραχώρησες τη θέση σου στην κοινότητα",
+      freeReservation: "Δωρεάν κρατήσεις μέσω πόντων· η ενεργή χρήση ξεκλειδώνει επίσης κουπόνια στην εφαρμογή (σύμφωνα με τους κανόνες της κάθε προσφοράς)",
+      partnerCoupons:
+        "Βραβείο κοινότητας: κουπόνια και προσφορές σε κορυφαία καταστήματα σε όλη την Ελλάδα. Όσο πιο συχνά ξεπαρκάρεις και μοιράζεσαι τη θέση σου, τόσο περισσότερα κερδίζεις.",
+      globalRanking: "Κατάταξη & στατιστικά — δες την πρόοδο, τους πόντους και τις ανταμοιβές σου"
     },
     notifications: {
       title: "Μείνετε Ενημερωμένοι",
@@ -45,52 +48,82 @@ export const translations = {
       history: "Ιστορικό & στατιστικά"
     },
     support: {
-      title: "Συχνές Ερωτήσεις",
-      howToEarn: "Πώς κερδίζω πόντους;",
-      earnAnswer: "Μοιραστείτε τη θέση σας όταν φεύγετε και κερδίστε +1 πόντο για κάθε επιβεβαιωμένη απελευθέρωση.",
-      premiumBenefits: "Ποια είναι τα οφέλη του Premium;",
-      premiumAnswer: "Λάβετε προτεραιότητα στις ειδοποιήσεις, προηγμένα φίλτρα και λεπτομερή στατιστικά με το Premium.",
-      contactSupport: "Πώς επικοινωνώ με την υποστήριξη;",
-      contactAnswer: "Στείλτε μας email στο support@t-parking.gr ή χρησιμοποιήστε τη συνομιλία στην εφαρμογή για άμεση βοήθεια."
+      title: "Συχνές Ερωτήσεις (T-Parking)",
+      faqItems: [
+        {
+          q: "Πώς μπορώ να κοινοποιήσω μια θέση στάθμευσης;",
+          a: "Επιλέξτε μέγεθος, πατήστε «Ξεπαρκάρω» και επιβεβαιώστε. Η θέση κοινοποιείται αυτόματα και κερδίζετε πόντους."
+        },
+        {
+          q: "Πώς μπορώ να φτάσω σε μια θέση που βρήκα;",
+          a: "Πατήστε στο σημείο στον χάρτη και μετά «Πλοήγηση». Η εφαρμογή θα ανοίξει χάρτες με οδηγίες."
+        },
+        {
+          q: "Τι σημαίνουν τα χρώματα των θέσεων;",
+          a: "Κόκκινο: μικρή, Κίτρινο: μεσαία, Πράσινο: μεγάλη θέση."
+        },
+        {
+          q: "Πού βλέπω το ιστορικό μου;",
+          a: "Από το μενού, επιλέξτε «Ιστορικό» για να δείτε όλες τις κοινοποιήσεις σας."
+        },
+        {
+          q: "Πώς κερδίζω δωρεάν κρατήσεις;",
+          a: "Για κάθε 20 επιβεβαιωμένα ξεπαρκαρίσματα, λαμβάνετε μία δωρεάν κράτηση. Η θέση στάθμευσης της κράτησης είναι ορατή αποκλειστικά σε εσάς."
+        },
+        {
+          q: "Πώς λειτουργεί το σύστημα πόντων;",
+          a: "Κάθε ξεπαρκάρισμα = +1 πόντος. Οι πόντοι σας αυξάνουν την κατάταξή σας, σας δίνουν στατιστικά και δωρεάν κρατήσεις."
+        },
+        {
+          q: "Πώς κερδίζω κουπόνια και προσφορές;",
+          a: "Για κάθε 20 επιβεβαιωμένα ξεπαρκαρίσματα, κερδίζετε κουπόνια και προσφορές από κορυφαία καταστήματα (όπως Wolt, Notino, epapoutsia.gr και άλλα). Τα κουπόνια εμφανίζονται στην ενότητα «Κουπόνια» και μπορείτε να τα εξαργυρώσετε μέσα από την εφαρμογή."
+        }
+      ]
     },
     cta: {
       title: "Ξεκινήστε Τώρα",
-      subtitle: "Κατεβάστε την εφαρμογή και βρείτε parking σε πραγματικό χρόνο",
+      subtitle: "Κατεβάστε την εφαρμογή: parking σε πραγματικό χρόνο και κουπόνια σε κορυφαία καταστήματα στην Ελλάδα",
       downloadNow: "Κατεβάστε Τώρα",
       getStarted: "Ξεκινήστε",
       readyToStart: "Έτοιμοι να ξεκινήσετε;",
       joinCommunity: "Εγγραφείτε και γίνετε μέλος της κοινότητας μας",
       ctaTitle: "Μην Χάσετε Άλλο Χρόνο",
-      ctaSubtitle: "Κατεβάστε την εφαρμογή τώρα και βρείτε parking σε δευτερόλεπτα"
+      ctaSubtitle: "Κατεβάστε την εφαρμογή τώρα: βρες θέση γρήγορα και κέρδισε κουπόνια & προσφορές σε ελληνικά καταστήματα όταν ξεπαρκάρεις"
     },
     testimonials: {
       title: "Τι Λένε οι Χρήστες μας",
-      subtitle: "Εκατοντάδες οδηγοί εμπιστεύονται την T-Parking",
+      subtitle: "Σχόλια από ανθρώπους που οδηγούν καθημερινά",
       user1: {
         name: "Μαρία Κ.",
         location: "Αθήνα",
-        text: "Η καλύτερη εφαρμογή για parking! Έχει γλιτώσει τόσες ώρες από αναζήτηση θέσης."
+        avatarUrl:
+          "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=faces&auto=format&q=80",
+        text: "Δεν κάνω πια τόση ώρα βόλτες ψάχνοντας. Όταν φεύγω τη σημειώνω κι εγώ· βγαίνουν μερικοί πόντοι, τίποτα δραματικό, αλλά με βολεύει."
       },
       user2: {
         name: "Νίκος Π.",
         location: "Θεσσαλονίκη",
-        text: "Το σύστημα πόντων είναι εξαιρετικό. Έχω ήδη κερδίσει πολλές δωρεάν κρατήσεις!"
+        avatarUrl:
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces&auto=format&q=80",
+        text: "Πριν είχα μόνο το χάρτη στο μυαλό μου. Τώρα που κάνω συχνά το ‘αφήνω τη θέση’, μου έχει κάτσει και προσφορά από γνωστό κατάστημα. Μικρό πράγμα, αλλά ευχαριστήθηκα."
       },
       user3: {
         name: "Ελένη Δ.",
         location: "Πάτρα",
-        text: "Τα real-time notifications είναι game changer. Ποτέ δεν χάνονται θέσεις πια!"
+        avatarUrl:
+          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop&crop=faces&auto=format&q=80",
+        text: "Κυρίως για τις ειδοποιήσεις την κράτησα· όταν ανοίγει κάτι κοντά, με σώζει. Τα κουπόνια είναι έξτρα, δεν τα κυνηγάω, αλλά όταν εμφανίζονται δεν λέω όχι."
       }
     },
     stats: {
       title: "Μας Εμπιστεύονται",
-      users: "4.3M+",
+      users: "5000+",
       usersLabel: "Εγγεγραμμένοι Χρήστες",
-      spots: "50K+",
+      spots: "500+",
       spotsLabel: "Θέσεις Ημερησίως",
       cities: "100+",
       citiesLabel: "Πόλεις",
-      savings: "2.5M€",
+      savings: "10.000€",
       savingsLabel: "Εξοικονόμηση Χρόνου/Χρημάτων"
     },
     footer: {
@@ -124,12 +157,14 @@ export const translations = {
         description: "Κρατήστε τη θέση σας με ένα πάτημα και πάρτε άμεση επιβεβαίωση"
       },
       shareEarn: {
-        title: "Μοιραστείτε & Κερδίστε",
-        description: "Κερδίστε πόντους όταν μοιράζεστε τη θέση σας με άλλους οδηγούς"
+        title: "Μοιράσου τη θέση & κέρδισε",
+        description:
+          "Όταν ξεπαρκάρεις και παραχωρείς τη θέση σου κερδίζεις πόντους, δωρεάν κρατήσεις και κουπόνια ή προσφορές σε κορυφαία καταστήματα στην Ελλάδα"
       },
       pointsSystem: {
-        title: "Σύστημα Πόντων",
-        description: "Συλλέξτε πόντους για δωρεάν κρατήσεις και προνομίες"
+        title: "Κουπόνια & μεγάλα brands",
+        description:
+          "Πόντοι + δωρεάν κρατήσεις + κουπόνια και προσφορές σε κορυφαία καταστήματα στην Ελλάδα — όσο πιο ενεργός είσαι, τόσο περισσότερα κερδίζεις"
       },
       realTimeUpdates: {
         title: "Ενημερώσεις σε Πραγματικό Χρόνο",
@@ -140,37 +175,23 @@ export const translations = {
         description: "Μέρος μιας μεγάλης κοινότητας οδηγών που βοηθούν ο ένας τον άλλο"
       }
     },
-    steps: {
-      openApp: {
-        title: {
-          el: 'Ανοίξτε την Εφαρμογή',
-          en: 'Open the App',
-        },
-        description: {
-          el: 'Κατεβάστε <span class="font-bold text-black">Δωρεάν</span> την εφαρμογή και δημιουργήστε λογαριασμό',
-          en: 'Download the app for <span class="font-bold text-black">free</span> and create an account',
-        },
-      },
-      findSpot: {
-        title: {
-          el: 'Βρείτε Θέση',
-          en: 'Find a Spot',
-        },
-        description: {
-          el: 'Χρησιμοποιήστε τον χάρτη για να βρείτε διαθέσιμες θέσεις κοντά σας',
-          en: 'Use the map to find available spots near you',
-        },
-      },
-      reserveOrShare: {
-        title: {
-          el: 'Κρατήστε ή Μοιραστείτε',
-          en: 'Reserve or Share',
-        },
-        description: {
-          el: 'Κλείστε μια θέση με ένα πάτημα ή μοιραστείτε τη δική σας όταν αποχωρείτε , κερδίζοντας πόντους κάθε φορά.',
-          en: 'Book a spot with one tap or share your own when leaving, earning points every time.',
-        },
-      },
+    howItWorks: {
+      leavingTrackTitle: 'Όταν φεύγεις / ξεπαρκάρεις',
+      leavingTrackLead: 'Όταν φεύγεις',
+      leavingTrackEmphasis: 'ξεπαρκάρεις',
+      searchingTrackTitle: 'Όταν ψάχνεις θέση parking',
+      searchingTrackLead: 'Όταν ψάχνεις θέση',
+      searchingTrackEmphasis: 'parking',
+      leaving: [
+        { title: 'Φεύγεις από θέση;', line: 'Δήλωσέ την ελεύθερη.' },
+        { title: 'Την δίνεις', line: 'Φαίνεται στον χάρτη.' },
+        { title: 'Κερδίζεις κουπόνια & προσφορές', line: 'Σε κορυφαία καταστήματα στην Ελλάδα, μέσα από την εφαρμογή.' },
+      ],
+      searching: [
+        { title: 'Ψάχνεις θέση;', line: 'Άνοιξε χάρτη.' },
+        { title: 'Την βρίσκεις στον χάρτη', line: 'Βλέπεις τι είναι ελεύθερο τώρα.' },
+        { title: 'Πλοήγηση κι έφυγες', line: 'Οδηγίες και τέλος.' },
+      ],
     },
     smartSection: {
       title: 'Smart Parking Solution',
@@ -178,14 +199,14 @@ export const translations = {
       el: [
         'Η εφαρμογή προσφέρει άμεση πρόσβαση σε διαθέσιμες θέσεις στάθμευσης στον δρόμο, σε πραγματικό χρόνο.',
         'Μέσα από έναν διαδραστικό χάρτη, οι χρήστες μπορούν να δουν και να κρατήσουν θέση με ένα μόνο πάτημα.',
-        'Το σύστημα πόντων επιβραβεύει τους οδηγούς που μοιράζονται τη θέση τους, ενισχύοντας την κοινότητα και διευκολύνοντας την εύρεση parking στις αστικές περιοχές.',
+        'Το σύστημα πόντων και ανταμοιβών επιβραβεύει όσους ξεπαρκάρουν και μοιράζονται τη θέση τους: πόντοι, δωρεάν κρατήσεις και κουπόνια ή προσφορές σε κορυφαία καταστήματα σε όλη την Ελλάδα — ισχυρό κίνητρο για την κοινότητα και πιο εύκολο parking στην πόλη.',
         'Επιπλέον, η εφαρμογή υπολογίζει τον χρόνο και τα χρήματα που εξοικονομεί κάθε χρήστης, προσφέροντας ξεκάθαρη εικόνα των καθημερινών οφελών.',
         'Ιδανική για καθημερινή χρήση, η εφαρμογή συνδυάζει ευκολία, αξιοπιστία και συνεργασία.'
       ],
       en: [
         'The app provides instant access to available on-street parking spots in real time.',
         'Through an interactive map, users can view and reserve parking spots with a single tap.',
-        'The point-based system rewards drivers who share their spots, strengthening the community and making it easier to find parking in urban areas.',
+        'Points and rewards thank drivers who unpark and share their spots: free reservations plus coupons and offers at leading retail stores across Greece—the more you contribute, the more you unlock.',
         'Additionally, the app calculates the time and money each user saves, offering a clear picture of the daily benefits.',
         'Ideal for everyday use, the app combines convenience, reliability, and collaboration.'
       ]
@@ -226,14 +247,14 @@ export const translations = {
           el: [
             'Ζωντανό χάρτη',
             'Ειδοποιήσεις σε πραγματικό χρόνο',
-            'Σύστημα πόντων & ανταμοιβών',
+            'Σύστημα πόντων, κουπονιών & ανταμοιβών',
             'Δωρεάν, Premium & Platinum λειτουργίες',
             'Ιστορικό στάθμευσης και κοινοποιήσεων'
           ],
           en: [
             'Live map',
             'Real-time notifications',
-            'Points & rewards system',
+            'Points, coupons & rewards system',
             'Free, Premium & Platinum features',
             'Parking and sharing history'
           ]
@@ -2808,7 +2829,7 @@ export const translations = {
       howItWorks: "How It Works",
       interactiveMap: "Interactive Map",
       features: "Key Features",
-      pointsRewards: "Points & Rewards",
+      pointsRewards: "Points, coupons & rewards",
       notifications: "Notifications",
       settings: "Settings",
       support: "Support"
@@ -2821,11 +2842,14 @@ export const translations = {
       largeSpots: "Large spots"
     },
     points: {
-      title: "Earn While You Park",
-      description: "Share your spot when leaving and earn points for free reservations. Track your global ranking and compete with other users.",
-      pointPerRelease: "1 point per spot release",
-      freeReservation: "Free reservation every 30 points",
-      globalRanking: "Global leaderboard ranking"
+      title: "Earn more as you help the community",
+      description:
+        "Every unpark and every time you share your spot counts. Collect points and free reservations—and unlock coupons and offers at leading retail stores across Greece.",
+      pointPerRelease: "+1 point each time you confirm you released your spot for others",
+      freeReservation: "Free reservations via points; active sharing also progresses you toward in-app coupons (see offer rules inside the app)",
+      partnerCoupons:
+        "Community reward spotlight: coupons and offers at top retail stores across Greece. The more consistently you unpark and share, the more you earn.",
+      globalRanking: "Leaderboard & stats—track your progress, points, and rewards"
     },
     notifications: {
       title: "Stay Updated",
@@ -2842,52 +2866,82 @@ export const translations = {
       history: "Parking history & statistics"
     },
     support: {
-      title: "Frequently Asked Questions",
-      howToEarn: "How do I earn points?",
-      earnAnswer: "Share your spot when leaving and earn +1 point for each confirmed release.",
-      premiumBenefits: "What are the benefits of Premium?",
-      premiumAnswer: "Get priority alerts, advanced filters, and detailed statistics with Premium.",
-      contactSupport: "How do I contact support?",
-      contactAnswer: "Email us at support@t-parking.gr or use the in-app chat for immediate assistance."
+      title: "Frequently Asked Questions (T-Parking)",
+      faqItems: [
+        {
+          q: "How can I share a parking spot?",
+          a: "Choose the size, tap “Unpark”, and confirm. The spot is shared automatically and you earn points."
+        },
+        {
+          q: "How do I get to a spot I found?",
+          a: "Tap the point on the map, then “Navigate”. The app will open maps with directions."
+        },
+        {
+          q: "What do the spot colors mean?",
+          a: "Red: small, Yellow: medium, Green: large spot."
+        },
+        {
+          q: "Where can I see my history?",
+          a: "From the menu, choose “History” to see all your shares."
+        },
+        {
+          q: "How do I earn free reservations?",
+          a: "For every 20 confirmed unparks, you get one free reservation. The parking spot for that reservation is visible only to you."
+        },
+        {
+          q: "How does the points system work?",
+          a: "Each unpark = +1 point. Your points raise your ranking, give you stats, and unlock free reservations."
+        },
+        {
+          q: "How do I earn coupons and offers?",
+          a: "For every 20 confirmed unparks, you earn coupons and offers from leading stores (such as Wolt, Notino, epapoutsia.gr, and more). Coupons appear under “Coupons” and you can redeem them in the app."
+        }
+      ]
     },
     cta: {
       title: "Get Started Now",
-      subtitle: "Download the app and find parking in real-time",
+      subtitle: "Download the app: real-time parking and coupons at top retail stores in Greece",
       downloadNow: "Download Now",
       getStarted: "Get Started",
       readyToStart: "Ready to Start?",
       joinCommunity: "Sign up and join our community",
       ctaTitle: "Don't Waste Another Minute",
-      ctaSubtitle: "Download the app now and find parking in seconds"
+      ctaSubtitle: "Download now: find a spot fast and earn coupons & offers at Greek retail stores when you unpark"
     },
     testimonials: {
       title: "What Our Users Say",
-      subtitle: "Hundreds of drivers trust T-Parking",
+      subtitle: "From people who drive almost every day",
       user1: {
         name: "Maria K.",
         location: "Athens",
-        text: "The best parking app! It has saved me so many hours of searching for a spot."
+        avatarUrl:
+          "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&h=120&fit=crop&crop=faces&auto=format&q=80",
+        text: "I'm not doing endless laps looking for a spot anymore. When I leave I mark it—I pick up a few points. Nothing flashy, but it suits me."
       },
       user2: {
         name: "Nikos P.",
         location: "Thessaloniki",
-        text: "The points system is excellent. I've already earned many free reservations!"
+        avatarUrl:
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&h=120&fit=crop&crop=faces&auto=format&q=80",
+        text: "At first I only cared about the map. Once I got into sharing my spot, a store offer popped up once or twice. Small perk, but I liked it."
       },
       user3: {
         name: "Eleni D.",
         location: "Patras",
-        text: "Real-time notifications are a game changer. Never miss a spot again!"
+        avatarUrl:
+          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=120&h=120&fit=crop&crop=faces&auto=format&q=80",
+        text: "I mostly stay for the alerts when something opens nearby. Coupons are a side thing for me—I don't chase them—but if one shows up, fine by me."
       }
     },
     stats: {
       title: "Trusted By Many",
-      users: "4.3M+",
+      users: "5000+",
       usersLabel: "Registered Users",
-      spots: "50K+",
+      spots: "500+",
       spotsLabel: "Daily Spots",
       cities: "100+",
       citiesLabel: "Cities",
-      savings: "2.5M€",
+      savings: "€10,000",
       savingsLabel: "Time/Money Saved"
     },
     footer: {
@@ -2921,12 +2975,14 @@ export const translations = {
         description: "Reserve your spot with one tap and get instant confirmation"
       },
       shareEarn: {
-        title: "Share & Earn",
-        description: "Earn points when you share your spot with other drivers"
+        title: "Share your spot & earn",
+        description:
+          "When you unpark and release your spot you earn points, free reservations, and coupons or offers at top retail stores in Greece"
       },
       pointsSystem: {
-        title: "Points System",
-        description: "Collect points for free reservations and premium benefits"
+        title: "Coupons & big-brand rewards",
+        description:
+          "Points plus free reservations plus coupons and offers at top retail stores in Greece—the more active you are, the more you unlock"
       },
       realTimeUpdates: {
         title: "Real-time Updates",
@@ -2937,19 +2993,23 @@ export const translations = {
         description: "Part of a large community of drivers helping each other"
       }
     },
-    steps: {
-      openApp: {
-        title: "Open the App",
-        description: "Download the app and create your account"
-      },
-      findSpot: {
-        title: "Find a Spot",
-        description: "Use the map to find available spots near you"
-      },
-      reserveOrShare: {
-        title: "Reserve or Share",
-        description: "Book a seat with one tap or share yours when you leave, earning points every time."
-      }
+    howItWorks: {
+      leavingTrackTitle: 'When you leave / unpark',
+      leavingTrackLead: 'When you leave',
+      leavingTrackEmphasis: 'unpark',
+      searchingTrackTitle: 'When you’re looking for parking',
+      searchingTrackLead: 'When you’re looking for',
+      searchingTrackEmphasis: 'parking',
+      leaving: [
+        { title: 'Leaving a spot?', line: 'Mark it free.' },
+        { title: 'You share it', line: 'Shows on the map.' },
+        { title: 'Earn coupons & offers', line: 'At top retail stores in Greece—via the app.' },
+      ],
+      searching: [
+        { title: 'Need a spot?', line: 'Open the map.' },
+        { title: 'Find it on the map', line: 'See what is free now.' },
+        { title: 'Navigate—and go', line: 'Directions. Done.' },
+      ],
     },
     smartSection: {
       title: 'Smart Parking Solution',
@@ -2957,14 +3017,14 @@ export const translations = {
       el: [
         'Η εφαρμογή προσφέρει άμεση πρόσβαση σε διαθέσιμες θέσεις στάθμευσης στον δρόμο, σε πραγματικό χρόνο.',
         'Μέσα από έναν διαδραστικό χάρτη, οι χρήστες μπορούν να δουν και να κρατήσουν θέση με ένα μόνο πάτημα.',
-        'Το σύστημα πόντων επιβραβεύει τους οδηγούς που μοιράζονται τη θέση τους, ενισχύοντας την κοινότητα και διευκολύνοντας την εύρεση parking στις αστικές περιοχές.',
+        'Το σύστημα πόντων και ανταμοιβών επιβραβεύει όσους ξεπαρκάρουν και μοιράζονται τη θέση τους: πόντοι, δωρεάν κρατήσεις και κουπόνια ή προσφορές σε κορυφαία καταστήματα σε όλη την Ελλάδα — ισχυρό κίνητρο για την κοινότητα και πιο εύκολο parking στην πόλη.',
         'Επιπλέον, η εφαρμογή υπολογίζει τον χρόνο και τα χρήματα που εξοικονομεί κάθε χρήστης, προσφέροντας ξεκάθαρη εικόνα των καθημερινών οφελών.',
         'Ιδανική για καθημερινή χρήση, η εφαρμογή συνδυάζει ευκολία, αξιοπιστία και συνεργασία.'
       ],
       en: [
         'The app provides instant access to available on-street parking spots in real time.',
         'Through an interactive map, users can view and reserve parking spots with a single tap.',
-        'The point-based system rewards drivers who share their spots, strengthening the community and making it easier to find parking in urban areas.',
+        'Points and rewards thank drivers who unpark and share their spots: free reservations plus coupons and offers at leading retail stores across Greece—the more you contribute, the more you unlock.',
         'Additionally, the app calculates the time and money each user saves, offering a clear picture of the daily benefits.',
         'Ideal for everyday use, the app combines convenience, reliability, and collaboration.'
       ]
@@ -3005,14 +3065,14 @@ export const translations = {
           el: [
             'Ζωντανό χάρτη',
             'Ειδοποιήσεις σε πραγματικό χρόνο',
-            'Σύστημα πόντων & ανταμοιβών',
+            'Σύστημα πόντων, κουπονιών & ανταμοιβών',
             'Δωρεάν, Premium & Platinum λειτουργίες',
             'Ιστορικό στάθμευσης και κοινοποιήσεων'
           ],
           en: [
             'Live map',
             'Real-time notifications',
-            'Points & rewards system',
+            'Points, coupons & rewards system',
             'Free, Premium & Platinum features',
             'Parking and sharing history'
           ]

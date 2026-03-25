@@ -3,7 +3,15 @@ import { motion } from 'framer-motion';
 import { translations, Language } from './data/translations';
 import { appData } from './data/appData';
 import FeatureCard from './components/FeatureCard';
-import StepCard from './components/StepCard';
+import {
+  MapIcon,
+  CheckCircleHiwIcon,
+  ShareNodesHiwIcon,
+  GiftHiwIcon,
+  MapPinHiwIcon,
+  MagnifyingGlassHiwIcon,
+  NavigateHiwIcon,
+} from './assets/icons';
 import PricingCard from './components/PricingCard';
 import TermsPage from './components/TermsPage';
 import logoSidebar from './assets/images/logosidebar.png';
@@ -35,11 +43,19 @@ interface Feature {
   description: string;
 }
 
-interface Step {
-  number: string;
-  key: string;
-  icon: React.ReactNode;
-}
+const HIW_ICON_INNER =
+  'w-12 h-12 shrink-0 rounded-xl p-2 flex items-center justify-center transition-transform duration-300 group-hover:scale-105';
+
+const HOW_IT_WORKS_LEAVING_ICONS = [
+  <CheckCircleHiwIcon key="hw-l1" className={`${HIW_ICON_INNER} text-orange-700`} aria-hidden />,
+  <ShareNodesHiwIcon key="hw-l2" className={`${HIW_ICON_INNER} text-amber-700`} aria-hidden />,
+  <GiftHiwIcon key="hw-l3" className={`${HIW_ICON_INNER} text-emerald-700`} aria-hidden />,
+];
+const HOW_IT_WORKS_SEARCHING_ICONS = [
+  <MapIcon key="hw-s1" className={`${HIW_ICON_INNER} text-sky-700`} strokeWidth={1.75} aria-hidden />,
+  <MagnifyingGlassHiwIcon key="hw-s2" className={`${HIW_ICON_INNER} text-blue-700`} aria-hidden />,
+  <NavigateHiwIcon key="hw-s3" className={`${HIW_ICON_INNER} text-indigo-700`} aria-hidden />,
+];
 
 function MainPage({ language, setLanguage }: { language: Language, setLanguage: (lang: Language) => void }) {
   const t = translations[language];
@@ -154,38 +170,129 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
           <h2 className="text-4xl md:text-5xl font-extrabold text-center mb-20 text-blue-900 drop-shadow-lg tracking-tight">
             {t.sections.howItWorks}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {appData.steps.map((step: Step, index: number) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8, y: 60 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: index * 0.18, type: 'spring', bounce: 0.5 }}
-                viewport={{ once: true }}
-                className="relative rounded-3xl bg-white/70 backdrop-blur-xl shadow-2xl hover:shadow-blue-300 hover:-translate-y-4 transition-all duration-300 p-10 flex flex-col items-center border border-blue-100 hover:border-blue-400 group min-h-[420px]"
-              >
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-20">
-                  <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-blue-600 shadow-xl border-4 border-white group-hover:scale-110 transition-transform duration-300">
-                    {step.icon}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-16 max-w-6xl mx-auto">
+            {[
+              {
+                key: 'leaving' as const,
+                icons: HOW_IT_WORKS_LEAVING_ICONS,
+                steps: t.howItWorks.leaving,
+                titleLead: t.howItWorks.leavingTrackLead,
+                titleEmphasis: t.howItWorks.leavingTrackEmphasis,
+              },
+              {
+                key: 'searching' as const,
+                icons: HOW_IT_WORKS_SEARCHING_ICONS,
+                steps: t.howItWorks.searching,
+                titleLead: t.howItWorks.searchingTrackLead,
+                titleEmphasis: t.howItWorks.searchingTrackEmphasis,
+              },
+            ].map((track, trackIndex) => (
+              <div key={track.key}>
+                <div
+                  className={`mb-8 rounded-2xl overflow-hidden shadow-xl border border-white/50 ${
+                    track.key === 'leaving'
+                      ? 'ring-2 ring-amber-300/50 shadow-amber-200/30'
+                      : 'ring-2 ring-blue-300/40 shadow-blue-200/30'
+                  }`}
+                >
+                  <div
+                    className={`relative px-5 py-5 md:px-8 md:py-6 text-center overflow-hidden ${
+                      track.key === 'leaving'
+                        ? 'bg-gradient-to-br from-amber-500 via-orange-500 to-rose-600'
+                        : 'bg-gradient-to-br from-sky-600 via-blue-600 to-indigo-800'
+                    }`}
+                  >
+                    <div
+                      className="absolute inset-0 opacity-90 bg-[radial-gradient(ellipse_120%_80%_at_50%_-20%,rgba(255,255,255,0.35),transparent_50%)] pointer-events-none"
+                      aria-hidden
+                    />
+                    <p className="relative text-white text-lg md:text-2xl font-extrabold tracking-tight leading-snug">
+                      <span className="text-white">{track.titleLead}</span>
+                      {track.key === 'leaving' ? (
+                        <>
+                          <span className="mx-2 md:mx-3 font-light text-white/80" aria-hidden>
+                            /
+                          </span>
+                          <span className="text-amber-100 drop-shadow-md">{track.titleEmphasis}</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="inline-block w-1 md:w-1.5" aria-hidden />
+                          <span className="text-cyan-100 drop-shadow-md">{track.titleEmphasis}</span>
+                        </>
+                      )}
+                    </p>
                   </div>
                 </div>
-                <div className="mt-16 text-4xl font-extrabold text-blue-700 mb-2 drop-shadow-sm">{step.number}</div>
-                <div className="text-2xl font-bold text-gray-900 mb-3 text-center group-hover:text-blue-700 transition-colors duration-300">
-                  {typeof t.steps[step.key as keyof typeof t.steps].title === 'object'
-                    ? (t.steps[step.key as keyof typeof t.steps].title as any)[language]
-                    : t.steps[step.key as keyof typeof t.steps].title}
+                <div className="flex flex-col items-stretch gap-0">
+                  {track.steps.map((step, i) => (
+                    <div key={`${track.key}-${i}`}>
+                      <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: trackIndex * 0.08 + i * 0.12 }}
+                        viewport={{ once: true }}
+                        className={`group relative overflow-hidden rounded-3xl border-2 p-6 md:p-7 flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-1 ${
+                          track.key === 'leaving'
+                            ? 'border-amber-200/70 bg-gradient-to-br from-white via-amber-50/45 to-orange-50/35 shadow-[0_12px_42px_-14px_rgba(245,158,11,0.42)] hover:shadow-[0_20px_48px_-14px_rgba(245,158,11,0.5)] ring-1 ring-amber-100/90'
+                            : 'border-sky-200/70 bg-gradient-to-br from-white via-sky-50/40 to-blue-50/30 shadow-[0_12px_42px_-14px_rgba(59,130,246,0.38)] hover:shadow-[0_20px_48px_-14px_rgba(59,130,246,0.48)] ring-1 ring-sky-100/90'
+                        }`}
+                      >
+                        <div
+                          className={`pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-[0.12] blur-2xl ${
+                            track.key === 'leaving' ? 'bg-amber-400' : 'bg-blue-400'
+                          }`}
+                          aria-hidden
+                        />
+                        <span
+                          className={`absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-xs font-extrabold tabular-nums ${
+                            track.key === 'leaving'
+                              ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-md shadow-amber-500/30'
+                              : 'bg-gradient-to-br from-sky-500 to-indigo-600 text-white shadow-md shadow-blue-500/30'
+                          }`}
+                        >
+                          {i + 1}
+                        </span>
+                        <div
+                          className={`relative mb-4 flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-2xl ${
+                            track.key === 'leaving'
+                              ? 'bg-gradient-to-br from-amber-100/95 via-white to-orange-100/80 ring-2 ring-amber-200/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_8px_20px_-8px_rgba(234,88,12,0.35)]'
+                              : 'bg-gradient-to-br from-sky-100/95 via-white to-blue-100/80 ring-2 ring-sky-200/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_8px_20px_-8px_rgba(37,99,235,0.32)]'
+                          }`}
+                        >
+                          {track.icons[i]}
+                        </div>
+                        <div className="relative text-lg md:text-xl font-bold text-slate-900 leading-snug tracking-tight">
+                          {step.title}
+                        </div>
+                        <p className="relative mt-2.5 text-slate-600 text-sm md:text-[0.95rem] leading-relaxed max-w-sm">
+                          {step.line}
+                        </p>
+                      </motion.div>
+                      {i < 2 && (
+                        <div className="flex flex-col items-center py-3" aria-hidden>
+                          <div
+                            className={`h-7 w-px bg-gradient-to-b ${
+                              track.key === 'leaving'
+                                ? 'from-amber-400 via-orange-300/80 to-transparent'
+                                : 'from-sky-400 via-blue-400/70 to-transparent'
+                            }`}
+                          />
+                          <div
+                            className={`-mt-1 flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm font-bold ${
+                              track.key === 'leaving'
+                                ? 'border-amber-200 bg-white text-amber-600 shadow-md shadow-amber-200/40'
+                                : 'border-sky-200 bg-white text-sky-600 shadow-md shadow-blue-200/40'
+                            }`}
+                          >
+                            ↓
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-                {step.key === 'openApp' && language === 'el' ? (
-                  <div className="text-gray-600 text-lg text-center leading-relaxed group-hover:text-blue-900 transition-colors duration-300" dangerouslySetInnerHTML={{ __html: (t.steps.openApp.description as any).el }} />
-                ) : (
-                  <div className="text-gray-600 text-lg text-center leading-relaxed group-hover:text-blue-900 transition-colors duration-300">
-                    {typeof t.steps[step.key as keyof typeof t.steps].description === 'object'
-                      ? (t.steps[step.key as keyof typeof t.steps].description as any)[language]
-                      : t.steps[step.key as keyof typeof t.steps].description}
-                  </div>
-                )}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-16 h-2 bg-gradient-to-r from-blue-300 via-blue-500 to-blue-300 rounded-full opacity-60 group-hover:opacity-100 transition-all"></div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -315,6 +422,14 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 <li className="flex items-center bg-blue-50 rounded-xl px-4 py-3 shadow-sm hover:bg-blue-100 transition-colors">
                   <span className="w-8 h-8 flex items-center justify-center bg-blue-200 text-blue-700 rounded-full font-bold mr-4">🎁</span>
                   <span className="text-gray-700 font-medium">{t.points.freeReservation}</span>
+                </li>
+                <li className="flex items-center gap-3 rounded-xl px-4 py-4 shadow-md border-2 border-amber-400/90 bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-100 ring-2 ring-amber-300/60">
+                  <span className="w-10 h-10 flex items-center justify-center bg-amber-500 text-white rounded-full font-bold text-lg shrink-0 shadow-lg" aria-hidden>
+                    ★
+                  </span>
+                  <span className="text-gray-900 font-semibold leading-snug">
+                    {t.points.partnerCoupons}
+                  </span>
                 </li>
                 <li className="flex items-center bg-blue-50 rounded-xl px-4 py-3 shadow-sm hover:bg-blue-100 transition-colors">
                   <span className="w-8 h-8 flex items-center justify-center bg-blue-200 text-blue-700 rounded-full font-bold mr-4">🏆</span>
@@ -516,9 +631,16 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
             >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-lg mr-4">
-                  {t.testimonials.user1.name.charAt(0)}
-                </div>
+                <img
+                  src={(t.testimonials.user1 as { avatarUrl: string }).avatarUrl}
+                  alt={t.testimonials.user1.name}
+                  width={48}
+                  height={48}
+                  className="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-blue-200 shadow-md shrink-0"
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
                 <div>
                   <div className="font-bold text-gray-900">{t.testimonials.user1.name}</div>
                   <div className="text-sm text-gray-500">{t.testimonials.user1.location}</div>
@@ -534,9 +656,16 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
             >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-lg mr-4">
-                  {t.testimonials.user2.name.charAt(0)}
-                </div>
+                <img
+                  src={(t.testimonials.user2 as { avatarUrl: string }).avatarUrl}
+                  alt={t.testimonials.user2.name}
+                  width={48}
+                  height={48}
+                  className="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-green-200 shadow-md shrink-0"
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
                 <div>
                   <div className="font-bold text-gray-900">{t.testimonials.user2.name}</div>
                   <div className="text-sm text-gray-500">{t.testimonials.user2.location}</div>
@@ -552,9 +681,16 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
               className="bg-white rounded-2xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow border border-blue-100"
             >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-lg mr-4">
-                  {t.testimonials.user3.name.charAt(0)}
-                </div>
+                <img
+                  src={(t.testimonials.user3 as { avatarUrl: string }).avatarUrl}
+                  alt={t.testimonials.user3.name}
+                  width={48}
+                  height={48}
+                  className="w-12 h-12 rounded-full object-cover mr-4 ring-2 ring-purple-200 shadow-md shrink-0"
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
                 <div>
                   <div className="font-bold text-gray-900">{t.testimonials.user3.name}</div>
                   <div className="text-sm text-gray-500">{t.testimonials.user3.location}</div>
@@ -579,107 +715,45 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             <h2 className="text-3xl md:text-4xl font-bold text-blue-800 mb-4">{t.support.title}</h2>
           </motion.div>
           <div className="max-w-3xl mx-auto space-y-4">
-            {/* FAQ Item 1 */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="bg-blue-50 rounded-xl border border-blue-100 overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenFAQ(openFAQ === 0 ? null : 0)}
-                className="w-full p-6 md:p-8 flex items-center justify-between text-left hover:bg-blue-100 transition-colors"
-              >
-                <h3 className="text-xl font-bold text-blue-900 pr-4">{t.support.howToEarn}</h3>
-                <svg
-                  className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${openFAQ === 0 ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
+            {t.support.faqItems.map((item, i) => (
               <motion.div
-                initial={false}
-                animate={{ height: openFAQ === 0 ? 'auto' : 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
+                key={item.q}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.05 }}
+                viewport={{ once: true }}
+                className="bg-blue-50 rounded-xl border border-blue-100 overflow-hidden"
               >
-                <div className="px-6 md:px-8 pb-6 md:pb-8">
-                  <p className="text-gray-700">{t.support.earnAnswer}</p>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* FAQ Item 2 */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="bg-blue-50 rounded-xl border border-blue-100 overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenFAQ(openFAQ === 1 ? null : 1)}
-                className="w-full p-6 md:p-8 flex items-center justify-between text-left hover:bg-blue-100 transition-colors"
-              >
-                <h3 className="text-xl font-bold text-blue-900 pr-4">{t.support.premiumBenefits}</h3>
-                <svg
-                  className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${openFAQ === 1 ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                <button
+                  type="button"
+                  onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
+                  className="w-full p-6 md:p-8 flex items-center justify-between text-left hover:bg-blue-100 transition-colors gap-4"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <motion.div
-                initial={false}
-                animate={{ height: openFAQ === 1 ? 'auto' : 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                <div className="px-6 md:px-8 pb-6 md:pb-8">
-                  <p className="text-gray-700">{t.support.premiumAnswer}</p>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* FAQ Item 3 */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="bg-blue-50 rounded-xl border border-blue-100 overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenFAQ(openFAQ === 2 ? null : 2)}
-                className="w-full p-6 md:p-8 flex items-center justify-between text-left hover:bg-blue-100 transition-colors"
-              >
-                <h3 className="text-xl font-bold text-blue-900 pr-4">{t.support.contactSupport}</h3>
-                <svg
-                  className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${openFAQ === 2 ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                  <h3 className="text-xl font-bold text-blue-900">{item.q}</h3>
+                  <svg
+                    className={`w-6 h-6 text-blue-600 flex-shrink-0 transition-transform duration-300 ${
+                      openFAQ === i ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <motion.div
+                  initial={false}
+                  animate={{ height: openFAQ === i ? 'auto' : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              <motion.div
-                initial={false}
-                animate={{ height: openFAQ === 2 ? 'auto' : 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                <div className="px-6 md:px-8 pb-6 md:pb-8">
-                  <p className="text-gray-700">{t.support.contactAnswer}</p>
-                </div>
+                  <div className="px-6 md:px-8 pb-6 md:pb-8">
+                    <p className="text-gray-700 leading-relaxed">{item.a}</p>
+                  </div>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            ))}
           </div>
         </div>
       </section>
