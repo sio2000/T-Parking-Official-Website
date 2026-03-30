@@ -5,10 +5,23 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    /* Avoid 100vw scrollbar gap on some mobile browsers */
+    width: 100%;
+    max-width: 100%;
   }
   
   body {
     @apply antialiased text-gray-900;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #root {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
   }
 }
 

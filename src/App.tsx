@@ -64,7 +64,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 w-full max-w-full min-w-0 overflow-x-hidden">
       {/* Language Toggle Button */}
       <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50 flex gap-2">
         <motion.button
@@ -78,8 +78,8 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden w-full max-w-full min-w-0">
+        <div className="absolute inset-0 min-w-0">
           <img 
             src={parkImage} 
             alt="Parking Background" 
@@ -87,7 +87,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <div className="container mx-auto px-4 text-center relative z-10">
+        <div className="container mx-auto px-4 text-center relative z-10 w-full max-w-full min-w-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -101,7 +101,7 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-6xl md:text-7xl font-bold mb-6 text-white"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 text-white leading-tight px-1 sm:px-0 max-w-[min(100%,42rem)] mx-auto [overflow-wrap:anywhere]"
           >
             {t.hero.title}
           </motion.h1>
@@ -109,42 +109,40 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row justify-center items-center gap-6 mb-8"
+            className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 sm:gap-6 mb-8 w-full max-w-full min-w-0"
           >
-            <div className="flex flex-row items-center gap-6">
-              <motion.a 
-                href={APP_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="h-20 w-56 flex items-center justify-center bg-black rounded-xl shadow-lg"
-              >
-                <div className="h-full w-full flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
-                    alt="Download on App Store" 
-                    className="h-full w-full object-contain block mx-auto p-2 scale-110"
-                  />
-                </div>
-              </motion.a>
-              <motion.a 
-                href={PLAY_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="h-20 w-56 flex items-center justify-center bg-black rounded-xl shadow-lg"
-              >
-                <div className="h-full w-full flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
-                    alt="Get it on Google Play" 
-                    className="h-full w-full object-contain block mx-auto p-2 scale-150"
-                  />
-                </div>
-              </motion.a>
-            </div>
+            <motion.a 
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="h-16 sm:h-20 w-full max-w-[min(100%,14rem)] sm:w-56 sm:max-w-none shrink-0 flex items-center justify-center bg-black rounded-xl shadow-lg mx-auto sm:mx-0"
+            >
+              <div className="h-full w-full min-w-0 flex items-center justify-center overflow-hidden rounded-xl">
+                <img 
+                  src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
+                  alt="Download on App Store" 
+                  className="h-full w-full max-h-full object-contain block mx-auto p-2 scale-110"
+                />
+              </div>
+            </motion.a>
+            <motion.a 
+              href={PLAY_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="h-16 sm:h-20 w-full max-w-[min(100%,14rem)] sm:w-56 sm:max-w-none shrink-0 flex items-center justify-center bg-black rounded-xl shadow-lg mx-auto sm:mx-0"
+            >
+              <div className="h-full w-full min-w-0 flex items-center justify-center overflow-hidden rounded-xl">
+                <img 
+                  src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" 
+                  alt="Get it on Google Play" 
+                  className="h-full w-full max-h-full object-contain block mx-auto p-2 scale-125 sm:scale-150"
+                />
+              </div>
+            </motion.a>
           </motion.div>
           {/* Animated Down Arrow */}
           <motion.div
@@ -774,20 +772,20 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
           >
             <h2 className="text-4xl md:text-5xl font-extrabold mb-6">{t.cta.ctaTitle}</h2>
             <p className="text-xl md:text-2xl text-blue-100 mb-10">{t.cta.ctaSubtitle}</p>
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-4 sm:gap-6 w-full max-w-full min-w-0">
               <motion.a
                 href={APP_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="h-16 w-64 flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all"
+                className="h-16 w-full max-w-[min(100%,16rem)] sm:w-64 sm:max-w-none flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all mx-auto sm:mx-0 shrink-0"
               >
-                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                <div className="h-full w-full min-w-0 flex items-center justify-center overflow-hidden rounded-xl">
                   <img
                     src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
                     alt="Download on App Store"
-                    className="h-full w-full object-contain block mx-auto p-2 scale-110"
+                    className="h-full w-full max-h-full object-contain block mx-auto p-2 scale-110"
                   />
                 </div>
               </motion.a>
@@ -797,13 +795,13 @@ function MainPage({ language, setLanguage }: { language: Language, setLanguage: 
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="h-16 w-64 flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all"
+                className="h-16 w-full max-w-[min(100%,16rem)] sm:w-64 sm:max-w-none flex items-center justify-center bg-black rounded-xl shadow-xl hover:shadow-2xl transition-all mx-auto sm:mx-0 shrink-0"
               >
-                <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                <div className="h-full w-full min-w-0 flex items-center justify-center overflow-hidden rounded-xl">
                   <img
                     src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
                     alt="Get it on Google Play"
-                    className="h-full w-full object-contain block mx-auto p-2 scale-150"
+                    className="h-full w-full max-h-full object-contain block mx-auto p-2 scale-125 sm:scale-150"
                   />
                 </div>
               </motion.a>
